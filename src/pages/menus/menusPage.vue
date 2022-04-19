@@ -1,0 +1,104 @@
+<template>
+  <DefaultPageLayout>
+    <template v-slot:page-content>
+      <div class="product-page">
+        <ListLayout
+          :tag-options-array="tags"
+          :dishes-options-array="dishes"
+          :is-search-by-name="true"
+          :is-show-check-i-have="true"
+          :is-show-reload-prices="true"
+          @change="changeIHave"
+          @search="onSearch"
+          @add="addProduct"
+          @reload="reloadPrices"
+          @sort="onSort"
+          @filter="onFilter"
+        >
+          <template v-slot:content>
+            <div class="product-page__grid">
+              <div
+                v-for="item in productsList"
+                :key="item.id"
+                class="product-page__item"
+              >
+                <NutritionCard
+                  :item="item"
+                />
+              </div>
+            </div>
+          </template>
+        </ListLayout>
+      </div>
+    </template>
+  </DefaultPageLayout>
+</template>
+
+<script>
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import ListLayout from '@/layouts/ListLayout.vue';
+import NutritionCard from '@/components/NutritionCard.vue';
+import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+
+export default {
+  name: 'productsPage',
+  components: {
+    ListLayout,
+    NutritionCard,
+    DefaultPageLayout,
+  },
+  setup() {
+    const store = useStore();
+    const tags = ref([
+      { name: 'Тэг 1', code: 'tag1' },
+      { name: 'Тэг 2', code: 'tag2' },
+    ]);
+    const dishes = ref([
+      { name: 'Блюдо 1', code: 'tag1' },
+      { name: 'Блюдо 2', code: 'tag2' },
+    ]);
+    const changeIHave = (ihave) => {
+      console.log('change', ihave);
+    };
+    const addProduct = () => {
+      console.log('addProduct');
+    };
+    const reloadPrices = () => {
+      console.log('reloadPrices');
+    };
+    const onSort = (value) => {
+      console.log('onSort', value);
+    };
+    const onFilter = (value) => {
+      console.log('onFilter', value);
+    };
+    const onSearch = (value) => {
+      console.log('onSearch', value.value);
+    };
+    return {
+      pageName: computed(() => store.state.menus.pageName),
+      productsList: computed(() => store.state.menus.menuslist),
+      tags,
+      dishes,
+      changeIHave,
+      addProduct,
+      reloadPrices,
+      onSort,
+      onFilter,
+      onSearch,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.product-page {
+  height: 100%;
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 0.5rem;
+  }
+}
+</style>

@@ -26,10 +26,10 @@
       <div v-else-if="item.type === 'Product'" class="nutrition-card__default-image">
         <i class="fas fa-carrot"></i>
       </div>
-      <div v-else-if="item.type === 'dishes'" class="nutrition-card__default-image">
+      <div v-else-if="item.type === 'Dish'" class="nutrition-card__default-image">
         <i class="fas fa-concierge-bell"></i>
       </div>
-      <div v-else-if="item.type === 'menu'" class="nutrition-card__default-image">
+      <div v-else-if="item.type === 'Menu'" class="nutrition-card__default-image">
         <i class="fas fa-utensils"></i>
       </div>
     </template>

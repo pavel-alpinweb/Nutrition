@@ -9,6 +9,7 @@ import productsPage from '@/pages/products/productsPage.vue';
 import productEditPage from '@/pages/products/productEditPage.vue';
 import menuEditPage from '@/pages/menus/menuEditPage.vue';
 import dishesEditPage from '@/pages/dishes/dishesEditPage.vue';
+import dishesPickProductList from '@/pages/dishes/dishesPickProductList.vue';
 import registrationStepOne from '@/pages/login/registrationStepOne.vue';
 import registrationStepTwo from '@/pages/login/registrationStepTwo.vue';
 import login from '@/pages/login/login.vue';
@@ -20,6 +21,7 @@ const routes = [
   { path: '/menu/:id', component: menuEditPage, meta: { requiresAuth: true } },
   { path: '/dishes/:id', component: dishesEditPage, meta: { requiresAuth: true } },
   { path: '/products/:id', component: productEditPage, meta: { requiresAuth: true } },
+  { path: '/dishes-pick-product-list', component: dishesPickProductList, meta: { requiresAuth: true } },
   { path: '/registration1', component: registrationStepOne },
   { path: '/registration2/:token', component: registrationStepTwo },
   { path: '/restore1', component: registrationStepOne },

@@ -86,6 +86,7 @@
                 label="Подобрать продукты"
                 icon="fas fa-carrot"
                 class="p-button-warning"
+                @click="pushToPickList()"
               />
             </template>
             <div class="p-grid">
@@ -147,7 +148,7 @@ import useOptions from '@/composition/selectOptions';
 import Ingredient from '@/components/Ingredient.vue';
 import { GLOBAL_UNITS } from '@/modules/constants';
 import IngredientTemplate from '@/modules/classes';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import useSetSelect from '@/composition/setSelect';
 
 export default {
@@ -166,6 +167,7 @@ export default {
   setup() {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
     const image = reactive();
     const dish = reactive({});
     const ingredientsArr = ref([]);
@@ -236,6 +238,10 @@ export default {
       window.location.replace('/dishes/new');
     };
 
+    const pushToPickList = () => {
+      router.push('/dishes-pick-product-list');
+    };
+
     const save = async () => {
       if (isNewDish.value) {
         await store.dispatch('dishes/dishAdd', dish);
@@ -260,6 +266,7 @@ export default {
       inputServingSizeHandler,
       changeOptionHandler,
       unitChangeHandler,
+      pushToPickList,
       ingredientsArr,
     };
   },

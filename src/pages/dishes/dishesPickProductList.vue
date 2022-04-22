@@ -33,12 +33,7 @@
           </div>
         </div>
         <div class="dishes-pick-product-list__content">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-            ccusantium animi blanditiis consequuntur debitis dolore error itaque,
-            magni molestias nam nulla numquam omnis pariatur
-            provident quas quasi qui quos unde voluptatibus?
-          </p>
+          <PickProductsSlider :products-array="productsArray" category-title="Сыр"/>
         </div>
       </div>
     </template>
@@ -47,15 +42,110 @@
 
 <script>
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import PickProductsSlider from '@/components/PickProductsSlider.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import { reactive } from 'vue';
 
 export default {
   name: 'dishesPickPoductList',
   components: {
     defaultPageLayout,
+    PickProductsSlider,
     InputText,
     Button,
+  },
+  setup() {
+    const productsArray = reactive([
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+      {
+        userId: '456132798',
+        category: 'Сыр',
+        shop: 'Сыродар',
+        grade: 'Сырный',
+        manufacturer: 'Сыровар',
+        price: 10,
+        packingSize: 10,
+        unit: 'кг',
+        quantity: 0,
+        description: 'Вуыс',
+        imageUrl: null,
+        tags: ['сыр', 'молочка'],
+      },
+    ]);
+
+    return {
+      productsArray,
+    };
   },
 };
 </script>

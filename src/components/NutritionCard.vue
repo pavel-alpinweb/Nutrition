@@ -110,6 +110,52 @@
           rounded>
         </Tag>
       </div>
+
+      <div v-if="isPickProduct" class="pick-info">
+        <Splitter class="p-mb-2 pick-info__container p-p-2">
+          <SplitterPanel
+            class="pick-info__item flex
+            align-items-center
+            justify-content-center
+            p-text-center
+            p-text-bold"
+          >
+            Необходимое кол-во
+          </SplitterPanel>
+          <SplitterPanel class="flex align-items-center justify-content-center p-text-center">
+            {{ item.necessaryQuantity }}
+          </SplitterPanel>
+        </Splitter>
+        <Splitter class="p-mb-2 pick-info__container p-p-2">
+          <SplitterPanel
+            class="pick-info__item
+            flex align-items-center
+            justify-content-center
+            p-text-center
+            p-text-bold"
+          >
+            Необходимо докупить
+          </SplitterPanel>
+          <SplitterPanel class="flex align-items-center justify-content-center p-text-center">
+            {{ item.lackQuantity }}
+          </SplitterPanel>
+        </Splitter>
+        <Splitter class="p-mb-2 pick-info__container p-p-2">
+          <SplitterPanel
+            class="pick-info__item
+            flex
+            align-items-center
+            justify-content-center
+            p-text-center
+            p-text-bold"
+          >
+            Стоимость докупаемого
+          </SplitterPanel>
+          <SplitterPanel class="flex align-items-center justify-content-center p-text-center">
+            {{ item.lackQuantityPrice }}
+          </SplitterPanel>
+        </Splitter>
+      </div>
     </template>
   </Card>
 </template>
@@ -119,10 +165,13 @@ import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Image from 'primevue/image';
 import Tag from 'primevue/tag';
+import Splitter from 'primevue/splitter';
+import SplitterPanel from 'primevue/splitterpanel';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
   name: 'NutritionCard',
@@ -131,6 +180,8 @@ export default {
     Button,
     Image,
     Tag,
+    Splitter,
+    SplitterPanel,
   },
   props: {
     item: {
@@ -143,6 +194,12 @@ export default {
     const confirm = useConfirm();
     const toast = useToast();
     const store = useStore();
+    // eslint-disable-next-line no-prototype-builtins
+    const isPickProduct = computed(() => props.item.hasOwnProperty('necessaryQuantity')
+      // eslint-disable-next-line no-prototype-builtins
+      && props.item.hasOwnProperty('lackQuantityPrice')
+      // eslint-disable-next-line no-prototype-builtins
+      && props.item.hasOwnProperty('lackQuantity'));
 
     const openItem = (type, itemId) => {
       let section = '';
@@ -187,6 +244,7 @@ export default {
     return {
       openItem,
       openDeleteProductConfirm,
+      isPickProduct,
     };
   },
 };
@@ -239,6 +297,11 @@ export default {
     font-size: 20px;
     width: 25px;
     text-align: center;
+  }
+}
+.pick-info {
+  &__item {
+    font-size: 12px;
   }
 }
 </style>

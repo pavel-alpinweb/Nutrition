@@ -33,7 +33,11 @@
           </div>
         </div>
         <div class="dishes-pick-product-list__content">
-          <PickProductsSlider :products-array="productsArray" category-title="Сыр"/>
+          <PickProductsSlider
+            :products-array="productsArray"
+            category-title="Сыр"
+            :circular="true"
+          />
         </div>
       </div>
     </template>
@@ -69,6 +73,9 @@ export default {
         quantity: 0,
         description: 'Вуыс',
         imageUrl: null,
+        necessaryQuantity: 0,
+        lackQuantity: 0,
+        lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
       },
       {
@@ -83,6 +90,9 @@ export default {
         quantity: 0,
         description: 'Вуыс',
         imageUrl: null,
+        necessaryQuantity: 0,
+        lackQuantity: 0,
+        lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
       },
       {
@@ -97,6 +107,9 @@ export default {
         quantity: 0,
         description: 'Вуыс',
         imageUrl: null,
+        necessaryQuantity: 0,
+        lackQuantity: 0,
+        lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
       },
       {
@@ -111,6 +124,9 @@ export default {
         quantity: 0,
         description: 'Вуыс',
         imageUrl: null,
+        necessaryQuantity: 0,
+        lackQuantity: 0,
+        lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
       },
       {

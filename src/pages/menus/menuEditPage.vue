@@ -3,14 +3,11 @@
 </template>
 
 <script>
-import useSetBage from '@/composition/setBage';
 
 export default {
   name: 'menuEditPage',
   setup() {
-    return {
-      ...useSetBage('Название меню!'),
-    };
+    return {};
   },
 };
 </script>

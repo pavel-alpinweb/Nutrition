@@ -227,7 +227,7 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, ref, reactive, onMounted, watch,
+  computed, ref, reactive, onMounted, watch, onBeforeUnmount,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import InputText from 'primevue/inputtext';
@@ -242,7 +242,6 @@ import Skeleton from 'primevue/skeleton';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import useUpload from '@/composition/upload';
 import useOptions from '@/composition/selectOptions';
-import useSetBage from '@/composition/setBage';
 import useProductOptions from '@/composition/productOptions';
 import useCreateNewFilter from '@/composition/createNewFilter';
 import useSetSelect from '@/composition/setSelect';
@@ -296,6 +295,11 @@ export default {
         await store.dispatch('products/getProduct', route.params.id);
       }
       Object.assign(product, initialProduct.value);
+      store.commit('setBadge', product.category);
+    });
+
+    onBeforeUnmount(() => {
+      store.commit('setBadge', null);
     });
 
     const addProduct = () => {
@@ -334,7 +338,6 @@ export default {
 
     return {
       ...useUpload(),
-      ...useSetBage('Название продукта'),
       ...useCreateNewFilter(),
       productOptions,
       product,

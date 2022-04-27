@@ -22,7 +22,7 @@
       <Button class="login-submit-btn" label="Отправить" @click="login"/>
       <div class="login-link-wrapper">
         <router-link class="login-link" to="/registration1">
-          Регситрация
+          Региcтрация
         </router-link>
         <router-link class="login-link" to="/restore1">
           Забыли пароль?

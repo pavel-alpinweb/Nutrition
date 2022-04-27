@@ -201,7 +201,7 @@
         <div class="p-col-12">
           <Button
             v-if="!isNewProduct"
-            label="Добавить"
+            label="Новый продукт"
             icon="fas fa-plus-circle"
             class="p-button-success"
             @click="addProduct"

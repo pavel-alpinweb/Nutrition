@@ -43,9 +43,9 @@
           <i class="fas fa-store nutrition-card__char-icon"></i>
           <div class="nutrition-card__char-value">{{ item.shop }}</div>
         </li>
-        <li v-if="item.variety" class="nutrition-card__char">
+        <li v-if="item.grade" class="nutrition-card__char">
           <i class="fas fa-certificate nutrition-card__char-icon"></i>
-          <div class="nutrition-card__char-value">{{ item.variety }}</div>
+          <div class="nutrition-card__char-value">{{ item.grade }}</div>
         </li>
         <li v-if="item.price" class="nutrition-card__char">
           <i class="fas fa-dollar-sign nutrition-card__char-icon"></i>

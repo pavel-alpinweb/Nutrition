@@ -42,7 +42,7 @@ HTTP.interceptors.response.use((response) => {
       severity: 'success',
       summary: response.data.title,
       detail: response.data.message,
-      life: 3000,
+      life: 5000,
     });
   }
   return response.data;
@@ -64,7 +64,7 @@ HTTP.interceptors.response.use((response) => {
         severity: 'error',
         summary: reason.title || 'Непредвиденная ошибка',
         detail: reason.message || 'Что-то очень пошло не так!',
-        life: 4000,
+        life: 5000,
       });
     });
   }

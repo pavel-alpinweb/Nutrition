@@ -132,9 +132,8 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, reactive, onMounted, watch, ref,
+  computed, reactive, onMounted, watch, ref, onBeforeUnmount,
 } from 'vue';
-import useSetBage from '@/composition/setBage';
 import useUpload from '@/composition/upload';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import Panel from 'primevue/panel';
@@ -192,6 +191,11 @@ export default {
       }
       ingredientsArr.value = initialDish.value.ingredients;
       Object.assign(dish, initialDish.value);
+      store.commit('setBadge', dish.name);
+    });
+
+    onBeforeUnmount(() => {
+      store.commit('setBadge', null);
     });
 
     const reset = () => {
@@ -251,7 +255,6 @@ export default {
     };
 
     return {
-      ...useSetBage('Название блюда'),
       ...useUpload(),
       image,
       unitOptions,

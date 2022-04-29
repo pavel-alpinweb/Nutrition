@@ -34,8 +34,10 @@
         </div>
         <div class="dishes-pick-product-list__content">
           <PickProductsSlider
-            :products-array="productsArray"
-            category-title="Сыр"
+            v-for="category in dishProductList"
+            :key="category.ingredientIndex"
+            :products-array="category.products"
+            :category-title="category.productCategory"
             :circular="true"
           />
         </div>
@@ -49,7 +51,8 @@ import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import PickProductsSlider from '@/components/PickProductsSlider.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import { reactive } from 'vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'dishesPickPoductList',
@@ -60,113 +63,11 @@ export default {
     Button,
   },
   setup() {
-    const productsArray = reactive([
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        necessaryQuantity: 0,
-        lackQuantity: 0,
-        lackQuantityPrice: 0,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        necessaryQuantity: 0,
-        lackQuantity: 0,
-        lackQuantityPrice: 0,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        necessaryQuantity: 0,
-        lackQuantity: 0,
-        lackQuantityPrice: 0,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        necessaryQuantity: 0,
-        lackQuantity: 0,
-        lackQuantityPrice: 0,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-      {
-        userId: '456132798',
-        category: 'Сыр',
-        shop: 'Сыродар',
-        grade: 'Сырный',
-        manufacturer: 'Сыровар',
-        price: 10,
-        packingSize: 10,
-        unit: 'кг',
-        quantity: 0,
-        description: 'Вуыс',
-        imageUrl: null,
-        tags: ['сыр', 'молочка'],
-        checked: false,
-      },
-    ]);
+    const store = useStore();
+    const dishProductList = computed(() => store.state.dishes.dishProductList);
 
     return {
-      productsArray,
+      dishProductList,
     };
   },
 };

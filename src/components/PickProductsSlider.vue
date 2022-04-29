@@ -4,7 +4,7 @@
       <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     </template>
     <template #item="slotProps">
-      <NutritionCard :item="slotProps.data" />
+      <NutritionCard :item="slotProps.data" @checkProductEvent="checkProductHandler" />
     </template>
   </Carousel>
 </template>
@@ -12,6 +12,7 @@
 <script>
 import Carousel from 'primevue/carousel';
 import NutritionCard from '@/components/NutritionCard.vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'PickProductsSlider',
@@ -24,6 +25,18 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup(props) {
+    const store = useStore();
+    const checkProductHandler = (productId) => {
+      store.commit('dishes/checkPickProduct', {
+        productId,
+        categoryId: props.category.ingredientIndex,
+      });
+    };
+    return {
+      checkProductHandler,
+    };
   },
 };
 </script>

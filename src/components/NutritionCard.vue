@@ -23,6 +23,7 @@
         <Button
           icon="fas fa-check"
           :class="btnClass"
+          @click="emitCheckProduct"
         />
       </div>
     </template>
@@ -205,7 +206,7 @@ export default {
       default: true,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const router = useRouter();
     const confirm = useConfirm();
     const toast = useToast();
@@ -259,9 +260,13 @@ export default {
         },
       });
     };
+    const emitCheckProduct = () => {
+      emit('checkProductEvent', props.item.id);
+    };
     return {
       openItem,
       openDeleteProductConfirm,
+      emitCheckProduct,
       btnClass,
     };
   },

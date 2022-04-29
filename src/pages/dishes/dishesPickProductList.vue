@@ -77,6 +77,7 @@ export default {
         lackQuantity: 0,
         lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
       {
         userId: '456132798',
@@ -94,6 +95,7 @@ export default {
         lackQuantity: 0,
         lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
       {
         userId: '456132798',
@@ -111,6 +113,7 @@ export default {
         lackQuantity: 0,
         lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
       {
         userId: '456132798',
@@ -128,6 +131,7 @@ export default {
         lackQuantity: 0,
         lackQuantityPrice: 0,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
       {
         userId: '456132798',
@@ -142,6 +146,7 @@ export default {
         description: 'Вуыс',
         imageUrl: null,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
       {
         userId: '456132798',
@@ -156,6 +161,7 @@ export default {
         description: 'Вуыс',
         imageUrl: null,
         tags: ['сыр', 'молочка'],
+        checked: false,
       },
     ]);
 

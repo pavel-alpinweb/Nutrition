@@ -1,7 +1,10 @@
 <template>
   <Card class="nutrition-card">
     <template #header>
-      <div class="nutrition-card__header">
+      <div
+        v-if="!isPickProduct"
+        class="nutrition-card__header"
+      >
         <Button
           icon="fas fa-pen"
           class="nutrition-card__btn p-button-rounded p-button-warning"
@@ -11,6 +14,15 @@
           icon="fas fa-trash"
           class="nutrition-card__btn p-button-rounded p-button-warning"
           @click="openDeleteProductConfirm(item.id)"
+        />
+      </div>
+      <div
+        v-else
+        class="nutrition-card__header"
+      >
+        <Button
+          icon="fas fa-check"
+          :class="btnClass"
         />
       </div>
     </template>
@@ -188,18 +200,24 @@ export default {
       type: Object,
       required: true,
     },
+    isPickProduct: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const router = useRouter();
     const confirm = useConfirm();
     const toast = useToast();
     const store = useStore();
-    // eslint-disable-next-line no-prototype-builtins
-    const isPickProduct = computed(() => props.item.hasOwnProperty('necessaryQuantity')
-      // eslint-disable-next-line no-prototype-builtins
-      && props.item.hasOwnProperty('lackQuantityPrice')
-      // eslint-disable-next-line no-prototype-builtins
-      && props.item.hasOwnProperty('lackQuantity'));
+
+    const btnClass = computed(() => {
+      let computedClass = 'nutrition-card__btn p-button-rounded p-button-warning';
+      if (!props.item.checked) {
+        computedClass += ' p-button-outlined';
+      }
+      return computedClass;
+    });
 
     const openItem = (type, itemId) => {
       let section = '';
@@ -244,7 +262,7 @@ export default {
     return {
       openItem,
       openDeleteProductConfirm,
-      isPickProduct,
+      btnClass,
     };
   },
 };

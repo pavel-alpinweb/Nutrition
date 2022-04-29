@@ -1,7 +1,7 @@
 <template>
-  <Carousel class="pick-product-slider" :value="productsArray" :numVisible="3" :numScroll="1">
+  <Carousel class="pick-product-slider" :value="category.products" :numVisible="3" :numScroll="1">
     <template #header>
-      <h2 class="pick-product-slider__title">{{ categoryTitle }}</h2>
+      <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     </template>
     <template #item="slotProps">
       <NutritionCard :item="slotProps.data" />
@@ -20,13 +20,9 @@ export default {
     NutritionCard,
   },
   props: {
-    productsArray: {
-      type: Array,
-      default: () => ([]),
-    },
-    categoryTitle: {
-      type: String,
-      default: 'Ингридиент',
+    category: {
+      type: Object,
+      required: true,
     },
   },
 };

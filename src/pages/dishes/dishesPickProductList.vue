@@ -36,8 +36,7 @@
           <PickProductsSlider
             v-for="category in dishProductList"
             :key="category.ingredientIndex"
-            :products-array="category.products"
-            :category-title="category.productCategory"
+            :category="category"
             :circular="true"
           />
         </div>

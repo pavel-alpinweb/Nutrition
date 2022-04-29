@@ -50,7 +50,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -75,7 +75,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -100,7 +100,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -125,7 +125,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -150,7 +150,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -175,12 +175,12 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
       ],
     },
     {
-      ingredientIndex: 0,
+      ingredientIndex: 2,
       productCategory: 'Не сыр',
       products: [
         {
@@ -206,7 +206,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -231,7 +231,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -256,7 +256,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -281,7 +281,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -306,7 +306,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
         {
           type: 'Dish',
@@ -331,7 +331,7 @@ const state = {
           tags: [
             'string',
           ],
-          checked: true,
+          checked: false,
         },
       ],
     },
@@ -358,6 +358,19 @@ const mutations = {
   // eslint-disable-next-line no-shadow
   deleteProduct(state, id) {
     state.dishesList = state.dishesList.filter((dish) => dish.id !== id);
+  },
+  // eslint-disable-next-line no-shadow
+  checkPickProduct(state, { productId, categoryId }) {
+    const category = state.dishProductList.find((cat) => categoryId === cat.ingredientIndex);
+    category.products.forEach(((item) => {
+      if (item.id === productId) {
+        // eslint-disable-next-line no-param-reassign
+        item.checked = true;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        item.checked = false;
+      }
+    }));
   },
 };
 

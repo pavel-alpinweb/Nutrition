@@ -243,7 +243,7 @@ export default {
     };
 
     const pushToPickList = () => {
-      router.push('/dishes-pick-product-list');
+      router.push(`/dishes-pick-product-list/${route.params.id}`);
     };
 
     const save = async () => {

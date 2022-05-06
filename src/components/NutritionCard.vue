@@ -275,6 +275,7 @@ export default {
 
 <style lang="scss" scoped>
 .nutrition-card {
+  min-width: 300px;
   &__header {
     display: flex;
     justify-content: flex-end;

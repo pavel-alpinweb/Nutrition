@@ -21,7 +21,7 @@ const routes = [
   { path: '/menu/:id', component: menuEditPage, meta: { requiresAuth: true } },
   { path: '/dishes/:id', component: dishesEditPage, meta: { requiresAuth: true } },
   { path: '/products/:id', component: productEditPage, meta: { requiresAuth: true } },
-  { path: '/dishes-pick-product-list', component: dishesPickProductList, meta: { requiresAuth: true } },
+  { path: '/dishes-pick-product-list/:id', component: dishesPickProductList, meta: { requiresAuth: true } },
   { path: '/registration1', component: registrationStepOne },
   { path: '/registration2/:token', component: registrationStepTwo },
   { path: '/restore1', component: registrationStepOne },

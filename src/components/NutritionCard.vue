@@ -203,7 +203,7 @@ export default {
     },
     isPickProduct: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   setup(props, { emit }) {

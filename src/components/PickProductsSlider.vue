@@ -4,7 +4,11 @@
       <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     </template>
     <template #item="slotProps">
-      <NutritionCard :item="slotProps.data" @checkProductEvent="checkProductHandler" />
+      <NutritionCard
+        :item="slotProps.data"
+        :is-pick-product="true"
+        @checkProductEvent="checkProductHandler"
+      />
     </template>
   </Carousel>
 </template>

@@ -277,12 +277,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .test {
-    grid-template-areas:
-      'title widget'
-    'text widget'
-  'slider widget';
-  }
   .dishes-edit {
     padding: 10px;
     &-footer {

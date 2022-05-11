@@ -7,6 +7,8 @@ const state = {
   dishesList: [],
   isDishesListLoaded: true,
   isPickProductListLoaded: false,
+  lackProductPrice: 0,
+  isPriceLoading: false,
   filters: {
     dishTags: [],
     dishUnits: [],
@@ -53,8 +55,6 @@ const mutations = {
   },
   // eslint-disable-next-line no-shadow
   checkPickProduct(state, { productId, categoryId }) {
-    console.log('params', { productId, categoryId });
-    console.log('dishProductList', state.pickProductList);
     const category = state.pickProductList.find((cat) => categoryId === cat.ingredientIndex);
     category.products.forEach(((item) => {
       if (item.id === productId) {
@@ -69,6 +69,14 @@ const mutations = {
   // eslint-disable-next-line no-shadow
   setPickProductsList(state, productsList) {
     state.pickProductList = productsList;
+  },
+  // eslint-disable-next-line no-shadow
+  setLackProductPrice(state, price) {
+    state.lackProductPrice = price;
+  },
+  // eslint-disable-next-line no-shadow
+  setIsPriceLoading(state, val) {
+    state.isPriceLoading = val;
   },
 };
 
@@ -112,6 +120,12 @@ const actions = {
     const result = await HTTP.get(`/dishes/getAllIngredientProducts?${queryString.stringify(params)}`);
     commit('setPickProductsList', result.categories);
     commit('setPickProductListLoaded', true);
+  },
+  async getLackProductPrice({ commit }, params) {
+    commit('setIsPriceLoading', true);
+    const price = await HTTP.post('/dishes/getLackProductPrice', params);
+    commit('setLackProductPrice', price);
+    commit('setIsPriceLoading', false);
   },
 };
 

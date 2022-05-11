@@ -40,6 +40,7 @@ import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'productsPage',
@@ -50,6 +51,8 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
+
     const tags = ref([
       { name: 'Тэг 1', code: 'tag1' },
       { name: 'Тэг 2', code: 'tag2' },
@@ -62,7 +65,7 @@ export default {
       console.log('change', ihave);
     };
     const addProduct = () => {
-      console.log('addProduct');
+      router.push('/menu/new');
     };
     const reloadPrices = () => {
       console.log('reloadPrices');

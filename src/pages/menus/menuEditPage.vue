@@ -54,7 +54,19 @@
           <h1>Dishes list</h1>
         </div>
         <div class="menu-edit-footer">
-          <h1>Footer</h1>
+          <div class="p-fluid p-field">
+            <label for="tags">Тэги</label>
+            <Chips id="tags"/>
+          </div>
+          <div class="menu-edit-footer__buttons">
+            <Button
+              label="Новое блюдо"
+              icon="fas fa-plus-circle"
+              class="p-button-success"
+            />
+            <Button label="Сохранить" icon="pi pi-save" class="p-button-success"/>
+            <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning"/>
+          </div>
         </div>
       </div>
     </template>
@@ -66,6 +78,8 @@ import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
+import Button from 'primevue/button';
+import Chips from 'primevue/chips';
 import useUpload from '@/composition/upload';
 import { reactive } from 'vue';
 
@@ -76,6 +90,8 @@ export default {
     FileUpload,
     InputText,
     Textarea,
+    Button,
+    Chips,
   },
   setup() {
     const image = reactive();

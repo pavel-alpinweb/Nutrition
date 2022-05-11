@@ -28,6 +28,7 @@
                   label="Рассчитать"
                   icon="fa fa-money"
                   class="p-button-warning"
+                  @click="fetchLackProductPrice()"
                 />
               </div>
             </div>
@@ -78,6 +79,19 @@ export default {
     const fetchPickProductList = async () => {
       await store.dispatch('dishes/getAllIngredientProducts', { dishId: route.params.id, servingNumber: dishNumber.value });
     };
+    const fetchLackProductPrice = () => {
+      const fetchProductPriceParams = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const ingredient of dishProductList.value) {
+        const product = ingredient.products.find((item) => item.checked);
+        const ingredientData = {
+          ingredientIndex: ingredient.ingredientIndex,
+          productIndex: product.id,
+        };
+        fetchProductPriceParams.push(ingredientData);
+      }
+      console.log('fetchProductPriceParams', fetchProductPriceParams);
+    };
     watch(dishNumber, async () => {
       await fetchPickProductList();
     });
@@ -91,6 +105,7 @@ export default {
       dishNumber,
       isPickProductListLoaded,
       fetchPickProductList,
+      fetchLackProductPrice,
     };
   },
 };

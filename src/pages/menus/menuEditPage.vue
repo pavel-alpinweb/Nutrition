@@ -117,7 +117,9 @@ import Button from 'primevue/button';
 import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
-import { computed, reactive, onMounted } from 'vue';
+import {
+  computed, reactive, onMounted, watch,
+} from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -138,8 +140,18 @@ export default {
     const menu = reactive({});
     const initialMenu = computed(() => store.state.menus.initialMenu);
     const filters = computed(() => store.state.menus.filters);
+    const user = computed(() => store.state.auth.user);
 
-    onMounted(() => {
+    watch(user, async (currentValue) => {
+      if (currentValue !== null) {
+        await store.dispatch('menus/getAllMenusFields', user.value.id);
+      }
+    });
+
+    onMounted(async () => {
+      if (user.value) {
+        await store.dispatch('menus/getAllMenusFields', user.value.id);
+      }
       Object.assign(menu, initialMenu.value);
     });
 

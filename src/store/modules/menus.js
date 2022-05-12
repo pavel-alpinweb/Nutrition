@@ -1,3 +1,5 @@
+import { HTTP } from '@/modules/api';
+
 const state = {
   pageName: 'Меню',
   menuslist: [
@@ -56,36 +58,9 @@ const state = {
   ],
   isMenuLoaded: true,
   filters: {
-    menuNames: [
-      {
-        name: 'Постное',
-        code: 'post',
-      },
-    ],
-    menuTags: [
-      {
-        name: 'Постное',
-        code: 'postag',
-      },
-      {
-        name: 'Студентческое',
-        code: 'Students',
-      },
-    ],
-    dishNames: [
-      {
-        name: 'Греча с сахаром',
-        code: 'grecha1',
-      },
-      {
-        name: 'И еще греча',
-        code: 'grecha2',
-      },
-      {
-        name: 'Ничего кроме гречи тебе не светит',
-        code: 'grecha3',
-      },
-    ],
+    menuNames: [],
+    menuTags: [],
+    dishNames: [],
   },
   initialMenu: {
     name: 'Постное',
@@ -112,7 +87,24 @@ const state = {
   },
 };
 
+const mutations = {
+  // eslint-disable-next-line no-shadow
+  setFilters(state, filters) {
+    state.filters = filters;
+  },
+};
+
+const actions = {
+  async getAllMenusFields({ commit }) {
+    const result = await HTTP.get('/menus/getAllMenusFields');
+    console.log('result:', result);
+    commit('setFilters', result);
+  },
+};
+
 export default {
   namespaced: true,
   state,
+  mutations,
+  actions,
 };

@@ -24,7 +24,7 @@
               alt="Image"
             />
             <div v-else class="menu-edit__default-image">
-              <i class="fas fa-concierge-bell"></i>
+              <i class="fas fa-utensils"></i>
             </div>
           </div>
           <div class="menu-edit-header__right p-col-6 p-formgrid">
@@ -51,7 +51,28 @@
           </div>
         </div>
         <div class="menu-edit-content">
-          <h1>Dishes list</h1>
+          <Panel header="Блюда входящие в меню">
+            <template #icons>
+              <Button
+                label="Добавить"
+                icon="fas fa-plus-circle"
+                class="p-button-success"
+              />
+              <Button
+                label="Подобрать продукты"
+                icon="fas fa-carrot"
+                class="p-button-warning"
+              />
+            </template>
+            <div class="p-grid">
+              <div class="p-col-6 p-text-center">
+                <h2>Блюдо</h2>
+              </div>
+              <div class="p-col-6 p-text-center">
+                <h2>Количество порций</h2>
+              </div>
+            </div>
+          </Panel>
         </div>
         <div class="menu-edit-footer">
           <div class="p-fluid p-field">
@@ -80,6 +101,7 @@ import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Chips from 'primevue/chips';
+import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
 import { reactive } from 'vue';
 
@@ -92,6 +114,7 @@ export default {
     Textarea,
     Button,
     Chips,
+    Panel,
   },
   setup() {
     const image = reactive();

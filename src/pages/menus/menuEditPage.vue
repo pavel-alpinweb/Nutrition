@@ -40,6 +40,7 @@
               <div class="p-field p-col-12">
                 <label for="name">Название меню</label>
                 <InputText
+                  v-model="menu.name"
                   id="name"
                   type="text"
                   placeholder="Название меню"
@@ -49,6 +50,7 @@
               <div class="p-field p-col-12">
                 <label for="describe">Примечание</label>
                 <Textarea
+                  v-model="menu.description"
                   id="describe"
                   :autoResize="true"
                   rows="5"
@@ -88,7 +90,7 @@
         <div class="menu-edit-footer">
           <div class="p-fluid p-field">
             <label for="tags">Тэги</label>
-            <Chips id="tags"/>
+            <Chips v-model="menu.tags" id="tags"/>
           </div>
           <div class="menu-edit-footer__buttons">
             <Button
@@ -115,7 +117,7 @@ import Button from 'primevue/button';
 import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
-import { computed, reactive } from 'vue';
+import { computed, reactive, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -133,13 +135,20 @@ export default {
   setup() {
     const image = reactive();
     const store = useStore();
+    const menu = reactive({});
     const initialMenu = computed(() => store.state.menus.initialMenu);
     const filters = computed(() => store.state.menus.filters);
+
+    onMounted(() => {
+      Object.assign(menu, initialMenu.value);
+    });
+
     return {
       ...useUpload(),
       image,
       initialMenu,
       filters,
+      menu,
     };
   },
 };

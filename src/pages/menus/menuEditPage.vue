@@ -1,6 +1,14 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
+      <div class="p-grid">
+        <div class="p-col-6">
+          <pre>{{ initialMenu }}</pre>
+        </div>
+        <div class="p-col-6">
+          <pre>{{ filters }}</pre>
+        </div>
+      </div>
       <div class="menu-edit">
         <div class="menu-edit-header p-grid">
           <div class="menu-edit-header__left p-col-6">
@@ -107,7 +115,8 @@ import Button from 'primevue/button';
 import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'menuEditPage',
@@ -123,9 +132,14 @@ export default {
   },
   setup() {
     const image = reactive();
+    const store = useStore();
+    const initialMenu = computed(() => store.state.menus.initialMenu);
+    const filters = computed(() => store.state.menus.filters);
     return {
       ...useUpload(),
       image,
+      initialMenu,
+      filters,
     };
   },
 };

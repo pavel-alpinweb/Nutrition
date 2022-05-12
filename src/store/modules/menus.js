@@ -54,6 +54,62 @@ const state = {
       ],
     },
   ],
+  isMenuLoaded: true,
+  filters: {
+    menuNames: [
+      {
+        name: 'Постное',
+        code: 'post',
+      },
+    ],
+    menuTags: [
+      {
+        name: 'Постное',
+        code: 'postag',
+      },
+      {
+        name: 'Студентческое',
+        code: 'Students',
+      },
+    ],
+    dishNames: [
+      {
+        name: 'Греча с сахаром',
+        code: 'grecha1',
+      },
+      {
+        name: 'И еще греча',
+        code: 'grecha2',
+      },
+      {
+        name: 'Ничего кроме гречи тебе не светит',
+        code: 'grecha3',
+      },
+    ],
+  },
+  initialMenu: {
+    name: 'Постное',
+    imageUrl: null,
+    description: 'Очень длинное описание, но короткое',
+    items: [
+      {
+        dishName: 'Греча с сахаром',
+        servingNumber: 1,
+      },
+      {
+        dishName: 'И еще греча',
+        servingNumber: 1,
+      },
+      {
+        dishName: 'Ничего кроме гречи тебе не светит',
+        servingNumber: 1,
+      },
+    ],
+    tags: [
+      'Постное',
+      'Студентческое',
+    ],
+  },
 };
 
 export default {

@@ -71,6 +71,9 @@
               <div class="p-col-6 p-text-center">
                 <h2>Количество порций</h2>
               </div>
+              <div class="p-col-12">
+                <DishSelect v-for="i in 5" :key="i"/>
+              </div>
             </div>
           </Panel>
         </div>
@@ -96,6 +99,7 @@
 
 <script>
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import DishSelect from '@/components/DishSelect.vue';
 import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
@@ -115,6 +119,7 @@ export default {
     Button,
     Chips,
     Panel,
+    DishSelect,
   },
   setup() {
     const image = reactive();

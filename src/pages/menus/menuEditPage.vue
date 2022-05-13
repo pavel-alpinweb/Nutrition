@@ -62,6 +62,7 @@
                 label="Подобрать продукты"
                 icon="fas fa-carrot"
                 class="p-button-warning"
+                @click="pushToPickList()"
               />
             </template>
             <div class="p-grid">
@@ -108,6 +109,7 @@ import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'menuEditPage',
@@ -123,8 +125,13 @@ export default {
   },
   setup() {
     const image = reactive();
+    const router = useRouter();
+    const pushToPickList = () => {
+      router.push('/menus-pick-product-list');
+    };
     return {
       ...useUpload(),
+      pushToPickList,
       image,
     };
   },

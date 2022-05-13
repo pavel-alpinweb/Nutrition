@@ -33,7 +33,25 @@
           </div>
         </div>
         <div class="menus-pick-product-list__content">
-          <h2>menus-pick-product-list</h2>
+          <Panel>
+            <template #header>
+              <div class="menus-pick-product-list__dish-names">
+                <Button
+                  v-for="dish in dishNames"
+                  :key="dish.code"
+                  :label="dish.name"
+                  icon="fas fa-concierge-bell"
+                  class="menus-pick-product-list__dish-btn p-button-warning"
+                />
+              </div>
+            </template>
+            <PickProductsSlider
+              v-for="category in dishProductList"
+              :key="category.ingredientIndex"
+              :category="category"
+              :circular="true"
+            />
+          </Panel>
         </div>
       </div>
     </template>
@@ -41,9 +59,13 @@
 </template>
 
 <script>
+import { computed, reactive } from 'vue';
+import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import PickProductsSlider from '@/components/PickProductsSlider.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import Panel from 'primevue/panel';
 
 export default {
   name: 'menusPickProductList',
@@ -51,6 +73,35 @@ export default {
     defaultPageLayout,
     InputText,
     Button,
+    Panel,
+    PickProductsSlider,
+  },
+  setup() {
+    const dishNames = reactive([
+      {
+        name: 'Блюдо1',
+        code: 'string1',
+      },
+      {
+        name: 'Блюдо2',
+        code: 'string2',
+      },
+      {
+        name: 'Блюдо3',
+        code: 'string3',
+      },
+      {
+        name: 'Блюдо4',
+        code: 'string4',
+      },
+    ]);
+    const store = useStore();
+    const dishProductList = computed(() => store.state.dishes.dishProductList);
+
+    return {
+      dishNames,
+      dishProductList,
+    };
   },
 };
 </script>
@@ -68,6 +119,9 @@ export default {
   &__btn-container {
     display: flex;
     align-items: flex-end;
+  }
+  &__dish-btn {
+    margin-right: 15px;
   }
 }
 </style>

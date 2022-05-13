@@ -4,7 +4,32 @@
       <div class="menus-pick-product-list">
         <div class="menus-pick-product-list__header">
           <div class="menus-pick-product-list__wrapper-form p-formgrid">
-            <h1>menus-pick-product-list</h1>
+            <div class="p-fluid p-grid">
+              <div class="p-field p-col-4">
+                <label for="number">Количество меню</label>
+                <InputText
+                  id="number"
+                  type="number"
+                  placeholder="Количество порций"
+                  min="1" />
+              </div>
+              <div class="p-field p-col-4">
+                <label for="number">Итоговая стоимость</label>
+                <InputText
+                  id="price"
+                  type="price"
+                  placeholder="Итоговая стоимость"
+                  min="0"
+                  disabled />
+              </div>
+              <div class="menus-pick-product-list__btn-container p-field p-col-4">
+                <Button
+                  label="Рассчитать"
+                  icon="fa fa-money"
+                  class="p-button-warning"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div class="menus-pick-product-list__content">
@@ -17,11 +42,15 @@
 
 <script>
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
 export default {
   name: 'menusPickProductList',
   components: {
     defaultPageLayout,
+    InputText,
+    Button,
   },
 };
 </script>

@@ -87,18 +87,23 @@ export default {
     const fetchPickProductList = async () => {
       await store.dispatch('dishes/getAllIngredientProducts', { dishId: route.params.id, servingNumber: dishNumber.value });
     };
-    const fetchLackProductPrice = () => {
-      const fetchProductPriceParams = [];
+    const fetchLackProductPrice = async () => {
+      const fetchProductPriceParams = {
+        dishId: route.params.id,
+        servingNumber: dishNumber.value,
+        products: [],
+      };
       // eslint-disable-next-line no-restricted-syntax
       for (const ingredient of dishProductList.value) {
         const product = ingredient.products.find((item) => item.checked);
         const ingredientData = {
           ingredientIndex: ingredient.ingredientIndex,
-          productIndex: product.id,
+          productIndex: product.productIndex,
         };
-        fetchProductPriceParams.push(ingredientData);
+        fetchProductPriceParams.products.push(ingredientData);
       }
-      console.log('fetchProductPriceParams', fetchProductPriceParams);
+
+      await store.dispatch('dishes/getLackProductPrice', fetchProductPriceParams);
     };
     watch(dishNumber, async () => {
       await fetchPickProductList();

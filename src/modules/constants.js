@@ -2,6 +2,6 @@
 export const BASE_API_URL = 'http://nutritionmanager.xyz';
 export const GLOBAL_UNITS = [
   { name: 'кг', code: 'kg' },
-  { name: 'литры', code: 'kg2' },
-  { name: 'штуки', code: 'kg3' },
+  { name: 'литр', code: 'kg2' },
+  { name: 'шт', code: 'kg3' },
 ];

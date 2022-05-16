@@ -62,7 +62,9 @@
         </li>
         <li v-if="item.price" class="nutrition-card__char">
           <i class="fas fa-dollar-sign nutrition-card__char-icon"></i>
-          <div class="nutrition-card__char-value">{{ item.price }}</div>
+          <div class="nutrition-card__char-value">
+            {{ item.price }} за {{ item.packingSize }} {{ item.unit }}
+          </div>
         </li>
         <li v-if="item.averagePrice" class="nutrition-card__char">
           <i class="fas fa-dollar-sign nutrition-card__char-icon"></i>
@@ -275,6 +277,7 @@ export default {
 
 <style lang="scss" scoped>
 .nutrition-card {
+  min-width: 300px;
   &__header {
     display: flex;
     justify-content: flex-end;

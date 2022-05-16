@@ -4,11 +4,13 @@
       <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     </template>
     <template #item="slotProps">
-      <NutritionCard
-        :item="slotProps.data"
-        :is-pick-product="true"
-        @checkProductEvent="checkProductHandler"
-      />
+      <div class="pick-product-slider__item">
+        <NutritionCard
+          :item="slotProps.data"
+          :is-pick-product="true"
+          @checkProductEvent="checkProductHandler"
+        />
+      </div>
     </template>
   </Carousel>
 </template>
@@ -49,6 +51,11 @@ export default {
   .pick-product-slider {
     &__title {
       text-align: center;
+    }
+    &__item {
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>

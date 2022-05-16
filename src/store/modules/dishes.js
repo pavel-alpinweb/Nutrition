@@ -6,6 +6,9 @@ const state = {
   pageName: 'Блюда',
   dishesList: [],
   isDishesListLoaded: true,
+  isPickProductListLoaded: false,
+  lackProductPrice: 0,
+  isPriceLoading: false,
   filters: {
     dishTags: [],
     dishUnits: [],
@@ -22,326 +25,17 @@ const state = {
     ingredients: [],
     tags: [],
   },
-  dishProductList: [
-    {
-      ingredientIndex: 0,
-      productCategory: 'Сыр',
-      products: [
-        {
-          type: 'Dish',
-          id: '1',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '2',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '3',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '4',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '5',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '6',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-      ],
-    },
-    {
-      ingredientIndex: 2,
-      productCategory: 'Не сыр',
-      products: [
-        {
-          type: 'Dish',
-          id: '1',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '2',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '3',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '4',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '5',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-        {
-          type: 'Dish',
-          id: '6',
-          user: {
-            id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-            name: 'string',
-            email: 'string',
-          },
-          imageUrl: null,
-          category: 'string',
-          shop: 'string',
-          grade: 'string',
-          packingSize: 0,
-          unit: 'string',
-          manufacturer: 'string',
-          price: 0,
-          quantity: 0,
-          necessaryQuantity: 0,
-          lackQuantity: 0,
-          lackQuantityPrice: 0,
-          tags: [
-            'string',
-          ],
-          checked: false,
-        },
-      ],
-    },
-  ],
+  pickProductList: [],
 };
 
 const mutations = {
   // eslint-disable-next-line no-shadow
   setDishesListLoaded(state, loaded) {
     state.isDishesListLoaded = loaded;
+  },
+  // eslint-disable-next-line no-shadow
+  setPickProductListLoaded(state, loaded) {
+    state.isPickProductListLoaded = loaded;
   },
   // eslint-disable-next-line no-shadow
   setInitialDish(state, product) {
@@ -361,7 +55,7 @@ const mutations = {
   },
   // eslint-disable-next-line no-shadow
   checkPickProduct(state, { productId, categoryId }) {
-    const category = state.dishProductList.find((cat) => categoryId === cat.ingredientIndex);
+    const category = state.pickProductList.find((cat) => categoryId === cat.ingredientIndex);
     category.products.forEach(((item) => {
       if (item.id === productId) {
         // eslint-disable-next-line no-param-reassign
@@ -371,6 +65,18 @@ const mutations = {
         item.checked = false;
       }
     }));
+  },
+  // eslint-disable-next-line no-shadow
+  setPickProductsList(state, productsList) {
+    state.pickProductList = productsList;
+  },
+  // eslint-disable-next-line no-shadow
+  setLackProductPrice(state, price) {
+    state.lackProductPrice = price;
+  },
+  // eslint-disable-next-line no-shadow
+  setIsPriceLoading(state, val) {
+    state.isPriceLoading = val;
   },
 };
 
@@ -408,6 +114,18 @@ const actions = {
   async deleteProduct({ commit }, productId) {
     await HTTP.delete('/dishes/delete', { params: { id: productId } });
     commit('deleteProduct', productId);
+  },
+  async getAllIngredientProducts({ commit }, params) {
+    commit('setPickProductListLoaded', false);
+    const result = await HTTP.get(`/dishes/getAllIngredientProducts?${queryString.stringify(params)}`);
+    commit('setPickProductsList', result.categories);
+    commit('setPickProductListLoaded', true);
+  },
+  async getLackProductPrice({ commit }, params) {
+    commit('setIsPriceLoading', true);
+    const price = await HTTP.post('/dishes/getLackProductPrice', params);
+    commit('setLackProductPrice', price);
+    commit('setIsPriceLoading', false);
   },
 };
 

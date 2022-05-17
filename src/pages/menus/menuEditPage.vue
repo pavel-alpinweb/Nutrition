@@ -67,6 +67,7 @@
                 label="Добавить"
                 icon="fas fa-plus-circle"
                 class="p-button-success"
+                @click="addDish"
               />
               <Button
                 label="Подобрать продукты"
@@ -123,6 +124,7 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
 
 export default {
   name: 'menuEditPage',
@@ -139,6 +141,7 @@ export default {
   setup() {
     const image = reactive();
     const store = useStore();
+    const router = useRouter();
     const menu = reactive({});
     const initialMenu = computed(() => store.state.menus.initialMenu);
     const filters = computed(() => store.state.menus.filters);
@@ -157,13 +160,18 @@ export default {
       Object.assign(menu, initialMenu.value);
     });
 
-    const router = useRouter();
+    const addDish = () => {
+      const index = menu.items.length;
+      const dish = new DishInMenuTemplate(index);
+      menu.items.push(dish);
+    };
     const pushToPickList = () => {
       router.push('/menus-pick-product-list');
     };
     return {
       ...useUpload(),
       pushToPickList,
+      addDish,
       image,
       initialMenu,
       filters,

@@ -89,6 +89,7 @@
                   :item="dish"
                   :key="key"
                   @changeOption="changeOptionHandler"
+                  @inputServingNumber="inputServingNumberHandler"
                 />
               </div>
             </div>
@@ -177,12 +178,17 @@ export default {
       const dish = menu.items.find((item) => item.index === data.index);
       dish.dishName = data.value.name;
     };
+    const inputServingNumberHandler = (data) => {
+      const dish = menu.items.find((item) => item.index === data.index);
+      dish.servingNumber = data.servingNumber;
+    };
 
     return {
       ...useUpload(),
       pushToPickList,
       addDish,
       changeOptionHandler,
+      inputServingNumberHandler,
       image,
       initialMenu,
       filters,

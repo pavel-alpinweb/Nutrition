@@ -21,9 +21,11 @@
             <div class="p-grid p-fluid">
               <div class="p-col-11">
                 <InputText
+                  v-model="servingNumber"
                   class="ingredient__text"
                   type="number"
                   min="1"
+                  @input="inputServingNumber"
                 />
               </div>
               <div class="p-col-1">
@@ -46,7 +48,7 @@ import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -68,6 +70,7 @@ export default {
     const dishNames = computed(() => store.state.menus.filters.dishNames);
     const dishPlaceholder = computed(() => (props.item.dishName ? props.item.dishName : 'Выберите блюдо'));
     const dishesOptions = useOptions(dishNames);
+    const servingNumber = ref(props.item.servingNumber);
 
     const changeHandler = (event, index) => {
       const data = {
@@ -76,10 +79,17 @@ export default {
       };
       emit('changeOption', data);
     };
+
+    const inputServingNumber = () => {
+      emit('inputServingNumber', { index: props.item.index, servingNumber: servingNumber.value });
+    };
+
     return {
       dishesOptions,
       changeHandler,
       dishPlaceholder,
+      servingNumber,
+      inputServingNumber,
     };
   },
 };

@@ -1,7 +1,7 @@
 export default class DishInMenuTemplate {
   constructor(index) {
     this.index = index;
-    this.servingNumber = 0;
+    this.servingNumber = 1;
     this.dishName = null;
   }
 }

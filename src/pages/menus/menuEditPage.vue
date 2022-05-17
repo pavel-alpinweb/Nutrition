@@ -84,7 +84,12 @@
                 <h2>Количество порций</h2>
               </div>
               <div class="p-col-12">
-                <DishSelect v-for="(dish, key) in menu.items" :key="key"/>
+                <DishSelect
+                  v-for="(dish, key) in menu.items"
+                  :item="dish"
+                  :key="key"
+                  @changeOption="changeOptionHandler"
+                />
               </div>
             </div>
           </Panel>
@@ -168,10 +173,16 @@ export default {
     const pushToPickList = () => {
       router.push('/menus-pick-product-list');
     };
+    const changeOptionHandler = (data) => {
+      const dish = menu.items.find((item) => item.index === data.index);
+      dish.dishName = data.value.name;
+    };
+
     return {
       ...useUpload(),
       pushToPickList,
       addDish,
+      changeOptionHandler,
       image,
       initialMenu,
       filters,

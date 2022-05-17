@@ -7,8 +7,11 @@
             <div class="p-grid p-fluid">
               <div class="p-col-12">
                 <Dropdown
+                  v-model="dishesOptions.selectedOption.value"
+                  :options="dishesOptions.options.value"
                   :filter="true"
                   optionLabel="name"
+                  @change="changeHandler($event, item.index)"
                 />
               </div>
             </div>
@@ -37,10 +40,13 @@
 </template>
 
 <script>
+import useOptions from '@/composition/selectOptions';
 import Card from 'primevue/card';
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'DishSelect',
@@ -55,6 +61,23 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup(props, { emit }) {
+    const store = useStore();
+    const dishNames = computed(() => store.state.menus.filters.dishNames);
+    const dishesOptions = useOptions(dishNames);
+
+    const changeHandler = (event, index) => {
+      const data = {
+        value: event.value,
+        index,
+      };
+      emit('changeOption', data);
+    };
+    return {
+      dishesOptions,
+      changeHandler,
+    };
   },
 };
 </script>

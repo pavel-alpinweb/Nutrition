@@ -50,6 +50,12 @@ export default {
     InputText,
     Button,
   },
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 

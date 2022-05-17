@@ -21,7 +21,7 @@ export default function useCreateNewFilter() {
         filtersTarget = 'shops';
         break;
       case 'grade':
-        filtersTarget = 'varieties';
+        filtersTarget = 'grades';
         break;
       case 'manufacturer':
         filtersTarget = 'manufacturers';

@@ -11,7 +11,7 @@ const state = {
     categories: [],
     shops: [],
     manufacturers: [],
-    varieties: [],
+    grades: [],
     tags: [],
   },
   initialProduct: {

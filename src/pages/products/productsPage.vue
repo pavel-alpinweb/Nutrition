@@ -71,7 +71,7 @@ export default {
     const category = computed(() => store.state.products.filters.categories);
     const tags = computed(() => store.state.products.filters.tags);
     const markets = computed(() => store.state.products.filters.shops);
-    const grades = computed(() => store.state.products.filters.varieties);
+    const grades = computed(() => store.state.products.filters.grades);
     const manufacturers = computed(() => store.state.products.filters.manufacturers);
     const user = computed(() => store.state.auth.user);
     const isProductsListLoaded = computed(() => store.state.products.isProductsListLoaded);

@@ -52,7 +52,7 @@ const state = {
         { name: 'Блюдо 1', code: 'dishes1' },
         { name: 'Блюдо 2', code: 'dishes2' },
         { name: 'Курица по Китайски', code: 'dishes3' },
-        { name: 'Соялнка', code: 'dishes4' },
+        { name: 'Солянка', code: 'dishes4' },
       ],
     },
   ],
@@ -66,20 +66,7 @@ const state = {
     name: 'Постное',
     imageUrl: null,
     description: 'Очень длинное описание, но короткое',
-    items: [
-      {
-        dishName: 'Греча с сахаром',
-        servingNumber: 1,
-      },
-      {
-        dishName: 'И еще греча',
-        servingNumber: 1,
-      },
-      {
-        dishName: 'Ничего кроме гречи тебе не светит',
-        servingNumber: 1,
-      },
-    ],
+    items: [],
     tags: [
       'Постное',
       'Студентческое',

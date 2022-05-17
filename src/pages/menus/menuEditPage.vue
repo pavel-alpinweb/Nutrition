@@ -83,7 +83,7 @@
                 <h2>Количество порций</h2>
               </div>
               <div class="p-col-12">
-                <DishSelect v-for="i in 5" :key="i"/>
+                <DishSelect v-for="(dish, key) in menu.items" :key="key"/>
               </div>
             </div>
           </Panel>

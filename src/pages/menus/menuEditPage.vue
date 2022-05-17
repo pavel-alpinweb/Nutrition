@@ -3,9 +3,11 @@
     <template v-slot:page-content>
       <div class="p-grid">
         <div class="p-col-6">
+          <h3>Current state</h3>
           <pre>{{ menu }}</pre>
         </div>
         <div class="p-col-6">
+          <h3>Initial state</h3>
           <pre>{{ initialMenu }}</pre>
         </div>
       </div>
@@ -106,9 +108,10 @@
               label="Новое блюдо"
               icon="fas fa-plus-circle"
               class="p-button-success"
+              @click="addMenu"
             />
             <Button label="Сохранить" icon="pi pi-save" class="p-button-success"/>
-            <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning"/>
+            <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
           </div>
         </div>
       </div>
@@ -130,8 +133,8 @@ import {
   computed, reactive, onMounted, watch, ref,
 } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'menuEditPage',
@@ -178,6 +181,13 @@ export default {
     const pushToPickList = () => {
       router.push('/menus-pick-product-list');
     };
+    const reset = () => {
+      dishesArr.value = [];
+      Object.assign(menu, initialMenu.value);
+    };
+    const addMenu = () => {
+      window.location.replace('/menu/new');
+    };
     const changeOptionHandler = (data) => {
       const dish = menu.items.find((item) => item.index === data.index);
       dish.dishName = data.value.name;
@@ -199,6 +209,8 @@ export default {
       changeOptionHandler,
       inputServingNumberHandler,
       deleteDishHandler,
+      reset,
+      addMenu,
       image,
       initialMenu,
       filters,

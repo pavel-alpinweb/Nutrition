@@ -3,7 +3,7 @@
     <template v-slot:page-content>
       <div class="p-grid">
         <div class="p-col-6">
-          <pre>{{ initialMenu }}</pre>
+          <pre>{{ menu }}</pre>
         </div>
         <div class="p-col-6">
           <pre>{{ filters }}</pre>
@@ -85,11 +85,12 @@
               </div>
               <div class="p-col-12">
                 <DishSelect
-                  v-for="(dish, key) in menu.items"
+                  v-for="dish in menu.items"
                   :item="dish"
-                  :key="key"
+                  :key="dish.index"
                   @changeOption="changeOptionHandler"
                   @inputServingNumber="inputServingNumberHandler"
+                  @deleteDish="deleteDishHandler"
                 />
               </div>
             </div>
@@ -126,7 +127,7 @@ import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
 import {
-  computed, reactive, onMounted, watch,
+  computed, reactive, onMounted, watch, ref,
 } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -149,6 +150,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const menu = reactive({});
+    const dishesArr = ref([]);
     const initialMenu = computed(() => store.state.menus.initialMenu);
     const filters = computed(() => store.state.menus.filters);
     const user = computed(() => store.state.auth.user);
@@ -167,20 +169,27 @@ export default {
     });
 
     const addDish = () => {
-      const index = menu.items.length;
+      const index = menu.items.length + 1;
       const dish = new DishInMenuTemplate(index);
-      menu.items.push(dish);
+      dishesArr.value.push(dish);
+      menu.items = dishesArr;
     };
     const pushToPickList = () => {
       router.push('/menus-pick-product-list');
     };
     const changeOptionHandler = (data) => {
-      const dish = menu.items.find((item) => item.index === data.index);
+      const dish = menu.items.find((item) => item.dishName === data.dishName);
       dish.dishName = data.value.name;
     };
     const inputServingNumberHandler = (data) => {
-      const dish = menu.items.find((item) => item.index === data.index);
+      const dish = menu.items.find((item) => item.dishName === data.dishName);
       dish.servingNumber = data.servingNumber;
+    };
+    const deleteDishHandler = (dishName) => {
+      console.log('deleteDishHandler', dishName);
+      menu.items = menu.items.filter(
+        (item) => item.dishName !== dishName,
+      );
     };
 
     return {
@@ -189,6 +198,7 @@ export default {
       addDish,
       changeOptionHandler,
       inputServingNumberHandler,
+      deleteDishHandler,
       image,
       initialMenu,
       filters,

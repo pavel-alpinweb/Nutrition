@@ -12,7 +12,7 @@
                   :filter="true"
                   optionLabel="name"
                   :placeholder="dishPlaceholder"
-                  @change="changeHandler($event, item.index)"
+                  @change="changeHandler($event, item.dishName)"
                 />
               </div>
             </div>
@@ -32,6 +32,7 @@
                 <Button
                   icon="fas fa-trash"
                   class="p-button-rounded p-button-danger"
+                  @click="deleteDish"
                 />
               </div>
             </div>
@@ -72,16 +73,19 @@ export default {
     const dishesOptions = useOptions(dishNames);
     const servingNumber = ref(props.item.servingNumber);
 
-    const changeHandler = (event, index) => {
+    const changeHandler = (event, dishName) => {
       const data = {
         value: event.value,
-        index,
+        dishName,
       };
       emit('changeOption', data);
     };
 
     const inputServingNumber = () => {
-      emit('inputServingNumber', { index: props.item.index, servingNumber: servingNumber.value });
+      emit('inputServingNumber', { dishName: props.item.dishName, servingNumber: servingNumber.value });
+    };
+    const deleteDish = () => {
+      emit('deleteDish', props.item.dishName);
     };
 
     return {
@@ -90,6 +94,7 @@ export default {
       dishPlaceholder,
       servingNumber,
       inputServingNumber,
+      deleteDish,
     };
   },
 };

@@ -11,6 +11,7 @@
                   :options="dishesOptions.options.value"
                   :filter="true"
                   optionLabel="name"
+                  :placeholder="dishPlaceholder"
                   @change="changeHandler($event, item.index)"
                 />
               </div>
@@ -65,6 +66,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const dishNames = computed(() => store.state.menus.filters.dishNames);
+    const dishPlaceholder = computed(() => (props.item.dishName ? props.item.dishName : 'Выберите блюдо'));
     const dishesOptions = useOptions(dishNames);
 
     const changeHandler = (event, index) => {
@@ -77,6 +79,7 @@ export default {
     return {
       dishesOptions,
       changeHandler,
+      dishPlaceholder,
     };
   },
 };

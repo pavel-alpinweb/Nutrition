@@ -14,7 +14,7 @@ export default function useProductOptions() {
   const manufacturers = computed(() => store.state.products.filters.manufacturers);
   const manufacturerOptions = useOptions(manufacturers);
 
-  const grades = computed(() => store.state.products.filters.varieties);
+  const grades = computed(() => store.state.products.filters.grades);
   const gradeOptions = useOptions(grades);
 
   const tags = computed(() => store.state.products.filters.tags);

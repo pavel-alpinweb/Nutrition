@@ -116,7 +116,7 @@
             :filter="true"
             optionLabel="name"
             placeholder="Сорта"
-            @change="filter('varieties', gradesOptions.selectedOption.value)"
+            @change="filter('grades', gradesOptions.selectedOption.value)"
           />
         </div>
         <div
@@ -259,7 +259,7 @@ export default {
     const productTags = computed(() => store.state.products.filters.tags);
     const dishesTags = computed(() => store.state.dishes.filters.dishTags);
     const markets = computed(() => store.state.products.filters.shops);
-    const grades = computed(() => store.state.products.filters.varieties);
+    const grades = computed(() => store.state.products.filters.grades);
     const manufacturers = computed(() => store.state.products.filters.manufacturers);
     const productNames = computed(() => store.state.dishes.filters.productCategories);
 

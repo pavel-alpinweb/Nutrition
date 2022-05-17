@@ -6,7 +6,7 @@
           <pre>{{ menu }}</pre>
         </div>
         <div class="p-col-6">
-          <pre>{{ filters }}</pre>
+          <pre>{{ initialMenu }}</pre>
         </div>
       </div>
       <div class="menu-edit">
@@ -151,6 +151,7 @@ export default {
     const router = useRouter();
     const menu = reactive({});
     const dishesArr = ref([]);
+    let newIndex = 0;
     const initialMenu = computed(() => store.state.menus.initialMenu);
     const filters = computed(() => store.state.menus.filters);
     const user = computed(() => store.state.auth.user);
@@ -169,8 +170,8 @@ export default {
     });
 
     const addDish = () => {
-      const index = menu.items.length + 1;
-      const dish = new DishInMenuTemplate(index);
+      newIndex += 1;
+      const dish = new DishInMenuTemplate(newIndex);
       dishesArr.value.push(dish);
       menu.items = dishesArr;
     };
@@ -178,17 +179,16 @@ export default {
       router.push('/menus-pick-product-list');
     };
     const changeOptionHandler = (data) => {
-      const dish = menu.items.find((item) => item.dishName === data.dishName);
+      const dish = menu.items.find((item) => item.index === data.index);
       dish.dishName = data.value.name;
     };
     const inputServingNumberHandler = (data) => {
-      const dish = menu.items.find((item) => item.dishName === data.dishName);
+      const dish = menu.items.find((item) => item.index === data.index);
       dish.servingNumber = data.servingNumber;
     };
-    const deleteDishHandler = (dishName) => {
-      console.log('deleteDishHandler', dishName);
+    const deleteDishHandler = (index) => {
       menu.items = menu.items.filter(
-        (item) => item.dishName !== dishName,
+        (item) => item.index !== index,
       );
     };
 

@@ -229,7 +229,7 @@ export default {
           break;
         case 'Dish': section = 'dishes';
           break;
-        case 'menu': section = 'menu';
+        case 'Menu': section = 'menu';
           break;
         default:
           break;
@@ -249,7 +249,7 @@ export default {
               break;
             case 'Dish': await store.dispatch('dishes/deleteProduct', id);
               break;
-            case 'menu': await store.dispatch('products/deleteProduct', id);
+            case 'Menu': await store.dispatch('menus/deleteMenu', id);
               break;
             default:
               break;

@@ -33,6 +33,10 @@ const mutations = {
   setMenusList(state, menus) {
     state.menuslist = menus;
   },
+  // eslint-disable-next-line no-shadow
+  deleteMenu(state, id) {
+    state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
+  },
 };
 
 const actions = {
@@ -56,6 +60,10 @@ const actions = {
   async getMenusByFilter({ commit }, params) {
     const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);
     commit('setMenusList', result.content);
+  },
+  async deleteMenu({ commit }, menuId) {
+    await HTTP.delete('/menus/delete', { params: { id: menuId } });
+    commit('deleteMenu', menuId);
   },
 };
 

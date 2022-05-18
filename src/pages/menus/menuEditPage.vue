@@ -1,16 +1,6 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
-      <div class="p-grid">
-        <div class="p-col-6">
-          <h3>Current state</h3>
-          <pre>{{ menu }}</pre>
-        </div>
-        <div class="p-col-6">
-          <h3>Initial state</h3>
-          <pre>{{ initialMenu }}</pre>
-        </div>
-      </div>
       <div class="menu-edit">
         <div class="menu-edit-header p-grid">
           <div class="menu-edit-header__left p-col-6">
@@ -106,7 +96,7 @@
           <div class="menu-edit-footer__buttons">
             <Button
               v-if="!isNewMenu"
-              label="Новое блюдо"
+              label="Новое меню"
               icon="fas fa-plus-circle"
               class="p-button-success"
               @click="addMenu"
@@ -131,7 +121,7 @@ import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import useUpload from '@/composition/upload';
 import {
-  computed, reactive, onMounted, watch, ref,
+  computed, reactive, onMounted, watch, ref, onBeforeUnmount,
 } from 'vue';
 import { useStore } from 'vuex';
 import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
@@ -178,6 +168,11 @@ export default {
       Object.assign(menu, initialMenu.value);
       newIndex = menu.items.length;
       dishesArr.value = dishesArr.value.concat(initialMenu.value.items);
+      store.commit('setBadge', menu.name);
+    });
+
+    onBeforeUnmount(() => {
+      store.commit('setBadge', null);
     });
 
     const addDish = () => {
@@ -198,8 +193,10 @@ export default {
     const saveMenu = async () => {
       if (isNewMenu.value) {
         await store.dispatch('menus/menuAdd', menu);
+        store.commit('setBadge', menu.name);
       } else {
         await store.dispatch('menus/updateMenu', menu);
+        store.commit('setBadge', menu.name);
       }
     };
     const changeOptionHandler = (data) => {

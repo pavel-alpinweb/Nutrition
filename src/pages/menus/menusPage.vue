@@ -74,17 +74,17 @@ export default {
     const reloadPrices = () => {
       console.log('reloadPrices');
     };
-    const onSort = (value) => {
-      console.log('onSort', value);
+    const onSort = async (value) => {
       params.sort = value.code;
+      await store.dispatch('menus/getMenusByFilter', params);
     };
-    const onFilter = (param) => {
-      console.log('onFilter', param);
+    const onFilter = async (param) => {
       const filtersArray = [];
       param.value.forEach((item) => {
         filtersArray.push(item.name);
       });
       params[param.key] = filtersArray;
+      await store.dispatch('menus/getMenusByFilter', params);
     };
     const onSearch = (value) => {
       console.log('onSearch', value.value);

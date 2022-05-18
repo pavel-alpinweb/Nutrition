@@ -15,9 +15,6 @@
           @filter="onFilter"
         >
           <template v-slot:content>
-            <div class="p-grid">
-              <div class="p-col-6">{{ params }}</div>
-            </div>
             <div class="product-page__grid">
               <div
                 v-for="item in productsList"

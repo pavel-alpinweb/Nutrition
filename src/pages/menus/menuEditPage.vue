@@ -105,6 +105,7 @@
           </div>
           <div class="menu-edit-footer__buttons">
             <Button
+              v-if="!isNewMenu"
               label="Новое блюдо"
               icon="fas fa-plus-circle"
               class="p-button-success"
@@ -229,6 +230,7 @@ export default {
       initialMenu,
       filters,
       menu,
+      isNewMenu,
     };
   },
 };

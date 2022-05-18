@@ -37,8 +37,16 @@ const actions = {
   },
   async menuAdd({ commit }, menu) {
     const result = await HTTP.post('/menus/add', menu);
-    commit('setInitialDish', result.body);
+    commit('setInitialMenu', result.body);
     eventBus.emit('forceRedirect', `/menu/${result.body.id}`);
+  },
+  async updateMenu({ commit }, menu) {
+    const result = await HTTP.put('/menus/update', menu);
+    commit('setInitialMenu', result.body);
+  },
+  async getMenuById({ commit }, id) {
+    const result = await HTTP.get('/menus/getById', { params: { id } });
+    commit('setInitialMenu', result);
   },
 };
 

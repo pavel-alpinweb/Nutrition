@@ -134,7 +134,7 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   name: 'menuEditPage',
@@ -151,11 +151,13 @@ export default {
   setup() {
     const image = reactive();
     const store = useStore();
+    const route = useRoute();
     const router = useRouter();
     const menu = reactive({});
     const dishesArr = ref([]);
-    let newIndex = 0;
     const initialMenu = computed(() => store.state.menus.initialMenu);
+    let newIndex = 0;
+    const isNewMenu = computed(() => route.params.id === 'new');
     const filters = computed(() => store.state.menus.filters);
     const user = computed(() => store.state.auth.user);
 
@@ -166,10 +168,15 @@ export default {
     });
 
     onMounted(async () => {
+      if (!isNewMenu.value) {
+        await store.dispatch('menus/getMenuById', route.params.id);
+      }
       if (user.value) {
         await store.dispatch('menus/getAllMenusFields', user.value.id);
       }
       Object.assign(menu, initialMenu.value);
+      newIndex = menu.items.length;
+      dishesArr.value = dishesArr.value.concat(initialMenu.value.items);
     });
 
     const addDish = () => {
@@ -182,26 +189,29 @@ export default {
       router.push('/menus-pick-product-list');
     };
     const reset = () => {
-      dishesArr.value = [];
-      Object.assign(menu, initialMenu.value);
+      window.location.replace(`/menu/${route.params.id}`);
     };
     const addMenu = () => {
       window.location.replace('/menu/new');
     };
     const saveMenu = async () => {
-      await store.dispatch('menus/menuAdd', menu);
+      if (isNewMenu.value) {
+        await store.dispatch('menus/menuAdd', menu);
+      } else {
+        await store.dispatch('menus/updateMenu', menu);
+      }
     };
     const changeOptionHandler = (data) => {
-      const dish = menu.items.find((item) => item.index === data.index);
+      const dish = menu.items.find((item) => item.itemIndex === data.itemIndex);
       dish.dishName = data.value.name;
     };
     const inputServingNumberHandler = (data) => {
-      const dish = menu.items.find((item) => item.index === data.index);
+      const dish = menu.items.find((item) => item.itemIndex === data.itemIndex);
       dish.servingNumber = data.servingNumber;
     };
-    const deleteDishHandler = (index) => {
+    const deleteDishHandler = (itemIndex) => {
       menu.items = menu.items.filter(
-        (item) => item.index !== index,
+        (item) => item.itemIndex !== itemIndex,
       );
     };
 

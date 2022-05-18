@@ -12,7 +12,7 @@
                   :filter="true"
                   optionLabel="name"
                   :placeholder="dishPlaceholder"
-                  @change="changeHandler($event, item.index)"
+                  @change="changeHandler($event, item.itemIndex)"
                 />
               </div>
             </div>
@@ -73,19 +73,19 @@ export default {
     const dishesOptions = useOptions(dishNames);
     const servingNumber = ref(props.item.servingNumber);
 
-    const changeHandler = (event, index) => {
+    const changeHandler = (event, itemIndex) => {
       const data = {
         value: event.value,
-        index,
+        itemIndex,
       };
       emit('changeOption', data);
     };
 
     const inputServingNumber = () => {
-      emit('inputServingNumber', { index: props.item.index, servingNumber: servingNumber.value });
+      emit('inputServingNumber', { itemIndex: props.item.itemIndex, servingNumber: servingNumber.value });
     };
     const deleteDish = () => {
-      emit('deleteDish', props.item.index);
+      emit('deleteDish', props.item.itemIndex);
     };
 
     return {

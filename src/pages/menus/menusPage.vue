@@ -16,6 +16,10 @@
           @filter="onFilter"
         >
           <template v-slot:content>
+            <div class="p-grid">
+              <div class="p-col-6">{{ params }}</div>
+              <div class="p-col-6">{{ filters }}</div>
+            </div>
             <div class="product-page__grid">
               <div
                 v-for="item in productsList"
@@ -35,7 +39,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
@@ -52,6 +56,11 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const filters = computed(() => store.state.menus.filters);
+    const params = reactive({
+      page: 0,
+      size: 200,
+    });
 
     const tags = ref([
       { name: 'Тэг 1', code: 'tag1' },
@@ -84,6 +93,8 @@ export default {
       productsList: computed(() => store.state.menus.menuslist),
       tags,
       dishes,
+      params,
+      filters,
       changeIHave,
       addProduct,
       reloadPrices,

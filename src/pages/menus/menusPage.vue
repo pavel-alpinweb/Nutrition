@@ -83,8 +83,9 @@ export default {
       params[param.key] = filtersArray;
       await store.dispatch('menus/getMenusByFilter', params);
     };
-    const onSearch = (value) => {
+    const onSearch = async (value) => {
       console.log('onSearch', value.value);
+      await store.dispatch('menus/getMenuByName', value.value);
     };
     return {
       pageName: computed(() => store.state.menus.pageName),

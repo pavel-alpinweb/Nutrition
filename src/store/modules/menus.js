@@ -54,8 +54,12 @@ const actions = {
     commit('setInitialMenu', result.body);
   },
   async getMenuById({ commit }, id) {
-    const result = await HTTP.get('/menus/getById', { params: { id } });
+    const result = await HTTP.get('/menus/getByName', { params: { id } });
     commit('setInitialMenu', result);
+  },
+  async getMenuByName({ commit }, name) {
+    const result = await HTTP.get('/menus/getByName', { params: { name } });
+    commit('setMenusList', [result]);
   },
   async getMenusByFilter({ commit }, params) {
     const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);

@@ -110,7 +110,7 @@
               class="p-button-success"
               @click="addMenu"
             />
-            <Button label="Сохранить" icon="pi pi-save" class="p-button-success"/>
+            <Button label="Сохранить" icon="pi pi-save" class="p-button-success" @click="saveMenu"/>
             <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
           </div>
         </div>
@@ -188,6 +188,9 @@ export default {
     const addMenu = () => {
       window.location.replace('/menu/new');
     };
+    const saveMenu = async () => {
+      await store.dispatch('menus/menuAdd', menu);
+    };
     const changeOptionHandler = (data) => {
       const dish = menu.items.find((item) => item.index === data.index);
       dish.dishName = data.value.name;
@@ -211,6 +214,7 @@ export default {
       deleteDishHandler,
       reset,
       addMenu,
+      saveMenu,
       image,
       initialMenu,
       filters,

@@ -1,4 +1,5 @@
 import { HTTP } from '@/modules/api';
+import { eventBus } from '@/modules/utils';
 
 const state = {
   pageName: 'Меню',
@@ -63,14 +64,11 @@ const state = {
     dishNames: [],
   },
   initialMenu: {
-    name: 'Постное',
+    name: '',
     imageUrl: null,
-    description: 'Очень длинное описание, но короткое',
+    description: '',
     items: [],
-    tags: [
-      'Постное',
-      'Студентческое',
-    ],
+    tags: [],
   },
 };
 
@@ -79,13 +77,21 @@ const mutations = {
   setFilters(state, filters) {
     state.filters = filters;
   },
+  // eslint-disable-next-line no-shadow
+  setInitialMenu(state, menu) {
+    state.initialMenu = menu;
+  },
 };
 
 const actions = {
   async getAllMenusFields({ commit }) {
     const result = await HTTP.get('/menus/getAllMenusFields');
-    console.log('result:', result);
     commit('setFilters', result);
+  },
+  async menuAdd({ commit }, menu) {
+    const result = await HTTP.post('/menus/add', menu);
+    commit('setInitialDish', result.body);
+    eventBus.emit('forceRedirect', `/menu/${result.body.id}`);
   },
 };
 

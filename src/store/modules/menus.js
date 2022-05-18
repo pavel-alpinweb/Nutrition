@@ -1,5 +1,6 @@
 import { HTTP } from '@/modules/api';
 import { eventBus } from '@/modules/utils';
+import queryString from 'query-string';
 
 const state = {
   pageName: 'Меню',
@@ -28,6 +29,10 @@ const mutations = {
   setInitialMenu(state, menu) {
     state.initialMenu = menu;
   },
+  // eslint-disable-next-line no-shadow
+  setMenusList(state, menus) {
+    state.menuslist = menus;
+  },
 };
 
 const actions = {
@@ -47,6 +52,10 @@ const actions = {
   async getMenuById({ commit }, id) {
     const result = await HTTP.get('/menus/getById', { params: { id } });
     commit('setInitialMenu', result);
+  },
+  async getMenusByFilter({ commit }, params) {
+    const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);
+    commit('setMenusList', result.content);
   },
 };
 

@@ -61,6 +61,7 @@ export default {
     });
 
     onMounted(async () => {
+      await store.dispatch('menus/getMenusByFilter', params);
       await store.dispatch('menus/getAllMenusFields');
     });
 

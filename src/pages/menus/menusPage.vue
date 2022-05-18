@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
+import { computed, reactive, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
@@ -60,6 +60,11 @@ export default {
       page: 0,
       size: 200,
     });
+
+    onMounted(async () => {
+      await store.dispatch('menus/getAllMenusFields');
+    });
+
     const changeIHave = (ihave) => {
       console.log('change', ihave);
     };

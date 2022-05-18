@@ -161,7 +161,7 @@
             :filter="true"
             optionLabel="name"
             placeholder="Блюда"
-            @change="filter(dishesOptions.selectedOption.value)"
+            @change="filter('dishes', dishesOptions.selectedOption.value)"
           />
         </div>
         <div
@@ -281,7 +281,7 @@ export default {
     const menusTags = computed(() => store.state.menus.filters.menuTags);
     const markets = computed(() => store.state.products.filters.shops);
     const grades = computed(() => store.state.products.filters.grades);
-    const dishes = computed(() => store.state.products.filters.dishNames);
+    const dishes = computed(() => store.state.menus.filters.dishNames);
     const manufacturers = computed(() => store.state.products.filters.manufacturers);
     const productNames = computed(() => store.state.dishes.filters.productCategories);
 

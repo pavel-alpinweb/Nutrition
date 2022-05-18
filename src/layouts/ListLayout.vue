@@ -90,6 +90,21 @@
           />
         </div>
         <div
+          v-if="menusTagOptionsArray.length > 0"
+          class="p-field"
+        >
+          <label for="options2">Уточнение по тэгам</label>
+          <MultiSelect
+            v-model="menusTagsOptions.selectedOption.value"
+            inputId="options2"
+            :options="menusTags"
+            :filter="true"
+            optionLabel="name"
+            placeholder="Уточнение по тэгам"
+            @change="filter('tags', menusTagsOptions.selectedOption.value)"
+          />
+        </div>
+        <div
           v-if="marketsOptionsArray.length > 0"
           class="p-field"
         >
@@ -142,7 +157,7 @@
           <MultiSelect
             v-model="dishesOptions.selectedOption.value"
             inputId="options5"
-            :options="dishesOptions.options.value"
+            :options="dishes"
             :filter="true"
             optionLabel="name"
             placeholder="Блюда"
@@ -212,6 +227,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    menusTagOptionsArray: {
+      type: Array,
+      default: () => [],
+    },
     categoryOptionsArray: {
       type: Array,
       default: () => [],
@@ -248,6 +267,7 @@ export default {
     ]);
     const productTagsOptions = useOptions(props.productTagOptionsArray);
     const dishesTagsOptions = useOptions(props.dishesTagOptionsArray);
+    const menusTagsOptions = useOptions(props.menusTagOptionsArray);
     const categoryOptions = useOptions(props.categoryOptionsArray);
     const marketsOptions = useOptions(props.marketsOptionsArray);
     const gradesOptions = useOptions(props.gradesOptionsArray);
@@ -258,8 +278,10 @@ export default {
     const category = computed(() => store.state.products.filters.categories);
     const productTags = computed(() => store.state.products.filters.tags);
     const dishesTags = computed(() => store.state.dishes.filters.dishTags);
+    const menusTags = computed(() => store.state.menus.filters.menuTags);
     const markets = computed(() => store.state.products.filters.shops);
     const grades = computed(() => store.state.products.filters.grades);
+    const dishes = computed(() => store.state.products.filters.dishNames);
     const manufacturers = computed(() => store.state.products.filters.manufacturers);
     const productNames = computed(() => store.state.dishes.filters.productCategories);
 
@@ -290,6 +312,7 @@ export default {
       sortOptions,
       productTagsOptions,
       dishesTagsOptions,
+      menusTagsOptions,
       marketsOptions,
       gradesOptions,
       manufacturersOptions,
@@ -305,6 +328,8 @@ export default {
       category,
       productTags,
       dishesTags,
+      menusTags,
+      dishes,
       markets,
       grades,
       manufacturers,

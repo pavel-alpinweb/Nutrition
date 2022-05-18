@@ -3,10 +3,9 @@
     <template v-slot:page-content>
       <div class="product-page">
         <ListLayout
-          :tag-options-array="tags"
-          :dishes-options-array="dishes"
+          :menus-tag-options-array="filters.menuTags"
+          :dishes-options-array="filters.dishNames"
           :is-search-by-name="true"
-          :is-show-check-i-have="true"
           :is-show-reload-prices="true"
           @change="changeIHave"
           @search="onSearch"
@@ -39,7 +38,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
@@ -61,15 +60,6 @@ export default {
       page: 0,
       size: 200,
     });
-
-    const tags = ref([
-      { name: 'Тэг 1', code: 'tag1' },
-      { name: 'Тэг 2', code: 'tag2' },
-    ]);
-    const dishes = ref([
-      { name: 'Блюдо 1', code: 'tag1' },
-      { name: 'Блюдо 2', code: 'tag2' },
-    ]);
     const changeIHave = (ihave) => {
       console.log('change', ihave);
     };
@@ -91,8 +81,6 @@ export default {
     return {
       pageName: computed(() => store.state.menus.pageName),
       productsList: computed(() => store.state.menus.menuslist),
-      tags,
-      dishes,
       params,
       filters,
       changeIHave,

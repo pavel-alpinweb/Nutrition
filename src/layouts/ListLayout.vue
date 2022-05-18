@@ -263,7 +263,6 @@ export default {
     const sortOptions = useOptions([
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
-      { name: 'По имени', code: 'category_asc' },
     ]);
     const productTagsOptions = useOptions(props.productTagOptionsArray);
     const dishesTagsOptions = useOptions(props.dishesTagOptionsArray);

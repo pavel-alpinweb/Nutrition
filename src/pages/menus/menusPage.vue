@@ -17,7 +17,6 @@
           <template v-slot:content>
             <div class="p-grid">
               <div class="p-col-6">{{ params }}</div>
-              <div class="p-col-6">{{ filters }}</div>
             </div>
             <div class="product-page__grid">
               <div
@@ -76,9 +75,15 @@ export default {
     };
     const onSort = (value) => {
       console.log('onSort', value);
+      params.sort = value.code;
     };
-    const onFilter = (value) => {
-      console.log('onFilter', value);
+    const onFilter = (param) => {
+      console.log('onFilter', param);
+      const filtersArray = [];
+      param.value.forEach((item) => {
+        filtersArray.push(item.name);
+      });
+      params[param.key] = filtersArray;
     };
     const onSearch = (value) => {
       console.log('onSearch', value.value);

@@ -5,6 +5,7 @@ import queryString from 'query-string';
 const state = {
   pageName: 'Меню',
   menuslist: [],
+  isMenusListLoaded: true,
   isMenuLoaded: true,
   filters: {
     menuNames: [],
@@ -21,6 +22,10 @@ const state = {
 };
 
 const mutations = {
+  // eslint-disable-next-line no-shadow
+  setMenusListLoaded(state, loaded) {
+    state.isMenusListLoaded = loaded;
+  },
   // eslint-disable-next-line no-shadow
   setFilters(state, filters) {
     state.filters = filters;
@@ -58,12 +63,24 @@ const actions = {
     commit('setInitialMenu', result);
   },
   async getMenuByName({ commit }, name) {
+    try {
+      commit('setMenusListLoaded', false);
+      const result = await HTTP.get('/menus/getByName', { params: { name } });
+      commit('setMenusList', [result]);
+    } finally {
+      commit('setMenusListLoaded', true);
+    }
     const result = await HTTP.get('/menus/getByName', { params: { name } });
     commit('setMenusList', [result]);
   },
   async getMenusByFilter({ commit }, params) {
-    const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);
-    commit('setMenusList', result.content);
+    try {
+      commit('setMenusListLoaded', false);
+      const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);
+      commit('setMenusList', result.content);
+    } finally {
+      commit('setMenusListLoaded', true);
+    }
   },
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });

@@ -15,7 +15,7 @@
           @filter="onFilter"
         >
           <template v-slot:content>
-            <div class="product-page__grid">
+            <div v-if="isLoaded" class="product-page__grid">
               <div
                 v-for="item in productsList"
                 :key="item.id"
@@ -25,6 +25,11 @@
                   :item="item"
                 />
               </div>
+            </div>
+            <div v-else class="product-page__grid">
+              <Skeleton height="400px"/>
+              <Skeleton height="400px"/>
+              <Skeleton height="400px"/>
             </div>
           </template>
         </ListLayout>
@@ -39,6 +44,7 @@ import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import Skeleton from 'primevue/skeleton';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -47,11 +53,13 @@ export default {
     ListLayout,
     NutritionCard,
     DefaultPageLayout,
+    Skeleton,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
     const filters = computed(() => store.state.menus.filters);
+    const isLoaded = computed(() => store.state.menus.isMenusListLoaded);
     const params = reactive({
       page: 0,
       size: 200,
@@ -92,6 +100,7 @@ export default {
       productsList: computed(() => store.state.menus.menuslist),
       params,
       filters,
+      isLoaded,
       changeIHave,
       addProduct,
       reloadPrices,

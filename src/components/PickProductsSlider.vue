@@ -54,6 +54,8 @@ export default {
     }
     &__item {
       width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
     }

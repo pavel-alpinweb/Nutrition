@@ -1,7 +1,7 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
-      <div class="dishes-edit">
+      <div v-if="isDishLoaded" class="dishes-edit">
         <div class="dishes-edit-header p-grid">
           <div class="dishes-edit-header__left p-col-6">
             <FileUpload
@@ -125,6 +125,16 @@
           </div>
         </div>
       </div>
+      <div v-else class="product-edit">
+        <div class="dishes-edit__skeleton-grid">
+          <Skeleton class="dishes-edit__item dishes-edit__item--image" height="25vh"/>
+          <Skeleton class="dishes-edit__item dishes-edit__item--input-1" height="30px"/>
+          <Skeleton class="dishes-edit__item dishes-edit__item--input-2" height="30px"/>
+          <Skeleton class="dishes-edit__item dishes-edit__item--input-3" height="30px"/>
+          <Skeleton class="dishes-edit__item dishes-edit__item--input-4" height="30px"/>
+          <Skeleton class="dishes-edit__item dishes-edit__item--input-5" height="30px"/>
+        </div>
+      </div>
     </template>
   </DefaultPageLayout>
 </template>
@@ -143,6 +153,7 @@ import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
+import Skeleton from 'primevue/skeleton';
 import useOptions from '@/composition/selectOptions';
 import Ingredient from '@/components/Ingredient.vue';
 import { GLOBAL_UNITS } from '@/modules/constants';
@@ -162,6 +173,7 @@ export default {
     Dropdown,
     Textarea,
     Ingredient,
+    Skeleton,
   },
   setup() {
     const store = useStore();
@@ -171,6 +183,7 @@ export default {
     const dish = reactive({});
     const ingredientsArr = ref([]);
     const initialDish = computed(() => store.state.dishes.initialDish);
+    const isDishLoaded = computed(() => store.state.dishes.isDishLoaded);
     const isNewDish = computed(() => route.params.id === 'new');
     const unitOptions = useOptions(GLOBAL_UNITS);
 
@@ -255,6 +268,7 @@ export default {
       initialDish,
       isNewDish,
       dish,
+      isDishLoaded,
       reset,
       save,
       addDish,
@@ -284,6 +298,36 @@ export default {
       text-align: center;
       margin-top: 20px;
       color: grey;
+    }
+    &__skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 30px;
+      grid-template-areas:
+        "image image input-1 input-2"
+        "image image input-3 input-4"
+        "input-5 input-5 input-5 input-5";
+      grid-gap: 10px;
+    }
+    &__item {
+      &--image {
+        grid-area: image;
+      }
+      &--input-1 {
+        grid-area: input-1;
+      }
+      &--input-2 {
+        grid-area: input-2;
+      }
+      &--input-3 {
+        grid-area: input-3;
+      }
+      &--input-4 {
+        grid-area: input-4;
+      }
+      &--input-5 {
+        grid-area: input-5;
+      }
     }
   }
 

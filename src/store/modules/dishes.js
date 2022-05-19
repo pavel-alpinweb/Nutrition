@@ -9,6 +9,7 @@ const state = {
   isPickProductListLoaded: false,
   lackProductPrice: 0,
   isPriceLoading: false,
+  isDishLoaded: true,
   filters: {
     dishTags: [],
     dishUnits: [],
@@ -79,6 +80,10 @@ const mutations = {
     state.isPriceLoading = val;
   },
   // eslint-disable-next-line no-shadow
+  setIsDishLoaded(state, val) {
+    state.isDishLoaded = val;
+  },
+  // eslint-disable-next-line no-shadow
   resetInitialDish(state) {
     state.initialDish = {
       user: null,
@@ -100,8 +105,13 @@ const actions = {
     eventBus.emit('forceRedirect', `/dishes/${result.body.id}`);
   },
   async getDishById({ commit }, id) {
-    const result = await HTTP.get('/dishes/getById', { params: { id } });
-    commit('setInitialDish', result);
+    try {
+      commit('setIsDishLoaded', false);
+      const result = await HTTP.get('/dishes/getById', { params: { id } });
+      commit('setInitialDish', result);
+    } finally {
+      commit('setIsDishLoaded', true);
+    }
   },
   async getDishByName({ commit }, name) {
     const result = await HTTP.get('/dishes/getByName', { params: { name } });

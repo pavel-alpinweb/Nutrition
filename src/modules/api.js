@@ -40,8 +40,8 @@ HTTP.interceptors.response.use((response) => {
   if (response.config.method !== 'get') {
     eventBus.emit('showToast', {
       severity: 'success',
-      summary: response.data.title,
-      detail: response.data.message,
+      summary: response.data.title || 'Успешно!',
+      detail: response.data.message || 'Запрос прошел успешно.',
       life: 5000,
     });
   }

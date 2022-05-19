@@ -1,7 +1,7 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
-      <div class="menu-edit">
+      <div v-if="isMenuLoaded" class="menu-edit">
         <div class="menu-edit-header p-grid">
           <div class="menu-edit-header__left p-col-6">
             <FileUpload
@@ -106,6 +106,16 @@
           </div>
         </div>
       </div>
+      <div v-else class="menu-edit">
+        <div class="menu-edit__skeleton-grid">
+          <Skeleton class="menu-edit__item menu-edit__item--image" height="25vh"/>
+          <Skeleton class="menu-edit__item menu-edit__item--input-1" height="30px"/>
+          <Skeleton class="menu-edit__item menu-edit__item--input-2" height="30px"/>
+          <Skeleton class="menu-edit__item menu-edit__item--input-3" height="30px"/>
+          <Skeleton class="menu-edit__item menu-edit__item--input-4" height="30px"/>
+          <Skeleton class="menu-edit__item menu-edit__item--input-5" height="30px"/>
+        </div>
+      </div>
     </template>
   </DefaultPageLayout>
 </template>
@@ -119,6 +129,7 @@ import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
+import Skeleton from 'primevue/skeleton';
 import useUpload from '@/composition/upload';
 import {
   computed, reactive, onMounted, watch, ref, onBeforeUnmount,
@@ -138,6 +149,7 @@ export default {
     Chips,
     Panel,
     DishSelect,
+    Skeleton,
   },
   setup() {
     const image = reactive();
@@ -147,6 +159,7 @@ export default {
     const menu = reactive({});
     const dishesArr = ref([]);
     const initialMenu = computed(() => store.state.menus.initialMenu);
+    const isMenuLoaded = computed(() => store.state.menus.isMenuLoaded);
     let newIndex = 0;
     const isNewMenu = computed(() => route.params.id === 'new');
     const filters = computed(() => store.state.menus.filters);
@@ -229,6 +242,7 @@ export default {
       filters,
       menu,
       isNewMenu,
+      isMenuLoaded,
     };
   },
 };
@@ -248,6 +262,36 @@ export default {
     text-align: center;
     margin-top: 20px;
     color: grey;
+  }
+  &__skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 30px;
+    grid-template-areas:
+        "image image input-1 input-2"
+        "image image input-3 input-4"
+        "input-5 input-5 input-5 input-5";
+    grid-gap: 10px;
+  }
+  &__item {
+    &--image {
+      grid-area: image;
+    }
+    &--input-1 {
+      grid-area: input-1;
+    }
+    &--input-2 {
+      grid-area: input-2;
+    }
+    &--input-3 {
+      grid-area: input-3;
+    }
+    &--input-4 {
+      grid-area: input-4;
+    }
+    &--input-5 {
+      grid-area: input-5;
+    }
   }
 }
 </style>

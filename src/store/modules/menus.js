@@ -191,6 +191,10 @@ const mutations = {
     state.isMenusListLoaded = loaded;
   },
   // eslint-disable-next-line no-shadow
+  setIsMenuLoaded(state, loaded) {
+    state.isMenuLoaded = loaded;
+  },
+  // eslint-disable-next-line no-shadow
   setFilters(state, filters) {
     state.filters = filters;
   },
@@ -233,8 +237,13 @@ const actions = {
     commit('setInitialMenu', result.body);
   },
   async getMenuById({ commit }, id) {
-    const result = await HTTP.get('/menus/getById', { params: { id } });
-    commit('setInitialMenu', result);
+    try {
+      commit('setIsMenuLoaded', false);
+      const result = await HTTP.get('/menus/getById', { params: { id } });
+      commit('setInitialMenu', result);
+    } finally {
+      commit('setIsMenuLoaded', true);
+    }
   },
   async getMenuByName({ commit }, name) {
     try {

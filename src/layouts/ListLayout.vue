@@ -161,7 +161,7 @@
             :filter="true"
             optionLabel="name"
             placeholder="Блюда"
-            @change="filter('dishes', dishesOptions.selectedOption.value)"
+            @change="filter('dishNames', dishesOptions.selectedOption.value)"
           />
         </div>
         <div
@@ -176,7 +176,7 @@
             :filter="true"
             optionLabel="name"
             placeholder="Продукты"
-            @change="filter('names', productsOptions.selectedOption.value)"
+            @change="filter('productCategories', productsOptions.selectedOption.value)"
           />
         </div>
       </div>

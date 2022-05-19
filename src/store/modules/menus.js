@@ -69,7 +69,7 @@ const actions = {
     commit('setInitialMenu', result.body);
   },
   async getMenuById({ commit }, id) {
-    const result = await HTTP.get('/menus/getByName', { params: { id } });
+    const result = await HTTP.get('/menus/getById', { params: { id } });
     commit('setInitialMenu', result);
   },
   async getMenuByName({ commit }, name) {

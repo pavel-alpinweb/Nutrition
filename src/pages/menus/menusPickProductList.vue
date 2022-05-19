@@ -96,7 +96,7 @@ export default {
       },
     ]);
     const store = useStore();
-    const dishProductList = computed(() => store.state.dishes.dishProductList);
+    const dishProductList = computed(() => store.state.menus.pickProductList);
 
     return {
       dishNames,

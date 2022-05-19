@@ -7,7 +7,7 @@
           :is-search-by-name="true"
           :products-options-array="filters.productCategories"
           :is-show-check-i-have="false"
-          :is-show-reload-prices="true"
+          :is-show-reload-prices="false"
           @search="onSearch"
           @add="addProduct"
           @reload="reloadPrices"

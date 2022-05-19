@@ -6,7 +6,7 @@
           :menus-tag-options-array="filters.menuTags"
           :dishes-options-array="filters.dishNames"
           :is-search-by-name="true"
-          :is-show-reload-prices="true"
+          :is-show-reload-prices="false"
           @change="changeIHave"
           @search="onSearch"
           @add="addProduct"

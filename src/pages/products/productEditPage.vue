@@ -300,6 +300,7 @@ export default {
 
     onBeforeUnmount(() => {
       store.commit('setBadge', null);
+      store.commit('products/resetInitialProduct');
     });
 
     const addProduct = () => {

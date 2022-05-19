@@ -173,6 +173,7 @@ export default {
 
     onBeforeUnmount(() => {
       store.commit('setBadge', null);
+      store.commit('menus/resetInitialMenu');
     });
 
     const addDish = () => {

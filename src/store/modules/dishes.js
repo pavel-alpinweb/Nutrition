@@ -78,6 +78,19 @@ const mutations = {
   setIsPriceLoading(state, val) {
     state.isPriceLoading = val;
   },
+  // eslint-disable-next-line no-shadow
+  resetInitialDish(state) {
+    state.initialDish = {
+      user: null,
+      name: '',
+      servingSize: 0,
+      unit: '',
+      description: '',
+      imageUrl: null,
+      ingredients: [],
+      tags: [],
+    };
+  },
 };
 
 const actions = {

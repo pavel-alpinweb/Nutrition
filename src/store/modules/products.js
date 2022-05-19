@@ -55,6 +55,23 @@ const mutations = {
   deleteProduct(state, id) {
     state.productsList = state.productsList.filter((product) => product.id !== id);
   },
+  // eslint-disable-next-line no-shadow
+  resetInitialProduct(state) {
+    state.initialProduct = {
+      userId: '',
+      category: '',
+      shop: '',
+      grade: '',
+      manufacturer: '',
+      price: 0,
+      packingSize: 0,
+      unit: '',
+      quantity: 0,
+      description: '',
+      imageUrl: null,
+      tags: [],
+    };
+  },
 };
 
 const actions = {

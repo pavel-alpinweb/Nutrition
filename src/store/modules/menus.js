@@ -42,6 +42,16 @@ const mutations = {
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
   },
+  // eslint-disable-next-line no-shadow
+  resetInitialMenu(state) {
+    state.initialMenu = {
+      name: '',
+      imageUrl: null,
+      description: '',
+      items: [],
+      tags: [],
+    };
+  },
 };
 
 const actions = {

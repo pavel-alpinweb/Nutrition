@@ -189,6 +189,7 @@ export default {
 
     onBeforeUnmount(() => {
       store.commit('setBadge', null);
+      store.commit('dishes/resetInitialDish');
     });
 
     const reset = () => {

@@ -132,7 +132,7 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, reactive, onMounted, watch, ref, onBeforeUnmount,
+  computed, reactive, onMounted, ref, onBeforeUnmount,
 } from 'vue';
 import useUpload from '@/composition/upload';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
@@ -173,22 +173,15 @@ export default {
     const initialDish = computed(() => store.state.dishes.initialDish);
     const isNewDish = computed(() => route.params.id === 'new');
     const unitOptions = useOptions(GLOBAL_UNITS);
-    const user = computed(() => store.state.auth.user);
-
-    watch(user, async (currentValue) => {
-      if (currentValue !== null) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
-        useSetSelect(unitOptions, initialDish, 'unit');
-      }
-    });
 
     onMounted(async () => {
       if (!isNewDish.value) {
         await store.dispatch('dishes/getDishById', route.params.id);
       }
-      if (user.value) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
-      }
+      await store.dispatch('dishes/getAllDishesFields');
+      await store.dispatch('products/getAllProductsFields');
+      useSetSelect(unitOptions, initialDish, 'unit');
+
       ingredientsArr.value = initialDish.value.ingredients;
       Object.assign(dish, initialDish.value);
       store.commit('setBadge', dish.name);

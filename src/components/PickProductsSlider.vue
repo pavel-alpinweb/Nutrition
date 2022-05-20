@@ -1,5 +1,11 @@
 <template>
-  <Carousel class="pick-product-slider" :value="category.products" :numVisible="3" :numScroll="1">
+  <Carousel
+    class="pick-product-slider"
+    :value="category.products"
+    :circular="true"
+    :numVisible="3"
+    :numScroll="3"
+  >
     <template #header>
       <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     </template>

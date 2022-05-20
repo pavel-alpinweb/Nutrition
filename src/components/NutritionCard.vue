@@ -138,7 +138,7 @@
             Необходимое кол-во
           </SplitterPanel>
           <SplitterPanel class="flex align-items-center justify-content-center p-text-center">
-            {{ item.necessaryQuantity }}
+            {{ item.necessaryQuantity }} {{ item.unit }}
           </SplitterPanel>
         </Splitter>
         <Splitter class="p-mb-2 pick-info__container p-p-2">

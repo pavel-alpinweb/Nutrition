@@ -186,31 +186,24 @@ const state = {
 };
 
 const mutations = {
-  // eslint-disable-next-line no-shadow
   setMenusListLoaded(state, loaded) {
     state.isMenusListLoaded = loaded;
   },
-  // eslint-disable-next-line no-shadow
   setIsMenuLoaded(state, loaded) {
     state.isMenuLoaded = loaded;
   },
-  // eslint-disable-next-line no-shadow
   setFilters(state, filters) {
     state.filters = filters;
   },
-  // eslint-disable-next-line no-shadow
   setInitialMenu(state, menu) {
     state.initialMenu = menu;
   },
-  // eslint-disable-next-line no-shadow
   setMenusList(state, menus) {
     state.menuslist = menus;
   },
-  // eslint-disable-next-line no-shadow
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
   },
-  // eslint-disable-next-line no-shadow
   resetInitialMenu(state) {
     state.initialMenu = {
       name: '',

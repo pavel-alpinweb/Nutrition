@@ -30,31 +30,24 @@ const state = {
 };
 
 const mutations = {
-  // eslint-disable-next-line no-shadow
   setDishesListLoaded(state, loaded) {
     state.isDishesListLoaded = loaded;
   },
-  // eslint-disable-next-line no-shadow
   setPickProductListLoaded(state, loaded) {
     state.isPickProductListLoaded = loaded;
   },
-  // eslint-disable-next-line no-shadow
   setInitialDish(state, product) {
     state.initialDish = product;
   },
-  // eslint-disable-next-line no-shadow
   setFilters(state, filters) {
     state.filters = filters;
   },
-  // eslint-disable-next-line no-shadow
   setDishesList(state, dishes) {
     state.dishesList = dishes;
   },
-  // eslint-disable-next-line no-shadow
   deleteProduct(state, id) {
     state.dishesList = state.dishesList.filter((dish) => dish.id !== id);
   },
-  // eslint-disable-next-line no-shadow
   checkPickProduct(state, { productId, categoryId }) {
     const category = state.pickProductList.find((cat) => categoryId === cat.ingredientIndex);
     category.products.forEach(((item) => {
@@ -67,23 +60,18 @@ const mutations = {
       }
     }));
   },
-  // eslint-disable-next-line no-shadow
   setPickProductsList(state, productsList) {
     state.pickProductList = productsList;
   },
-  // eslint-disable-next-line no-shadow
   setLackProductPrice(state, price) {
     state.lackProductPrice = price;
   },
-  // eslint-disable-next-line no-shadow
   setIsPriceLoading(state, val) {
     state.isPriceLoading = val;
   },
-  // eslint-disable-next-line no-shadow
   setIsDishLoaded(state, val) {
     state.isDishLoaded = val;
   },
-  // eslint-disable-next-line no-shadow
   resetInitialDish(state) {
     state.initialDish = {
       user: null,

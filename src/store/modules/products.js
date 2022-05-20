@@ -31,31 +31,24 @@ const state = {
 };
 
 const mutations = {
-  // eslint-disable-next-line no-shadow
   setCurrentProduct(state, product) {
     state.initialProduct = product;
   },
-  // eslint-disable-next-line no-shadow
   pushNewFilter(state, { filter, value }) {
     state.filters[filter].push(value);
   },
-  // eslint-disable-next-line no-shadow
   setFilters(state, filters) {
     state.filters = filters;
   },
-  // eslint-disable-next-line no-shadow
   setProductList(state, products) {
     state.productsList = products;
   },
-  // eslint-disable-next-line no-shadow
   setProductListLoaded(state, loaded) {
     state.isProductsListLoaded = loaded;
   },
-  // eslint-disable-next-line no-shadow
   deleteProduct(state, id) {
     state.productsList = state.productsList.filter((product) => product.id !== id);
   },
-  // eslint-disable-next-line no-shadow
   resetInitialProduct(state) {
     state.initialProduct = {
       userId: '',

@@ -7,14 +7,12 @@ const state = {
 };
 
 const mutations = {
-  // eslint-disable-next-line no-shadow
   setUser(state, user) {
     state.user = user;
   },
 };
 
 const getters = {
-  // eslint-disable-next-line no-shadow
   hasUser(state) {
     return state.user;
   },

@@ -83,6 +83,7 @@
                 @click="createIngredient()"
               />
               <Button
+                v-if="!isNewDish"
                 label="Подобрать продукты"
                 icon="fas fa-carrot"
                 class="p-button-warning"

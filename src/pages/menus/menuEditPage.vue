@@ -62,6 +62,7 @@
                 @click="addDish"
               />
               <Button
+                v-if="!isNewMenu"
                 label="Подобрать продукты"
                 icon="fas fa-carrot"
                 class="p-button-warning"

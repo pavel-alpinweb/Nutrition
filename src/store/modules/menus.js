@@ -27,6 +27,7 @@ const state = {
     },
   ],
   pickDishesList: [],
+  pickDishName: null,
 };
 
 const mutations = {
@@ -50,6 +51,9 @@ const mutations = {
   },
   setPickDishesList(state, dishesList) {
     state.pickDishesList = dishesList;
+  },
+  setPickDishName(state, dishName) {
+    state.pickDishName = dishName;
   },
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
@@ -112,6 +116,7 @@ const actions = {
     const result = await HTTP.get(`/menus/getAllDishIngredientProducts?${queryString.stringify(params)}`);
     commit('setPickProductsList', result.dishProducts.categories);
     commit('setPickDishesList', result.dishes);
+    commit('setPickDishName', result.dishProducts.dishName);
   },
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });

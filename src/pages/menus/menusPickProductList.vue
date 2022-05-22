@@ -8,6 +8,7 @@
               <div class="p-field p-col-4">
                 <label for="number">Количество меню</label>
                 <InputText
+                  v-model="menuQuantity"
                   id="number"
                   type="number"
                   placeholder="Количество порций"
@@ -42,6 +43,8 @@
                   :label="dish.dishName"
                   icon="fas fa-concierge-bell"
                   class="menus-pick-product-list__dish-btn p-button-warning"
+                  :class="{'p-button-outlined' : dish.dishName === currentDishName}"
+                  @click="fetchPickProductList(dish.dishName)"
                 />
               </div>
             </template>
@@ -59,7 +62,9 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import {
+  computed, onMounted, ref, watch,
+} from 'vue';
 import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import PickProductsSlider from '@/components/PickProductsSlider.vue';
@@ -83,18 +88,29 @@ export default {
     const menuQuantity = ref(1);
     const dishProductList = computed(() => store.state.menus.pickProductList);
     const dishNames = computed(() => store.state.menus.pickDishesList);
+    const currentDishName = computed(() => store.state.menus.pickDishName);
 
-    const fetchPickProductList = async () => {
-      await store.dispatch('menus/getAllMenuIngredientProducts', { menuId: route.params.id, menuQuantity: menuQuantity.value });
+    const fetchPickProductList = async (dishName) => {
+      const params = { menuId: route.params.id, menuQuantity: menuQuantity.value };
+      if (dishName) {
+        params.dishName = dishName;
+      }
+      await store.dispatch('menus/getAllMenuIngredientProducts', params);
     };
 
     onMounted(async () => {
-      await fetchPickProductList();
+      await fetchPickProductList(null);
+    });
+    watch(menuQuantity, async () => {
+      await fetchPickProductList(currentDishName.value);
     });
 
     return {
       dishNames,
       dishProductList,
+      currentDishName,
+      menuQuantity,
+      fetchPickProductList,
     };
   },
 };

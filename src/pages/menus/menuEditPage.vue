@@ -197,7 +197,7 @@ export default {
       menu.items = dishesArr;
     };
     const pushToPickList = () => {
-      router.push('/menus-pick-product-list');
+      router.push(`/menus-pick-product-list/${route.params.id}`);
     };
     const reset = () => {
       window.location.replace(`/menu/${route.params.id}`);

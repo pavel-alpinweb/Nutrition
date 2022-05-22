@@ -59,13 +59,14 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import PickProductsSlider from '@/components/PickProductsSlider.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'menusPickProductList',
@@ -78,8 +79,18 @@ export default {
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
+    const menuQuantity = ref(1);
     const dishProductList = computed(() => store.state.menus.pickProductList);
     const dishNames = computed(() => store.state.menus.pickDishesList);
+
+    const fetchPickProductList = async () => {
+      await store.dispatch('menus/getAllMenuIngredientProducts', { menuId: route.params.id, menuQuantity: menuQuantity.value });
+    };
+
+    onMounted(async () => {
+      await fetchPickProductList();
+    });
 
     return {
       dishNames,

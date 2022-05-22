@@ -108,6 +108,11 @@ const actions = {
       commit('setMenusListLoaded', true);
     }
   },
+  async getAllMenuIngredientProducts({ commit }, params) {
+    const result = await HTTP.get(`/menus/getAllDishIngredientProducts?${queryString.stringify(params)}`);
+    commit('setPickProductsList', result.dishProducts.categories);
+    commit('setPickDishesList', result.dishes);
+  },
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });
     commit('deleteMenu', menuId);

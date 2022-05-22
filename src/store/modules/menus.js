@@ -26,20 +26,7 @@ const state = {
       products: [],
     },
   ],
-  pickDishesList: [
-    {
-      dishId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      dishName: 'Name',
-    },
-    {
-      dishId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      dishName: 'Name',
-    },
-    {
-      dishId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      dishName: 'Name',
-    },
-  ],
+  pickDishesList: [],
 };
 
 const mutations = {
@@ -57,6 +44,12 @@ const mutations = {
   },
   setMenusList(state, menus) {
     state.menuslist = menus;
+  },
+  setPickProductsList(state, productsList) {
+    state.pickProductList = productsList;
+  },
+  setPickDishesList(state, dishesList) {
+    state.pickDishesList = dishesList;
   },
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);

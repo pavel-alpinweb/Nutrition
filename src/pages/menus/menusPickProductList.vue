@@ -38,8 +38,8 @@
               <div class="menus-pick-product-list__dish-names">
                 <Button
                   v-for="dish in dishNames"
-                  :key="dish.code"
-                  :label="dish.name"
+                  :key="dish.id"
+                  :label="dish.dishName"
                   icon="fas fa-concierge-bell"
                   class="menus-pick-product-list__dish-btn p-button-warning"
                 />
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import PickProductsSlider from '@/components/PickProductsSlider.vue';
@@ -77,26 +77,9 @@ export default {
     PickProductsSlider,
   },
   setup() {
-    const dishNames = reactive([
-      {
-        name: 'Блюдо1',
-        code: 'string1',
-      },
-      {
-        name: 'Блюдо2',
-        code: 'string2',
-      },
-      {
-        name: 'Блюдо3',
-        code: 'string3',
-      },
-      {
-        name: 'Блюдо4',
-        code: 'string4',
-      },
-    ]);
     const store = useStore();
     const dishProductList = computed(() => store.state.menus.pickProductList);
+    const dishNames = computed(() => store.state.menus.pickDishesList);
 
     return {
       dishNames,

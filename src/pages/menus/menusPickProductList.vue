@@ -64,7 +64,7 @@
 
 <script>
 import {
-  computed, onMounted, ref, watch,
+  computed, onMounted, ref, watch, reactive,
 } from 'vue';
 import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
@@ -73,6 +73,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
 import { useRoute } from 'vue-router';
+import { eventBus } from '@/modules/utils';
 
 export default {
   name: 'menusPickProductList',
@@ -90,6 +91,11 @@ export default {
     const dishProductList = computed(() => store.state.menus.pickProductList);
     const dishNames = computed(() => store.state.menus.pickDishesList);
     const currentDishName = computed(() => store.state.menus.pickDishName);
+    const pickMenuParams = reactive({
+      menuId: route.params.id,
+      quantity: menuQuantity.value,
+      products: [],
+    });
 
     const fetchPickProductList = async (dishName) => {
       const params = { menuId: route.params.id, menuQuantity: menuQuantity.value };
@@ -101,6 +107,15 @@ export default {
 
     onMounted(async () => {
       await fetchPickProductList(null);
+      eventBus.on('checkMenuPickProductEvent', (data) => {
+        pickMenuParams.quantity = Number(menuQuantity.value);
+        pickMenuParams.products.push({
+          dishName: currentDishName.value,
+          productIndex: data.productId,
+          categoryId: data.categoryId,
+        });
+        console.log('pickMenuParams', pickMenuParams);
+      });
     });
     watch(menuQuantity, async () => {
       await fetchPickProductList(currentDishName.value);

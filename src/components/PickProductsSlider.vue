@@ -25,6 +25,7 @@
 import Carousel from 'primevue/carousel';
 import NutritionCard from '@/components/NutritionCard.vue';
 import { useStore } from 'vuex';
+import { eventBus } from '@/modules/utils';
 
 export default {
   name: 'PickProductsSlider',
@@ -46,6 +47,10 @@ export default {
     const store = useStore();
     const checkProductHandler = (productId) => {
       store.commit(`${props.sliderType}/checkPickProduct`, {
+        productId,
+        categoryId: props.category.ingredientIndex,
+      });
+      eventBus.emit('checkMenuPickProductEvent', {
         productId,
         categoryId: props.category.ingredientIndex,
       });

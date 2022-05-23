@@ -37,11 +37,15 @@ export default {
       type: Object,
       required: true,
     },
+    sliderType: {
+      type: String,
+      default: 'dishes',
+    },
   },
   setup(props) {
     const store = useStore();
     const checkProductHandler = (productId) => {
-      store.commit('dishes/checkPickProduct', {
+      store.commit(`${props.sliderType}/checkPickProduct`, {
         productId,
         categoryId: props.category.ingredientIndex,
       });

@@ -46,6 +46,7 @@
             :key="category.ingredientIndex"
             :category="category"
             :circular="true"
+            slider-type="dishes"
           />
         </div>
         <Skeleton v-if="!isPickProductListLoaded" height="400px"/>

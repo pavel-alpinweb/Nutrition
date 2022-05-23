@@ -53,6 +53,7 @@
               :key="category.ingredientIndex"
               :category="category"
               :circular="true"
+              slider-type="menus"
             />
           </Panel>
         </div>

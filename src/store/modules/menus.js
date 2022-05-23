@@ -58,6 +58,18 @@ const mutations = {
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
   },
+  checkPickProduct(state, { productId, categoryId }) {
+    const category = state.pickProductList.find((cat) => categoryId === cat.ingredientIndex);
+    category.products.forEach(((item) => {
+      if (item.id === productId) {
+        // eslint-disable-next-line no-param-reassign
+        item.checked = true;
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        item.checked = false;
+      }
+    }));
+  },
   resetInitialMenu(state) {
     state.initialMenu = {
       name: '',

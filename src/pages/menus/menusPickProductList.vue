@@ -21,13 +21,14 @@
                   type="price"
                   placeholder="Итоговая стоимость"
                   min="0"
-                  disabled />
+                  readonly />
               </div>
               <div class="menus-pick-product-list__btn-container p-field p-col-4">
                 <Button
                   label="Рассчитать"
                   icon="fa fa-money"
                   class="p-button-warning"
+                  @click="fetchLackMenuPrice"
                 />
               </div>
             </div>
@@ -105,16 +106,25 @@ export default {
       await store.dispatch('menus/getAllMenuIngredientProducts', params);
     };
 
+    const fetchLackMenuPrice = () => {
+      pickMenuParams.quantity = Number(menuQuantity.value);
+      console.log('pickMenuParams', pickMenuParams);
+    };
+
     onMounted(async () => {
       await fetchPickProductList(null);
       eventBus.on('checkPickProductEvent', (data) => {
-        pickMenuParams.quantity = Number(menuQuantity.value);
+        const oldChoiceIndex = pickMenuParams.products
+          .findIndex((choice) => choice.ingredientIndex === data.ingredientIndex
+          && choice.dishName === currentDishName.value);
+        if (oldChoiceIndex !== -1) {
+          pickMenuParams.products.splice(oldChoiceIndex, 1);
+        }
         pickMenuParams.products.push({
           dishName: currentDishName.value,
-          productIndex: data.productId,
-          categoryId: data.categoryId,
+          productIndex: data.productIndex,
+          ingredientIndex: data.ingredientIndex,
         });
-        console.log('pickMenuParams', pickMenuParams);
       });
     });
     watch(menuQuantity, async () => {
@@ -127,6 +137,7 @@ export default {
       currentDishName,
       menuQuantity,
       fetchPickProductList,
+      fetchLackMenuPrice,
     };
   },
 };

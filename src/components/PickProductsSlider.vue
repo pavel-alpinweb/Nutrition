@@ -45,14 +45,14 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const checkProductHandler = (productId) => {
+    const checkProductHandler = (productIndex) => {
       store.commit(`${props.sliderType}/checkPickProduct`, {
-        productId,
-        categoryId: props.category.ingredientIndex,
+        productIndex,
+        ingredientIndex: props.category.ingredientIndex,
       });
-      eventBus.emit('checkMenuPickProductEvent', {
-        productId,
-        categoryId: props.category.ingredientIndex,
+      eventBus.emit('checkPickProductEvent', {
+        productIndex,
+        ingredientIndex: props.category.ingredientIndex,
       });
     };
     return {

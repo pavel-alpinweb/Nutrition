@@ -263,7 +263,8 @@ export default {
       });
     };
     const emitCheckProduct = () => {
-      emit('checkProductEvent', props.item.id);
+      console.log('emitCheckProduct', props.item);
+      emit('checkProductEvent', props.item.productIndex);
     };
     return {
       openItem,

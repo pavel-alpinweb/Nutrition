@@ -107,7 +107,7 @@ export default {
 
     onMounted(async () => {
       await fetchPickProductList(null);
-      eventBus.on('checkMenuPickProductEvent', (data) => {
+      eventBus.on('checkPickProductEvent', (data) => {
         pickMenuParams.quantity = Number(menuQuantity.value);
         pickMenuParams.products.push({
           dishName: currentDishName.value,

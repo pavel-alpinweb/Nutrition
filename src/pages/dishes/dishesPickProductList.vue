@@ -66,6 +66,7 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { eventBus } from '@/modules/utils';
 
 export default {
   name: 'dishesPickProductList',
@@ -84,34 +85,38 @@ export default {
     const isPickProductListLoaded = computed(() => store.state.dishes.isPickProductListLoaded);
     const lackProductPrice = computed(() => store.state.dishes.lackProductPrice);
     const isPriceLoading = computed(() => store.state.dishes.isPriceLoading);
+    const fetchProductPriceParams = {
+      dishId: route.params.id,
+      servingNumber: dishNumber.value,
+      products: [],
+    };
 
     const fetchPickProductList = async () => {
       await store.dispatch('dishes/getAllIngredientProducts', { dishId: route.params.id, servingNumber: dishNumber.value });
     };
     const fetchLackProductPrice = async () => {
-      const fetchProductPriceParams = {
-        dishId: route.params.id,
-        servingNumber: dishNumber.value,
-        products: [],
-      };
-      // eslint-disable-next-line no-restricted-syntax
-      for (const ingredient of dishProductList.value) {
-        const product = ingredient.products.find((item) => item.checked);
-        const ingredientData = {
-          ingredientIndex: ingredient.ingredientIndex,
-          productIndex: product.productIndex,
-        };
-        fetchProductPriceParams.products.push(ingredientData);
-      }
-
+      fetchProductPriceParams.servingNumber = Number(dishNumber.value);
       await store.dispatch('dishes/getLackProductPrice', fetchProductPriceParams);
     };
     watch(dishNumber, async () => {
       await fetchPickProductList();
+      if (fetchProductPriceParams.products.length) {
+        fetchProductPriceParams.products.forEach((product) => {
+          store.commit('dishes/checkPickProduct', product);
+        });
+      }
     });
 
     onMounted(async () => {
       await fetchPickProductList();
+      eventBus.on('checkPickProductEvent', (data) => {
+        const oldChoiceIndex = fetchProductPriceParams.products
+          .findIndex((choice) => choice.ingredientIndex === data.ingredientIndex);
+        if (oldChoiceIndex !== -1) {
+          fetchProductPriceParams.products.splice(oldChoiceIndex, 1);
+        }
+        fetchProductPriceParams.products.push(data);
+      });
     });
 
     return {

@@ -48,10 +48,10 @@ const mutations = {
   deleteProduct(state, id) {
     state.dishesList = state.dishesList.filter((dish) => dish.id !== id);
   },
-  checkPickProduct(state, { productId, categoryId }) {
-    const category = state.pickProductList.find((cat) => categoryId === cat.ingredientIndex);
+  checkPickProduct(state, { productIndex, ingredientIndex }) {
+    const category = state.pickProductList.find((cat) => ingredientIndex === cat.ingredientIndex);
     category.products.forEach(((item) => {
-      if (item.id === productId) {
+      if (item.productIndex === productIndex) {
         // eslint-disable-next-line no-param-reassign
         item.checked = true;
       } else {

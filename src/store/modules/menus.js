@@ -56,6 +56,9 @@ const mutations = {
   setPickDishName(state, dishName) {
     state.pickDishName = dishName;
   },
+  setLackMenuPrice(state, price) {
+    state.lackMenuPrice = price;
+  },
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
   },
@@ -134,6 +137,10 @@ const actions = {
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });
     commit('deleteMenu', menuId);
+  },
+  async getLackMenuPrice({ commit }, params) {
+    const price = await HTTP.post('/menus/getLackProductPrice', params);
+    commit('setLackMenuPrice', price);
   },
 };
 

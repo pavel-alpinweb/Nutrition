@@ -109,9 +109,10 @@ export default {
       await store.dispatch('menus/getAllMenuIngredientProducts', params);
     };
 
-    const fetchLackMenuPrice = () => {
+    const fetchLackMenuPrice = async () => {
       pickMenuParams.quantity = Number(menuQuantity.value);
       console.log('pickMenuParams', pickMenuParams);
+      await store.dispatch('menus/getLackMenuPrice', pickMenuParams);
     };
 
     onMounted(async () => {

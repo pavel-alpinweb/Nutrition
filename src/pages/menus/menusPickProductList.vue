@@ -12,23 +12,29 @@
                   id="number"
                   type="number"
                   placeholder="Количество порций"
+                  :disabled="isPriceLoading"
                   min="1" />
               </div>
               <div class="p-field p-col-4">
                 <label for="number">Итоговая стоимость</label>
-                <InputText
-                  v-model="lackMenuPrice"
-                  id="price"
-                  type="price"
-                  placeholder="Итоговая стоимость"
-                  min="0"
-                  readonly />
+                <span class="p-input-icon-right">
+                  <i v-if="isPriceLoading" class="pi pi-spin pi-spinner" />
+                  <InputText
+                    v-model="lackMenuPrice"
+                    id="price"
+                    type="price"
+                    placeholder="Итоговая стоимость"
+                    min="0"
+                    :disabled="isPriceLoading"
+                    readonly />
+                </span>
               </div>
               <div class="menus-pick-product-list__btn-container p-field p-col-4">
                 <Button
                   label="Рассчитать"
                   icon="fa fa-money"
                   class="p-button-warning"
+                  :disabled="isPriceLoading"
                   @click="fetchLackMenuPrice"
                 />
               </div>
@@ -50,14 +56,16 @@
                 />
               </div>
             </template>
-<!--            <pre>{{ dishProductList }}</pre>-->
-            <PickProductsSlider
-              v-for="category in dishProductList"
-              :key="category.ingredientIndex"
-              :category="category"
-              :circular="true"
-              slider-type="menus"
-            />
+            <div v-if="isPickProductListLoaded" class="menus-pick-product-list__container">
+              <PickProductsSlider
+                v-for="category in dishProductList"
+                :key="category.ingredientIndex"
+                :category="category"
+                :circular="true"
+                slider-type="menus"
+              />
+            </div>
+            <Skeleton v-else height="400px"/>
           </Panel>
         </div>
       </div>
@@ -75,6 +83,7 @@ import PickProductsSlider from '@/components/PickProductsSlider.vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
+import Skeleton from 'primevue/skeleton';
 import { useRoute } from 'vue-router';
 import { eventBus } from '@/modules/utils';
 
@@ -85,6 +94,7 @@ export default {
     InputText,
     Button,
     Panel,
+    Skeleton,
     PickProductsSlider,
   },
   setup() {
@@ -95,6 +105,8 @@ export default {
     const dishNames = computed(() => store.state.menus.pickDishesList);
     const currentDishName = computed(() => store.state.menus.pickDishName);
     const lackMenuPrice = computed(() => store.state.menus.lackMenuPrice);
+    const isPriceLoading = computed(() => store.state.menus.isPriceLoading);
+    const isPickProductListLoaded = computed(() => store.state.menus.isPickProductListLoaded);
     const pickMenuParams = reactive({
       menuId: route.params.id,
       quantity: menuQuantity.value,
@@ -151,6 +163,8 @@ export default {
       currentDishName,
       menuQuantity,
       lackMenuPrice,
+      isPriceLoading,
+      isPickProductListLoaded,
       fetchPickProductList,
       fetchLackMenuPrice,
     };

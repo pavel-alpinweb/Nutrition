@@ -12,6 +12,7 @@
                   id="number"
                   type="number"
                   placeholder="Количество порций"
+                  :disabled="isPriceLoading"
                   min="1" />
               </div>
               <div class="p-field p-col-4">
@@ -49,7 +50,7 @@
             slider-type="dishes"
           />
         </div>
-        <Skeleton v-if="!isPickProductListLoaded" height="400px"/>
+        <Skeleton v-else height="400px"/>
       </div>
     </template>
   </defaultPageLayout>

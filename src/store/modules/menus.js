@@ -8,6 +8,7 @@ const state = {
   isMenusListLoaded: true,
   isMenuLoaded: true,
   lackMenuPrice: 0,
+  isPriceLoading: false,
   filters: {
     menuNames: [],
     menuTags: [],
@@ -37,6 +38,12 @@ const mutations = {
   },
   setIsMenuLoaded(state, loaded) {
     state.isMenuLoaded = loaded;
+  },
+  setPickProductListLoaded(state, loaded) {
+    state.isPickProductListLoaded = loaded;
+  },
+  setIsPriceLoading(state, val) {
+    state.isPriceLoading = val;
   },
   setFilters(state, filters) {
     state.filters = filters;
@@ -139,18 +146,22 @@ const actions = {
     }
   },
   async getAllMenuIngredientProducts({ commit }, params) {
+    commit('setPickProductListLoaded', false);
     const result = await HTTP.get(`/menus/getAllDishIngredientProducts?${queryString.stringify(params)}`);
     commit('setPickProductsList', result.dishProducts.categories);
     commit('setPickDishesList', result.dishes);
     commit('setPickDishName', result.dishProducts.dishName);
+    commit('setPickProductListLoaded', true);
   },
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });
     commit('deleteMenu', menuId);
   },
   async getLackMenuPrice({ commit }, params) {
+    commit('setIsPriceLoading', true);
     const price = await HTTP.post('/menus/getLackProductPrice', params);
     commit('setLackMenuPrice', price);
+    commit('setIsPriceLoading', false);
   },
 };
 

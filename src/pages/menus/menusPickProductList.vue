@@ -67,7 +67,7 @@
 
 <script>
 import {
-  computed, onMounted, ref, watch, reactive,
+  computed, onMounted, ref, watch, reactive, onBeforeUnmount,
 } from 'vue';
 import { useStore } from 'vuex';
 import defaultPageLayout from '@/layouts/DefaultPageLayout.vue';
@@ -139,6 +139,10 @@ export default {
           ingredientIndex: data.ingredientIndex,
         });
       });
+    });
+
+    onBeforeUnmount(() => {
+      store.commit('menus/resetPickProductPage');
     });
 
     return {

@@ -83,6 +83,16 @@ const mutations = {
       tags: [],
     };
   },
+  resetPickProductPage(state) {
+    state.lackMenuPrice = 0;
+    state.pickProductList = [
+      {
+        ingredientIndex: 0,
+        productCategory: '',
+        products: [],
+      },
+    ];
+  },
 };
 
 const actions = {

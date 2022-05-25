@@ -17,6 +17,7 @@
               <div class="p-field p-col-4">
                 <label for="number">Итоговая стоимость</label>
                 <InputText
+                  v-model="lackMenuPrice"
                   id="price"
                   type="price"
                   placeholder="Итоговая стоимость"
@@ -49,6 +50,7 @@
                 />
               </div>
             </template>
+<!--            <pre>{{ dishProductList }}</pre>-->
             <PickProductsSlider
               v-for="category in dishProductList"
               :key="category.ingredientIndex"
@@ -92,6 +94,7 @@ export default {
     const dishProductList = computed(() => store.state.menus.pickProductList);
     const dishNames = computed(() => store.state.menus.pickDishesList);
     const currentDishName = computed(() => store.state.menus.pickDishName);
+    const lackMenuPrice = computed(() => store.state.menus.lackMenuPrice);
     const pickMenuParams = reactive({
       menuId: route.params.id,
       quantity: menuQuantity.value,
@@ -136,6 +139,7 @@ export default {
       dishProductList,
       currentDishName,
       menuQuantity,
+      lackMenuPrice,
       fetchPickProductList,
       fetchLackMenuPrice,
     };

@@ -7,6 +7,7 @@ const state = {
   menuslist: [],
   isMenusListLoaded: true,
   isMenuLoaded: true,
+  lackMenuPrice: 0,
   filters: {
     menuNames: [],
     menuTags: [],

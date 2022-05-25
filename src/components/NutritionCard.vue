@@ -263,7 +263,6 @@ export default {
       });
     };
     const emitCheckProduct = () => {
-      console.log('emitCheckProduct', props.item);
       emit('checkProductEvent', props.item.productIndex);
     };
     return {

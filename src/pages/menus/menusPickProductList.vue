@@ -45,7 +45,7 @@
                   :label="dish.dishName"
                   icon="fas fa-concierge-bell"
                   class="menus-pick-product-list__dish-btn p-button-warning"
-                  :class="{'p-button-outlined' : dish.dishName === currentDishName}"
+                  :class="{'p-button-outlined' : dish.dishName !== currentDishName}"
                   @click="fetchPickProductList(dish.dishName)"
                 />
               </div>
@@ -107,13 +107,22 @@ export default {
         params.dishName = dishName;
       }
       await store.dispatch('menus/getAllMenuIngredientProducts', params);
+      if (pickMenuParams.products.length) {
+        pickMenuParams.products.forEach((product) => {
+          if (product.dishName === currentDishName.value) {
+            store.commit('menus/checkPickProduct', product);
+          }
+        });
+      }
     };
 
     const fetchLackMenuPrice = async () => {
       pickMenuParams.quantity = Number(menuQuantity.value);
-      console.log('pickMenuParams', pickMenuParams);
       await store.dispatch('menus/getLackMenuPrice', pickMenuParams);
     };
+    watch(menuQuantity, async () => {
+      await fetchPickProductList(currentDishName.value);
+    });
 
     onMounted(async () => {
       await fetchPickProductList(null);
@@ -130,9 +139,6 @@ export default {
           ingredientIndex: data.ingredientIndex,
         });
       });
-    });
-    watch(menuQuantity, async () => {
-      await fetchPickProductList(currentDishName.value);
     });
 
     return {

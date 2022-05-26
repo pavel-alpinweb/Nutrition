@@ -21,6 +21,12 @@
             />
           </div>
         </div>
+        <div class="menu-generator__section">
+          <label>Ограничения по продуктам</label>
+        </div>
+        <div class="menu-generator__section">
+          <label>Ограничения по блюдам</label>
+        </div>
       </div>
       <div class="menu-generator__footer">
         <Button label="Отмена" />
@@ -64,6 +70,9 @@ export default {
 
 <style lang="scss" scoped>
   .menu-generator {
+    &__section {
+      margin-bottom: 15px;
+    }
     &__footer {
       display: flex;
       justify-content: space-between;

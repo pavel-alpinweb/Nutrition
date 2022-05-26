@@ -104,6 +104,12 @@
             />
             <Button label="Сохранить" icon="pi pi-save" class="p-button-success" @click="saveMenu"/>
             <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
+            <Button
+              v-if="isNewMenu"
+              label="Подобрать меню"
+              icon="fas fa-clipboard-list"
+              class="p-button-success"
+            />
           </div>
         </div>
       </div>

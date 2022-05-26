@@ -109,6 +109,7 @@
               label="Подобрать меню"
               icon="fas fa-clipboard-list"
               class="p-button-success"
+              @click="showMenuGenerator"
             />
           </div>
         </div>
@@ -123,6 +124,8 @@
           <Skeleton class="menu-edit__item menu-edit__item--input-5" height="30px"/>
         </div>
       </div>
+
+      <MenuGenerator />
     </template>
   </DefaultPageLayout>
 </template>
@@ -130,6 +133,7 @@
 <script>
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import DishSelect from '@/components/DishSelect.vue';
+import MenuGenerator from '@/components/MenuGenerator.vue';
 import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
@@ -144,6 +148,7 @@ import {
 import { useStore } from 'vuex';
 import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
 import { useRoute, useRouter } from 'vue-router';
+import { eventBus } from '@/modules/utils';
 
 export default {
   name: 'menuEditPage',
@@ -157,6 +162,7 @@ export default {
     Panel,
     DishSelect,
     Skeleton,
+    MenuGenerator,
   },
   setup() {
     const image = reactive();
@@ -234,6 +240,10 @@ export default {
       );
     };
 
+    const showMenuGenerator = () => {
+      eventBus.emit('showMenuGenerator');
+    };
+
     return {
       ...useUpload(),
       pushToPickList,
@@ -244,6 +254,7 @@ export default {
       reset,
       addMenu,
       saveMenu,
+      showMenuGenerator,
       image,
       initialMenu,
       filters,

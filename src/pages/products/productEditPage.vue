@@ -20,7 +20,6 @@
             :maxFileSize="1000000"
             :customUpload="true"
             @uploader="myUploader"
-            @upload="onUpload"
           >
             <template #empty>
               <p>Перетащите файл сюда для загрузки</p>
@@ -332,10 +331,6 @@ export default {
       }
     };
 
-    const onUpload = (response) => {
-      console.log('upload', response);
-    };
-
     const myUploader = async (event) => {
       console.log('myUploader', event.files[0]);
       const result = await store.dispatch('products/uploadImage', event.files[0]);
@@ -350,7 +345,6 @@ export default {
 
     return {
       ...useCreateNewFilter(),
-      onUpload,
       myUploader,
       productOptions,
       product,

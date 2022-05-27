@@ -3,18 +3,6 @@
     <template v-slot:page-content>
       <div v-if="isProductInit" class="product-edit p-grid">
         <div class="product-edit__left p-col-6">
-          <FileUpload
-            name="demo[]"
-            url="./upload.php"
-            @upload="onUpload"
-            :multiple="false"
-            accept="image/*"
-            :maxFileSize="1000000"
-          >
-            <template #empty>
-              <p>Drag and drop files to here to upload.</p>
-            </template>
-          </FileUpload>
           <Image
             v-if="image"
             class="product-edit__image"
@@ -25,6 +13,18 @@
           <div v-else class="product-edit__default-image">
             <i class="fas fa-carrot"></i>
           </div>
+          <FileUpload
+            class="product-edit__upload"
+            name="demo[]"
+            :multiple="false"
+            accept="image/*"
+            mode="basic"
+            :maxFileSize="1000000"
+            :customUpload="true"
+            @uploader="myUploader"
+            @upload="onUpload"
+          >
+          </FileUpload>
         </div>
         <div class="product-edit__right p-col-6">
           <div class="p-fluid p-grid">
@@ -240,12 +240,11 @@ import Textarea from 'primevue/textarea';
 import Inplace from 'primevue/inplace';
 import Skeleton from 'primevue/skeleton';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
-import useUpload from '@/composition/upload';
 import useOptions from '@/composition/selectOptions';
 import useProductOptions from '@/composition/productOptions';
 import useCreateNewFilter from '@/composition/createNewFilter';
 import useSetSelect from '@/composition/setSelect';
-import { GLOBAL_UNITS } from '@/modules/constants';
+import { GLOBAL_UNITS, BASE_API_URL } from '@/modules/constants';
 
 export default {
   name: 'productEditPage',
@@ -332,14 +331,23 @@ export default {
       }
     };
 
+    const onUpload = (response) => {
+      console.log('upload', response);
+    };
+
+    const myUploader = (event) => {
+      console.log('myUploader', event.files[0]);
+    };
+
     const reset = () => {
       Object.assign(product, initialProduct.value);
       setProductOptions();
     };
 
     return {
-      ...useUpload(),
       ...useCreateNewFilter(),
+      onUpload,
+      myUploader,
       productOptions,
       product,
       isProductInit,
@@ -351,6 +359,7 @@ export default {
       reset,
       user,
       initialProduct,
+      BASE_API_URL,
     };
   },
 };
@@ -406,5 +415,10 @@ export default {
   }
   .p-button {
     margin-right: .5rem;
+  }
+</style>
+<style lang="scss">
+  .product-edit__upload {
+    display: block;
   }
 </style>

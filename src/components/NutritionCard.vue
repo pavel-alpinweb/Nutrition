@@ -299,13 +299,20 @@ export default {
   }
 
   &__default-image {
-    font-size: 100px;
+    font-size: 135px;
     text-align: center;
   }
 
   &__image {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 180px;
+    overflow: hidden;
+    img {
+      height: 180px;
+      width: auto;
+    }
   }
   &__characters {
     padding-left: 0;

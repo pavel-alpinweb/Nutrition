@@ -4,28 +4,28 @@
       <div v-if="isDishLoaded" class="dishes-edit">
         <div class="dishes-edit-header p-grid">
           <div class="dishes-edit-header__left p-col-6">
-            <FileUpload
-              name="demo[]"
-              url="./upload.php"
-              @upload="onUpload"
-              :multiple="false"
-              accept="image/*"
-              :maxFileSize="1000000"
-            >
-              <template #empty>
-                <p>Drag and drop files to here to upload.</p>
-              </template>
-            </FileUpload>
             <Image
-              v-if="image"
-              class="product-edit__image"
-              width="250"
-              src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+              v-if="dish.imageUrl"
+              class="dishes-edit__image"
+              :src="dish.imageUrl"
               alt="Image"
             />
             <div v-else class="dishes-edit__default-image">
               <i class="fas fa-concierge-bell"></i>
             </div>
+            <FileUpload
+              lass="dishes-edit__upload"
+              name="demo[]"
+              :multiple="false"
+              accept="image/*"
+              :maxFileSize="1000000"
+              :customUpload="true"
+              @uploader="myUploader"
+            >
+              <template #empty>
+                <p>Перетащите файл для загрузки</p>
+              </template>
+            </FileUpload>
           </div>
           <div class="dishes-edit-header__right p-col-6 p-formgrid">
             <div class="p-fluid p-grid">
@@ -155,6 +155,7 @@ import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Skeleton from 'primevue/skeleton';
+import Image from 'primevue/image';
 import useOptions from '@/composition/selectOptions';
 import Ingredient from '@/components/Ingredient.vue';
 import { GLOBAL_UNITS } from '@/modules/constants';
@@ -175,6 +176,7 @@ export default {
     Textarea,
     Ingredient,
     Skeleton,
+    Image,
   },
   setup() {
     const store = useStore();
@@ -254,6 +256,11 @@ export default {
       router.push(`/dishes-pick-product-list/${route.params.id}`);
     };
 
+    const myUploader = async (event) => {
+      const result = await store.dispatch('dishes/uploadImage', event.files[0]);
+      dish.imageUrl = result.body;
+    };
+
     const save = async () => {
       if (isNewDish.value) {
         await store.dispatch('dishes/dishAdd', dish);
@@ -270,6 +277,7 @@ export default {
       isNewDish,
       dish,
       isDishLoaded,
+      myUploader,
       reset,
       save,
       addDish,
@@ -332,4 +340,14 @@ export default {
     }
   }
 
+</style>
+<style lang="scss">
+.dishes-edit__image {
+  img {
+    height: 446px;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+  }
+}
 </style>

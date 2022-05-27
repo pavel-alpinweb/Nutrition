@@ -138,6 +138,12 @@ const actions = {
     commit('setLackProductPrice', price);
     commit('setIsPriceLoading', false);
   },
+  async uploadImage(context, file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const result = await HTTP.post('/dishes/uploadImage', formData);
+    return result;
+  },
 };
 
 export default {

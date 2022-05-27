@@ -1,24 +1,4 @@
 <template>
-<!--  <Carousel-->
-<!--    class="pick-product-slider"-->
-<!--    :value="category.products"-->
-<!--    :circular="true"-->
-<!--    :numVisible="3"-->
-<!--    :numScroll="3"-->
-<!--  >-->
-<!--    <template #header>-->
-<!--      <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>-->
-<!--    </template>-->
-<!--    <template #item="slotProps">-->
-<!--      <div class="pick-product-slider__item">-->
-<!--        <NutritionCard-->
-<!--          :item="slotProps.data"-->
-<!--          :is-pick-product="true"-->
-<!--          @checkProductEvent="checkProductHandler"-->
-<!--        />-->
-<!--      </div>-->
-<!--    </template>-->
-<!--  </Carousel>-->
   <div class="pick-product-slider">
     <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     <div class="pick-product-slider__content">

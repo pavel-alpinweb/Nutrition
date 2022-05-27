@@ -22,7 +22,7 @@
             @uploader="myUploader"
           >
             <template #empty>
-              <p>Перетащите файл сюда для загрузки</p>
+              <p>Перетащите файл для загрузки</p>
             </template>
           </FileUpload>
         </div>
@@ -332,9 +332,7 @@ export default {
     };
 
     const myUploader = async (event) => {
-      console.log('myUploader', event.files[0]);
       const result = await store.dispatch('products/uploadImage', event.files[0]);
-      console.log('result', result);
       product.imageUrl = result.body;
     };
 
@@ -420,6 +418,8 @@ export default {
   img {
     height: 446px;
     width: auto;
+    margin: 0 auto;
+    display: block;
   }
 }
 </style>

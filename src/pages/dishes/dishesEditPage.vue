@@ -14,11 +14,11 @@
               <i class="fas fa-concierge-bell"></i>
             </div>
             <FileUpload
-              lass="dishes-edit__upload"
+              class="dishes-edit__upload"
               name="demo[]"
               :multiple="false"
               accept="image/*"
-              :maxFileSize="1000000"
+              :maxFileSize="250000"
               :customUpload="true"
               @uploader="myUploader"
             >
@@ -182,7 +182,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    const image = reactive();
     const dish = reactive({});
     const ingredientsArr = ref([]);
     const initialDish = computed(() => store.state.dishes.initialDish);
@@ -271,7 +270,6 @@ export default {
 
     return {
       ...useUpload(),
-      image,
       unitOptions,
       initialDish,
       isNewDish,
@@ -346,7 +344,7 @@ export default {
   img {
     height: 446px;
     width: auto;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     display: block;
   }
 }

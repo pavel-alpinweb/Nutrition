@@ -4,28 +4,29 @@
       <div v-if="isMenuLoaded" class="menu-edit">
         <div class="menu-edit-header p-grid">
           <div class="menu-edit-header__left p-col-6">
-            <FileUpload
-              name="demo[]"
-              url="./upload.php"
-              @upload="onUpload"
-              :multiple="false"
-              accept="image/*"
-              :maxFileSize="1000000"
-            >
-              <template #empty>
-                <p>Drag and drop files to here to upload.</p>
-              </template>
-            </FileUpload>
             <Image
-              v-if="image"
+              v-if="menu.imageUrl"
               class="menu-edit__image"
               width="250"
-              src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+              :src="menu.imageUrl"
               alt="Image"
             />
             <div v-else class="menu-edit__default-image">
               <i class="fas fa-utensils"></i>
             </div>
+            <FileUpload
+              class="menu-edit__upload"
+              name="demo[]"
+              :multiple="false"
+              accept="image/*"
+              :maxFileSize="250000"
+              :customUpload="true"
+              @uploader="myUploader"
+            >
+              <template #empty>
+                <p>Drag and drop files to here to upload.</p>
+              </template>
+            </FileUpload>
           </div>
           <div class="menu-edit-header__right p-col-6 p-formgrid">
             <div class="p-fluid p-grid">
@@ -141,6 +142,7 @@ import Button from 'primevue/button';
 import Chips from 'primevue/chips';
 import Panel from 'primevue/panel';
 import Skeleton from 'primevue/skeleton';
+import Image from 'primevue/image';
 import useUpload from '@/composition/upload';
 import {
   computed, reactive, onMounted, watch, ref, onBeforeUnmount,
@@ -163,6 +165,7 @@ export default {
     DishSelect,
     Skeleton,
     MenuGenerator,
+    Image,
   },
   setup() {
     const image = reactive();
@@ -239,6 +242,10 @@ export default {
         (item) => item.itemIndex !== itemIndex,
       );
     };
+    const myUploader = async (event) => {
+      const result = await store.dispatch('menus/uploadImage', event.files[0]);
+      menu.imageUrl = result.body;
+    };
 
     const showMenuGenerator = () => {
       eventBus.emit('showMenuGenerator');
@@ -255,6 +262,7 @@ export default {
       addMenu,
       saveMenu,
       showMenuGenerator,
+      myUploader,
       image,
       initialMenu,
       filters,
@@ -310,6 +318,16 @@ export default {
     &--input-5 {
       grid-area: input-5;
     }
+  }
+}
+</style>
+<style lang="scss">
+.menu-edit__image {
+  img {
+    height: 446px;
+    width: auto;
+    margin: 0 auto 10px ;
+    display: block;
   }
 }
 </style>

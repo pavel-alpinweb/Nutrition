@@ -17,7 +17,7 @@
             name="demo[]"
             :multiple="false"
             accept="image/*"
-            :maxFileSize="1000000"
+            :maxFileSize="250000"
             :customUpload="true"
             @uploader="myUploader"
           >
@@ -418,7 +418,7 @@ export default {
   img {
     height: 446px;
     width: auto;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     display: block;
   }
 }

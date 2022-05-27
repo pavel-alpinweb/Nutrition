@@ -103,6 +103,13 @@ const actions = {
     await HTTP.delete('/products/delete', { params: { id: productId } });
     commit('deleteProduct', productId);
   },
+
+  async uploadImage(context, file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const result = await HTTP.post('/products/uploadImage', formData);
+    return result;
+  },
 };
 
 export default {

@@ -4,10 +4,10 @@
       <div v-if="isProductInit" class="product-edit p-grid">
         <div class="product-edit__left p-col-6">
           <Image
-            v-if="image"
+            v-if="product.imageUrl"
             class="product-edit__image"
             width="250"
-            src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
+            :src="product.imageUrl"
             alt="Image"
           />
           <div v-else class="product-edit__default-image">
@@ -227,7 +227,7 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, ref, reactive, onMounted, watch, onBeforeUnmount,
+  computed, reactive, onMounted, watch, onBeforeUnmount,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import InputText from 'primevue/inputtext';
@@ -261,7 +261,6 @@ export default {
     DefaultPageLayout,
   },
   setup() {
-    const image = ref();
     const store = useStore();
     const route = useRoute();
     const user = computed(() => store.state.auth.user);
@@ -327,6 +326,7 @@ export default {
       if (isNewProduct.value) {
         await store.dispatch('products/addProduct', product);
       } else {
+        console.log('save', product);
         await store.dispatch('products/updateProduct', product);
       }
     };
@@ -335,8 +335,11 @@ export default {
       console.log('upload', response);
     };
 
-    const myUploader = (event) => {
+    const myUploader = async (event) => {
       console.log('myUploader', event.files[0]);
+      const result = await store.dispatch('products/uploadImage', event.files[0]);
+      console.log('result', result);
+      product.imageUrl = result.body;
     };
 
     const reset = () => {
@@ -352,7 +355,6 @@ export default {
       product,
       isProductInit,
       isNewProduct,
-      image,
       unitOptions,
       addProduct,
       save,
@@ -419,6 +421,6 @@ export default {
 </style>
 <style lang="scss">
   .product-edit__upload {
-    display: block;
+    display: block!important;
   }
 </style>

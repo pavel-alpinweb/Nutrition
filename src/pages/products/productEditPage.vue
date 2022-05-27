@@ -6,7 +6,6 @@
           <Image
             v-if="product.imageUrl"
             class="product-edit__image"
-            width="250"
             :src="product.imageUrl"
             alt="Image"
           />
@@ -18,12 +17,14 @@
             name="demo[]"
             :multiple="false"
             accept="image/*"
-            mode="basic"
             :maxFileSize="1000000"
             :customUpload="true"
             @uploader="myUploader"
             @upload="onUpload"
           >
+            <template #empty>
+              <p>Перетащите файл сюда для загрузки</p>
+            </template>
           </FileUpload>
         </div>
         <div class="product-edit__right p-col-6">
@@ -374,6 +375,7 @@ export default {
       display: block;
       margin: 0 auto;
       text-align: center;
+      overflow: hidden;
     }
     &__default-image {
       font-size: 300px;
@@ -420,7 +422,10 @@ export default {
   }
 </style>
 <style lang="scss">
-  .product-edit__upload {
-    display: block!important;
+.product-edit__image {
+  img {
+    height: 446px;
+    width: auto;
   }
+}
 </style>

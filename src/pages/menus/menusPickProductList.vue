@@ -5,7 +5,7 @@
         <div class="menus-pick-product-list__header">
           <div class="menus-pick-product-list__wrapper-form p-formgrid">
             <div class="p-fluid p-grid">
-              <div class="p-field p-col-4">
+              <div class="p-field p-col-3 p-offset-5">
                 <label for="number">Количество меню</label>
                 <InputText
                   v-model="menuQuantity"
@@ -15,27 +15,13 @@
                   :disabled="isPriceLoading"
                   min="1" />
               </div>
-              <div class="p-field p-col-4">
-                <label for="number">Итоговая стоимость</label>
-                <span class="p-input-icon-right">
-                  <i v-if="isPriceLoading" class="pi pi-spin pi-spinner" />
-                  <InputText
-                    v-model="lackMenuPrice"
-                    id="price"
-                    type="price"
-                    placeholder="Итоговая стоимость"
-                    min="0"
-                    :disabled="isPriceLoading"
-                    readonly />
-                </span>
-              </div>
               <div class="menus-pick-product-list__btn-container p-field p-col-4">
                 <Button
-                  label="Рассчитать"
-                  icon="fa fa-money"
+                  label="Составить отчет"
+                  icon="fas fa-print"
                   class="p-button-warning"
                   :disabled="isPriceLoading"
-                  @click="fetchLackMenuPrice"
+                  @click="fetchReport"
                 />
               </div>
             </div>
@@ -109,7 +95,7 @@ export default {
     const isPickProductListLoaded = computed(() => store.state.menus.isPickProductListLoaded);
     const pickMenuParams = reactive({
       menuId: route.params.id,
-      quantity: menuQuantity.value,
+      menuNumber: menuQuantity.value,
       products: [],
     });
 
@@ -128,9 +114,9 @@ export default {
       }
     };
 
-    const fetchLackMenuPrice = async () => {
-      pickMenuParams.quantity = Number(menuQuantity.value);
-      await store.dispatch('menus/getLackMenuPrice', pickMenuParams);
+    const fetchReport = async () => {
+      pickMenuParams.menuNumber = Number(menuQuantity.value);
+      await store.dispatch('menus/createReport', pickMenuParams);
     };
     watch(menuQuantity, async () => {
       await fetchPickProductList(currentDishName.value);
@@ -166,7 +152,7 @@ export default {
       isPriceLoading,
       isPickProductListLoaded,
       fetchPickProductList,
-      fetchLackMenuPrice,
+      fetchReport,
     };
   },
 };

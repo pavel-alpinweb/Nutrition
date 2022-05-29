@@ -82,7 +82,7 @@ export default {
     };
     const fetchReport = async () => {
       fetchProductPriceParams.servingNumber = Number(dishNumber.value);
-      await store.dispatch('dishes/getLackProductPrice', fetchProductPriceParams);
+      await store.dispatch('dishes/createReport', fetchProductPriceParams);
     };
     watch(dishNumber, async () => {
       await fetchPickProductList();

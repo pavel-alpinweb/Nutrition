@@ -1,5 +1,5 @@
 import { HTTP } from '@/modules/api';
-import { eventBus } from '@/modules/utils';
+import { downloadFile, eventBus } from '@/modules/utils';
 import queryString from 'query-string';
 
 const state = {
@@ -7,7 +7,6 @@ const state = {
   menuslist: [],
   isMenusListLoaded: true,
   isMenuLoaded: true,
-  lackMenuPrice: 0,
   isPriceLoading: false,
   filters: {
     menuNames: [],
@@ -62,9 +61,6 @@ const mutations = {
   },
   setPickDishName(state, dishName) {
     state.pickDishName = dishName;
-  },
-  setLackMenuPrice(state, price) {
-    state.lackMenuPrice = price;
   },
   deleteMenu(state, id) {
     state.menuslist = state.menuslist.filter((menu) => menu.id !== id);
@@ -157,10 +153,12 @@ const actions = {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });
     commit('deleteMenu', menuId);
   },
-  async getLackMenuPrice({ commit }, params) {
+  async createReport({ commit }, params) {
     commit('setIsPriceLoading', true);
-    const price = await HTTP.post('/menus/getLackProductPrice', params);
-    commit('setLackMenuPrice', price);
+    const report = await HTTP.post('/menus/createReport', params, {
+      responseType: 'blob', // THIS is very important, because we need Blob object in order to download PDF
+    });
+    downloadFile(report, 'my_report.pdf', 'application/pdf');
     commit('setIsPriceLoading', false);
   },
   async uploadImage(context, file) {

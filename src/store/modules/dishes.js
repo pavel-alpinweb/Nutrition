@@ -128,7 +128,7 @@ const actions = {
     commit('setPickProductsList', result.categories);
     commit('setPickProductListLoaded', true);
   },
-  async getLackProductPrice({ commit }, params) {
+  async createReport({ commit }, params) {
     commit('setIsPriceLoading', true);
     const report = await HTTP.post('/dishes/createReport', params, {
       responseType: 'blob', // THIS is very important, because we need Blob object in order to download PDF

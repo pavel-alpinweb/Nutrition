@@ -5,7 +5,7 @@
         <div class="dishes-pick-product-list__header">
           <div class="dishes-pick-product-list__wrapper-form p-formgrid">
             <div class="p-fluid p-grid">
-              <div class="p-field p-col-4">
+              <div class="p-field p-col-3 p-offset-5">
                 <label for="number">Количество порций</label>
                 <InputText
                   v-model="dishNumber"
@@ -15,27 +15,13 @@
                   :disabled="isPriceLoading"
                   min="1" />
               </div>
-              <div class="p-field p-col-4">
-                <label for="number">Итоговая стоимость</label>
-                <span class="p-input-icon-right">
-                  <i v-if="isPriceLoading" class="pi pi-spin pi-spinner" />
-                  <InputText
-                    v-model="lackProductPrice"
-                    id="price"
-                    type="price"
-                    placeholder="Итоговая стоимость"
-                    min="0"
-                    :disabled="isPriceLoading"
-                    readonly />
-                </span>
-              </div>
               <div class="dishes-pick-product-list__btn-container p-field p-col-4">
                 <Button
-                  label="Рассчитать"
-                  icon="fa fa-money"
+                  label="Составить отчет"
+                  icon="fas fa-print"
                   class="p-button-warning"
                   :disabled="isPriceLoading"
-                  @click="fetchLackProductPrice"
+                  @click="fetchReport"
                 />
               </div>
             </div>
@@ -84,7 +70,6 @@ export default {
     const dishNumber = ref(1);
     const dishProductList = computed(() => store.state.dishes.pickProductList);
     const isPickProductListLoaded = computed(() => store.state.dishes.isPickProductListLoaded);
-    const lackProductPrice = computed(() => store.state.dishes.lackProductPrice);
     const isPriceLoading = computed(() => store.state.dishes.isPriceLoading);
     const fetchProductPriceParams = {
       dishId: route.params.id,
@@ -95,7 +80,7 @@ export default {
     const fetchPickProductList = async () => {
       await store.dispatch('dishes/getAllIngredientProducts', { dishId: route.params.id, servingNumber: dishNumber.value });
     };
-    const fetchLackProductPrice = async () => {
+    const fetchReport = async () => {
       fetchProductPriceParams.servingNumber = Number(dishNumber.value);
       await store.dispatch('dishes/getLackProductPrice', fetchProductPriceParams);
     };
@@ -124,10 +109,9 @@ export default {
       dishProductList,
       dishNumber,
       isPickProductListLoaded,
-      lackProductPrice,
       isPriceLoading,
       fetchPickProductList,
-      fetchLackProductPrice,
+      fetchReport,
     };
   },
 };

@@ -1,5 +1,5 @@
 import { HTTP } from '@/modules/api';
-import { eventBus } from '@/modules/utils';
+import { eventBus, downloadFile } from '@/modules/utils';
 import queryString from 'query-string';
 
 const state = {
@@ -7,7 +7,6 @@ const state = {
   dishesList: [],
   isDishesListLoaded: true,
   isPickProductListLoaded: false,
-  lackProductPrice: 0,
   isPriceLoading: false,
   isDishLoaded: true,
   filters: {
@@ -62,9 +61,6 @@ const mutations = {
   },
   setPickProductsList(state, productsList) {
     state.pickProductList = productsList;
-  },
-  setLackProductPrice(state, price) {
-    state.lackProductPrice = price;
   },
   setIsPriceLoading(state, val) {
     state.isPriceLoading = val;
@@ -134,8 +130,10 @@ const actions = {
   },
   async getLackProductPrice({ commit }, params) {
     commit('setIsPriceLoading', true);
-    const price = await HTTP.post('/dishes/getLackProductPrice', params);
-    commit('setLackProductPrice', price);
+    const report = await HTTP.post('/dishes/createReport', params, {
+      responseType: 'blob', // THIS is very important, because we need Blob object in order to download PDF
+    });
+    downloadFile(report, 'my_report.pdf', 'application/pdf');
     commit('setIsPriceLoading', false);
   },
   async uploadImage(context, file) {

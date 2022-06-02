@@ -3,12 +3,16 @@
     <div class="list-layout__sidebar p-fluid">
       <div class="list-layout__sidebar-top">
         <div class="p-field">
-          <InputText
+          <AutoComplete
             v-if="isSearchByName"
             v-model="searchString"
-            id="search" type="text"
-            placeholder="Название"
-            @keyup.enter="search"
+            id="search" type="search"
+            :placeholder="searchPlaceholder"
+            :suggestions="filteredSuggestions"
+            field="name"
+            @complete="searchFromSuggestions"
+            @item-select="search"
+            @clear="clearEmit"
           />
         </div>
         <div class="p-field">
@@ -190,10 +194,10 @@
 <script>
 import { ref, computed } from 'vue';
 import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
 import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
+import AutoComplete from 'primevue/autocomplete';
 import useOptions from '@/composition/selectOptions';
 import { useStore } from 'vuex';
 
@@ -204,7 +208,7 @@ export default {
     MultiSelect,
     Checkbox,
     Dropdown,
-    InputText,
+    AutoComplete,
   },
   props: {
     isSearchByName: {
@@ -255,11 +259,20 @@ export default {
       type: Array,
       default: () => [],
     },
+    searchArray: {
+      type: Array,
+      default: () => [],
+    },
+    searchPlaceholder: {
+      type: String,
+      default: 'Название',
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
     const isIHave = ref(false);
-    const searchString = ref('');
+    const searchString = ref();
+    const filteredSuggestions = ref();
     const sortOptions = useOptions([
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
@@ -302,8 +315,21 @@ export default {
         value,
       });
     };
+    const searchFromSuggestions = (event) => {
+      setTimeout(() => {
+        if (!event.query.trim().length) {
+          filteredSuggestions.value = [...props.searchArray];
+        } else {
+          filteredSuggestions.value = props.searchArray
+            .filter((item) => item.name.toLowerCase().startsWith(event.query.toLowerCase()));
+        }
+      }, 250);
+    };
     const search = () => {
-      emit('search', searchString);
+      emit('search', searchString.value.name);
+    };
+    const clearEmit = () => {
+      emit('clearSearch');
     };
     return {
       searchString,
@@ -324,6 +350,8 @@ export default {
       sort,
       filter,
       search,
+      searchFromSuggestions,
+      clearEmit,
       category,
       productTags,
       dishesTags,
@@ -333,6 +361,7 @@ export default {
       grades,
       manufacturers,
       productNames,
+      filteredSuggestions,
     };
   },
 };

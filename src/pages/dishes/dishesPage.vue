@@ -8,11 +8,14 @@
           :products-options-array="filters.productCategories"
           :is-show-check-i-have="false"
           :is-show-reload-prices="false"
+          :searchArray="filters.dishNames"
+          search-placeholder="Название блюда"
           @search="onSearch"
           @add="addProduct"
           @reload="reloadPrices"
           @sort="onSort"
           @filter="onFilter"
+          @clearSearch="onClearSearch"
         >
           <template v-slot:content>
             <div v-if="isLoaded" class="product-page__grid">
@@ -89,7 +92,10 @@ export default {
       await store.dispatch('dishes/getDishesByFilter', params);
     };
     const onSearch = async (value) => {
-      await store.dispatch('dishes/getDishByName', value.value);
+      await store.dispatch('dishes/getDishByName', value);
+    };
+    const onClearSearch = async () => {
+      await store.dispatch('dishes/getDishesByFilter', params);
     };
     return {
       pageName: computed(() => store.state.dishes.pageName),
@@ -102,6 +108,7 @@ export default {
       onSort,
       onFilter,
       onSearch,
+      onClearSearch,
     };
   },
 };

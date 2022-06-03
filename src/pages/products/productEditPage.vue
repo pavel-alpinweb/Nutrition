@@ -195,7 +195,15 @@
         <div class="product-edit__central p-col-12 p-fluid">
           <div class="p-field">
             <label for="tags">Тэги</label>
-            <Chips id="tags" v-model="product.tags"/>
+            <AutoComplete
+              v-model="product.tags"
+              placeholder="Добавте тэги для блюда"
+              id="tags"
+              :suggestions="filteredSuggestions"
+              :multiple="true"
+              @complete="searchFromSuggestions"
+              @keyup.enter="createNewTag"
+            />
           </div>
         </div>
         <div class="p-col-12">
@@ -227,14 +235,14 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, reactive, onMounted, watch, onBeforeUnmount,
+  computed, reactive, onMounted, watch, onBeforeUnmount, ref,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import FileUpload from 'primevue/fileupload';
 import Image from 'primevue/image';
-import Chips from 'primevue/chips';
+import AutoComplete from 'primevue/autocomplete';
 import Button from 'primevue/button';
 import Textarea from 'primevue/textarea';
 import Inplace from 'primevue/inplace';
@@ -253,7 +261,7 @@ export default {
     Dropdown,
     FileUpload,
     Image,
-    Chips,
+    AutoComplete,
     Button,
     Textarea,
     Inplace,
@@ -265,7 +273,9 @@ export default {
     const route = useRoute();
     const user = computed(() => store.state.auth.user);
     const initialProduct = computed(() => store.state.products.initialProduct);
+    const filters = computed(() => store.state.products.filters);
     const product = reactive({});
+    const filteredSuggestions = ref();
     const isProductInit = computed(() => Object.keys(product).length > 0);
     const isNewProduct = computed(() => route.params.id === 'new');
     const productOptions = useProductOptions();
@@ -341,6 +351,26 @@ export default {
       setProductOptions();
     };
 
+    const searchFromSuggestions = (event) => {
+      setTimeout(() => {
+        const mapTags = filters.value.tags.map((item) => item.name);
+        if (!event.query.trim().length) {
+          filteredSuggestions.value = [...mapTags];
+        } else {
+          filteredSuggestions.value = mapTags
+            .filter((item) => item.toLowerCase().startsWith(event.query.toLowerCase()));
+        }
+      }, 250);
+    };
+
+    const createNewTag = (event) => {
+      if (event.target.value.trim().length) {
+        product.tags.push(event.target.value);
+      }
+      // eslint-disable-next-line no-param-reassign
+      event.target.value = '';
+    };
+
     return {
       ...useCreateNewFilter(),
       myUploader,
@@ -349,11 +379,14 @@ export default {
       isProductInit,
       isNewProduct,
       unitOptions,
+      searchFromSuggestions,
+      createNewTag,
       addProduct,
       save,
       reset,
       user,
       initialProduct,
+      filteredSuggestions,
       BASE_API_URL,
     };
   },

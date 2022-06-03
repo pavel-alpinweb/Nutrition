@@ -267,6 +267,14 @@ export default {
       }, 250);
     };
 
+    const createNewTag = (event) => {
+      if (event.target.value.trim().length) {
+        dish.tags.push(event.target.value);
+      }
+      // eslint-disable-next-line no-param-reassign
+      event.target.value = '';
+    };
+
     const getTagName = (data) => {
       if (typeof data === 'string') {
         return data;
@@ -318,6 +326,7 @@ export default {
       pushToPickList,
       searchFromSuggestions,
       getTagName,
+      createNewTag,
       filteredSuggestions,
       ingredientsArr,
     };

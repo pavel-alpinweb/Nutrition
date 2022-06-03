@@ -93,7 +93,15 @@
         <div class="menu-edit-footer">
           <div class="p-fluid p-field">
             <label for="tags">Тэги</label>
-            <Chips v-model="menu.tags" id="tags"/>
+            <AutoComplete
+              v-model="menu.tags"
+              placeholder="Добавте тэги для блюда"
+              id="tags"
+              :suggestions="filteredSuggestions"
+              :multiple="true"
+              @complete="searchFromSuggestions"
+              @keyup.enter="createNewTag"
+            />
           </div>
           <div class="menu-edit-footer__buttons">
             <Button
@@ -139,7 +147,7 @@ import FileUpload from 'primevue/fileupload';
 import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
-import Chips from 'primevue/chips';
+import AutoComplete from 'primevue/autocomplete';
 import Panel from 'primevue/panel';
 import Skeleton from 'primevue/skeleton';
 import Image from 'primevue/image';
@@ -160,18 +168,19 @@ export default {
     InputText,
     Textarea,
     Button,
-    Chips,
     Panel,
     DishSelect,
     Skeleton,
     MenuGenerator,
     Image,
+    AutoComplete,
   },
   setup() {
     const image = reactive();
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+    const filteredSuggestions = ref();
     const menu = reactive({});
     const dishesArr = ref([]);
     const initialMenu = computed(() => store.state.menus.initialMenu);
@@ -251,6 +260,26 @@ export default {
       eventBus.emit('showMenuGenerator');
     };
 
+    const searchFromSuggestions = (event) => {
+      setTimeout(() => {
+        const mapTags = filters.value.menuTags.map((item) => item.name);
+        if (!event.query.trim().length) {
+          filteredSuggestions.value = [...mapTags];
+        } else {
+          filteredSuggestions.value = mapTags
+            .filter((item) => item.toLowerCase().startsWith(event.query.toLowerCase()));
+        }
+      }, 250);
+    };
+
+    const createNewTag = (event) => {
+      if (event.target.value.trim().length) {
+        menu.tags.push(event.target.value);
+      }
+      // eslint-disable-next-line no-param-reassign
+      event.target.value = '';
+    };
+
     return {
       ...useUpload(),
       pushToPickList,
@@ -263,12 +292,16 @@ export default {
       saveMenu,
       showMenuGenerator,
       myUploader,
+      createNewTag,
+      searchFromSuggestions,
+      filteredSuggestions,
       image,
       initialMenu,
       filters,
       menu,
       isNewMenu,
       isMenuLoaded,
+      AutoComplete,
     };
   },
 };

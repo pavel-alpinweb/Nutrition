@@ -275,13 +275,6 @@ export default {
       event.target.value = '';
     };
 
-    const getTagName = (data) => {
-      if (typeof data === 'string') {
-        return data;
-      }
-      return data.name;
-    };
-
     const unitChangeHandler = (event) => {
       dish.unit = event.value.name;
     };
@@ -325,7 +318,6 @@ export default {
       unitChangeHandler,
       pushToPickList,
       searchFromSuggestions,
-      getTagName,
       createNewTag,
       filteredSuggestions,
       ingredientsArr,

@@ -66,6 +66,7 @@
                   v-model="dish.description"
                   id="describe"
                   :autoResize="true"
+                  :suggestions="filteredSuggestions"
                   rows="5"
                   cols="30"
                 />
@@ -111,7 +112,15 @@
         <div class="dishes-edit-footer">
           <div class="p-fluid p-field">
             <label for="tags">Тэги</label>
-            <Chips id="tags" v-model="dish.tags"/>
+            <AutoComplete
+              v-model="dish.tags"
+              placeholder="Добавте тэги для блюда"
+              id="tags"
+              :suggestions="filteredSuggestions"
+              :multiple="true"
+              @complete="searchFromSuggestions"
+              @keyup.enter="createNewTag"
+            />
           </div>
           <div class="dishes-edit-footer__buttons">
             <Button
@@ -125,6 +134,7 @@
             <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
           </div>
         </div>
+        <pre>{{ dish.tags }}</pre>
       </div>
       <div v-else class="product-edit">
         <div class="dishes-edit__skeleton-grid">
@@ -148,7 +158,6 @@ import {
 import useUpload from '@/composition/upload';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import Panel from 'primevue/panel';
-import Chips from 'primevue/chips';
 import Dropdown from 'primevue/dropdown';
 import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload';
@@ -156,6 +165,7 @@ import InputText from 'primevue/inputtext';
 import Textarea from 'primevue/textarea';
 import Skeleton from 'primevue/skeleton';
 import Image from 'primevue/image';
+import AutoComplete from 'primevue/autocomplete';
 import useOptions from '@/composition/selectOptions';
 import Ingredient from '@/components/Ingredient.vue';
 import { GLOBAL_UNITS } from '@/modules/constants';
@@ -168,7 +178,7 @@ export default {
   components: {
     DefaultPageLayout,
     Panel,
-    Chips,
+    AutoComplete,
     Button,
     FileUpload,
     InputText,
@@ -183,9 +193,11 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const dish = reactive({});
+    const filteredSuggestions = ref();
     const ingredientsArr = ref([]);
     const initialDish = computed(() => store.state.dishes.initialDish);
     const isDishLoaded = computed(() => store.state.dishes.isDishLoaded);
+    const filters = computed(() => store.state.dishes.filters);
     const isNewDish = computed(() => route.params.id === 'new');
     const unitOptions = useOptions(GLOBAL_UNITS);
 
@@ -243,6 +255,25 @@ export default {
       }
     };
 
+    const searchFromSuggestions = (event) => {
+      setTimeout(() => {
+        const mapTags = filters.value.dishTags.map((item) => item.name);
+        if (!event.query.trim().length) {
+          filteredSuggestions.value = [...mapTags];
+        } else {
+          filteredSuggestions.value = mapTags
+            .filter((item) => item.toLowerCase().startsWith(event.query.toLowerCase()));
+        }
+      }, 250);
+    };
+
+    const getTagName = (data) => {
+      if (typeof data === 'string') {
+        return data;
+      }
+      return data.name;
+    };
+
     const unitChangeHandler = (event) => {
       dish.unit = event.value.name;
     };
@@ -285,6 +316,9 @@ export default {
       changeOptionHandler,
       unitChangeHandler,
       pushToPickList,
+      searchFromSuggestions,
+      getTagName,
+      filteredSuggestions,
       ingredientsArr,
     };
   },

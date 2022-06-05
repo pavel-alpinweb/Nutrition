@@ -37,6 +37,7 @@
                 :filter="true"
                 optionLabel="name"
                 placeholder="Категория"
+                @change="selectField($event, 'category')"
               />
               <Inplace
                 class="product-edit__add-category"
@@ -66,6 +67,7 @@
                 :filter="true"
                 optionLabel="name"
                 placeholder="Магазин"
+                @change="selectField($event, 'shop')"
               />
               <Inplace
                 class="product-edit__add-category"
@@ -95,6 +97,7 @@
                 :filter="true"
                 optionLabel="name"
                 placeholder="Сорт"
+                @change="selectField($event, 'grade')"
               />
               <Inplace
                 class="product-edit__add-category"
@@ -124,6 +127,7 @@
                 :filter="true"
                 optionLabel="name"
                 placeholder="Производитель"
+                @change="selectField($event, 'manufacturer')"
               />
               <Inplace
                 class="product-edit__add-category"
@@ -173,6 +177,7 @@
                   :options="unitOptions.options.value"
                   optionLabel="name"
                   placeholder="Единицы"
+                  @change="selectField($event, 'unit')"
                 />
               </div>
             </div>
@@ -201,6 +206,7 @@
               id="tags"
               :suggestions="filteredSuggestions"
               :multiple="true"
+              :dropdown="true"
               @complete="searchFromSuggestions"
               @keyup.enter="createNewTag"
             />
@@ -325,6 +331,10 @@ export default {
       Object.assign(product, initialProduct.value);
     };
 
+    const selectField = (event, field) => {
+      product[field] = event.value.name;
+    };
+
     const searchFromSuggestions = (event) => {
       setTimeout(() => {
         const mapTags = filters.value.tags.map((item) => item.name);
@@ -358,6 +368,7 @@ export default {
       addProduct,
       save,
       reset,
+      selectField,
       user,
       initialProduct,
       filteredSuggestions,

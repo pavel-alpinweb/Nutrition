@@ -1,23 +1,24 @@
 import { useStore } from 'vuex';
-import { computed, reactive } from 'vue';
+import { computed } from 'vue';
 import { eventBus } from '@/modules/utils';
 
 export default function useCreateNewFilter() {
   const store = useStore();
-  const productsNewOptions = reactive({
-    market: '',
+  const productsNewOptions = {
+    shop: '',
     category: '',
     grade: '',
     manufacturer: '',
-  });
+  };
 
-  const createNewFilter = (filter, selectedOption) => {
+  const createNewFilter = (filter, selectedOption, product) => {
+    console.log('filter', filter);
     let filtersTarget;
     switch (filter) {
       case 'category':
         filtersTarget = 'categories';
         break;
-      case 'market':
+      case 'shop':
         filtersTarget = 'shops';
         break;
       case 'grade':
@@ -34,6 +35,7 @@ export default function useCreateNewFilter() {
       name: productsNewOptions[filter],
       code: `${filter}-${filterArray.value.length + 1}`,
     };
+    console.log('newFilter', productsNewOptions);
     store.commit('products/pushNewFilter', {
       filter: filtersTarget,
       value: newFilter,
@@ -41,6 +43,8 @@ export default function useCreateNewFilter() {
     productsNewOptions[filter] = '';
     // eslint-disable-next-line no-param-reassign
     selectedOption.value = newFilter;
+    // eslint-disable-next-line no-param-reassign
+    product[filter] = newFilter.name;
     eventBus.emit('showToast', {
       severity: 'success',
       summary: 'Новая категория добавлена',

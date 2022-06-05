@@ -52,7 +52,8 @@
                     v-model="productsNewOptions.category"
                     @keyup.enter="createNewFilter(
                       'category',
-                      productOptions.categoryOptions.selectedOption
+                      productOptions.categoryOptions.selectedOption,
+                      product,
                     )"
                   />
                 </template>
@@ -79,10 +80,11 @@
                 <template #content>
                   <InputText
                     autoFocus
-                    v-model="productsNewOptions.market"
+                    v-model="productsNewOptions.shop"
                     @keyup.enter="createNewFilter(
-                      'market',
-                      productOptions.marketOptions.selectedOption
+                      'shop',
+                      productOptions.marketOptions.selectedOption,
+                      product,
                     )"
                   />
                 </template>
@@ -112,7 +114,8 @@
                     v-model="productsNewOptions.grade"
                     @keyup.enter="createNewFilter(
                       'grade',
-                      productOptions.gradeOptions.selectedOption
+                      productOptions.gradeOptions.selectedOption,
+                      product,
                     )"
                   />
                 </template>
@@ -142,7 +145,8 @@
                     v-model="productsNewOptions.manufacturer"
                     @keyup.enter="createNewFilter(
                       'manufacturer',
-                      productOptions.manufacturerOptions.selectedOption
+                      productOptions.manufacturerOptions.selectedOption,
+                      product,
                     )"
                   />
                 </template>

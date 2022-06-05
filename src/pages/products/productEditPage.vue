@@ -245,7 +245,7 @@
 <script>
 import { useStore } from 'vuex';
 import {
-  computed, reactive, onMounted, watch, onBeforeUnmount, ref,
+  computed, reactive, onMounted, onBeforeUnmount, ref,
 } from 'vue';
 import { useRoute } from 'vue-router';
 import InputText from 'primevue/inputtext';
@@ -261,7 +261,6 @@ import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import useOptions from '@/composition/selectOptions';
 import useProductOptions from '@/composition/productOptions';
 import useCreateNewFilter from '@/composition/createNewFilter';
-import useSetSelect from '@/composition/setSelect';
 import { GLOBAL_UNITS, BASE_API_URL } from '@/modules/constants';
 
 export default {
@@ -290,26 +289,9 @@ export default {
     const isNewProduct = computed(() => route.params.id === 'new');
     const productOptions = useProductOptions();
     const unitOptions = useOptions(GLOBAL_UNITS);
-    const setProductOptions = () => {
-      useSetSelect(productOptions.categoryOptions, initialProduct, 'category');
-      useSetSelect(productOptions.manufacturerOptions, initialProduct, 'manufacturer');
-      useSetSelect(productOptions.gradeOptions, initialProduct, 'grade');
-      useSetSelect(productOptions.marketOptions, initialProduct, 'shop');
-      useSetSelect(unitOptions, initialProduct, 'unit');
-    };
-
-    watch(user, async (currentValue) => {
-      if (currentValue !== null) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
-        setProductOptions();
-      }
-    });
 
     onMounted(async () => {
-      if (user.value) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
-        setProductOptions();
-      }
+      await store.dispatch('products/getAllProductsFields');
       if (!isNewProduct.value) {
         await store.dispatch('products/getProduct', route.params.id);
       }
@@ -327,23 +309,6 @@ export default {
     };
 
     const save = async () => {
-      product.category = productOptions.categoryOptions.selectedOption?.value
-        ? productOptions.categoryOptions.selectedOption.value.name : null;
-
-      product.manufacturer = productOptions.manufacturerOptions.selectedOption?.value
-        ? productOptions.manufacturerOptions.selectedOption.value.name : null;
-
-      product.grade = productOptions.gradeOptions.selectedOption?.value
-        ? productOptions.gradeOptions.selectedOption.value.name : null;
-
-      product.shop = productOptions.marketOptions.selectedOption?.value
-        ? productOptions.marketOptions.selectedOption.value.name : null;
-
-      product.unit = unitOptions.selectedOption?.value
-        ? unitOptions.selectedOption.value.name : null;
-
-      product.userId = user.value.id;
-
       if (isNewProduct.value) {
         await store.dispatch('products/addProduct', product);
       } else {
@@ -358,7 +323,6 @@ export default {
 
     const reset = () => {
       Object.assign(product, initialProduct.value);
-      setProductOptions();
     };
 
     const searchFromSuggestions = (event) => {

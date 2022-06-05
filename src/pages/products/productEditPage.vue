@@ -36,7 +36,7 @@
                 :options="productOptions.categoryOptions.options.value"
                 :filter="true"
                 optionLabel="name"
-                placeholder="Категория"
+                :placeholder="categoryPlaceholder"
                 @change="selectField($event, 'category')"
               />
               <Inplace
@@ -67,7 +67,7 @@
                 :options="productOptions.marketOptions.options.value"
                 :filter="true"
                 optionLabel="name"
-                placeholder="Магазин"
+                :placeholder="shopsPlaceholder"
                 @change="selectField($event, 'shop')"
               />
               <Inplace
@@ -98,7 +98,7 @@
                 :options="productOptions.gradeOptions.options.value"
                 :filter="true"
                 optionLabel="name"
-                placeholder="Сорт"
+                :placeholder="gradesPlaceholder"
                 @change="selectField($event, 'grade')"
               />
               <Inplace
@@ -129,7 +129,7 @@
                 :options="productOptions.manufacturerOptions.options.value"
                 :filter="true"
                 optionLabel="name"
-                placeholder="Производитель"
+                :placeholder="manufacturersPlaceholder"
                 @change="selectField($event, 'manufacturer')"
               />
               <Inplace
@@ -300,6 +300,11 @@ export default {
     const productOptions = useProductOptions();
     const unitOptions = useOptions(GLOBAL_UNITS);
 
+    const categoryPlaceholder = computed(() => (product.category ? product.category : 'Выберите категорию'));
+    const shopsPlaceholder = computed(() => (product.shop ? product.shop : 'Выберите магазин'));
+    const gradesPlaceholder = computed(() => (product.grade ? product.grade.toString() : 'Выберите сорт'));
+    const manufacturersPlaceholder = computed(() => (product.manufacturer ? product.manufacturer.toString() : 'Выберите производителя'));
+
     onMounted(async () => {
       await store.dispatch('products/getAllProductsFields');
       if (!isNewProduct.value) {
@@ -367,6 +372,10 @@ export default {
       isProductInit,
       isNewProduct,
       unitOptions,
+      categoryPlaceholder,
+      shopsPlaceholder,
+      gradesPlaceholder,
+      manufacturersPlaceholder,
       searchFromSuggestions,
       createNewTag,
       addProduct,

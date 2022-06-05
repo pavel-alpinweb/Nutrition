@@ -217,6 +217,16 @@
           <Button label="Сохранить" icon="pi pi-save" class="p-button-success" @click="save"/>
           <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
         </div>
+        <div class="p-grid">
+          <div class="p-col-6">
+            <h3>Editable product</h3>
+            <pre>{{ product }}</pre>
+          </div>
+          <div class="p-col-6">
+            <h3>Initial product</h3>
+            <pre>{{ initialProduct }}</pre>
+          </div>
+        </div>
       </div>
       <div v-else class="product-edit">
         <div class="product-edit__skeleton-grid">
@@ -298,6 +308,7 @@ export default {
     onMounted(async () => {
       if (user.value) {
         await store.dispatch('products/getAllProductsFields', user.value.id);
+        setProductOptions();
       }
       if (!isNewProduct.value) {
         await store.dispatch('products/getProduct', route.params.id);
@@ -336,7 +347,6 @@ export default {
       if (isNewProduct.value) {
         await store.dispatch('products/addProduct', product);
       } else {
-        console.log('save', product);
         await store.dispatch('products/updateProduct', product);
       }
     };

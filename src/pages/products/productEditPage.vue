@@ -227,16 +227,6 @@
           <Button label="Сохранить" icon="pi pi-save" class="p-button-success" @click="save"/>
           <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
         </div>
-        <div class="p-grid">
-          <div class="p-col-6">
-            <h3>Editable product</h3>
-            <pre>{{ product }}</pre>
-          </div>
-          <div class="p-col-6">
-            <h3>Initial product</h3>
-            <pre>{{ initialProduct }}</pre>
-          </div>
-        </div>
       </div>
       <div v-else class="product-edit">
         <div class="product-edit__skeleton-grid">

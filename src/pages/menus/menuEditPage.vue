@@ -153,7 +153,7 @@ import Skeleton from 'primevue/skeleton';
 import Image from 'primevue/image';
 import useUpload from '@/composition/upload';
 import {
-  computed, reactive, onMounted, watch, ref, onBeforeUnmount,
+  computed, reactive, onMounted, ref, onBeforeUnmount,
 } from 'vue';
 import { useStore } from 'vuex';
 import DishInMenuTemplate from '@/modules/DishInMenuTemplate';
@@ -188,21 +188,12 @@ export default {
     let newIndex = 0;
     const isNewMenu = computed(() => route.params.id === 'new');
     const filters = computed(() => store.state.menus.filters);
-    const user = computed(() => store.state.auth.user);
-
-    watch(user, async (currentValue) => {
-      if (currentValue !== null) {
-        await store.dispatch('menus/getAllMenusFields', user.value.id);
-      }
-    });
 
     onMounted(async () => {
       if (!isNewMenu.value) {
         await store.dispatch('menus/getMenuById', route.params.id);
       }
-      if (user.value) {
-        await store.dispatch('menus/getAllMenusFields', user.value.id);
-      }
+      await store.dispatch('menus/getAllMenusFields');
       Object.assign(menu, initialMenu.value);
       newIndex = menu.items.length;
       dishesArr.value = dishesArr.value.concat(initialMenu.value.items);

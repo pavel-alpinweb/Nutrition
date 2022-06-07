@@ -58,7 +58,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-color);
-  background: url('~@/assets/bg.jpg') no-repeat center;
-  background-size: cover;
+  background: url('~@/assets/bg.jpg');
 }
 </style>

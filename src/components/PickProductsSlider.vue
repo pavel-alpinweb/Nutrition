@@ -2,7 +2,7 @@
   <div class="pick-product-slider">
     <h2 class="pick-product-slider__title">{{ category.productCategory }}</h2>
     <div class="pick-product-slider__content">
-      <ScrollPanel style="width: 100%; height: 700px" class="custombar1">
+      <ScrollPanel style="width: 100%; height: auto;" class="custombar1">
         <div class="pick-product-slider__content">
           <div
             v-for="item in category.products"
@@ -69,7 +69,6 @@ export default {
     }
     &__content {
       display: flex;
-      justify-content: center;
       flex-wrap: nowrap;
     }
     &__item {

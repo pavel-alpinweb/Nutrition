@@ -122,7 +122,7 @@
               </Inplace>
             </div>
             <div class="p-field p-col-6">
-              <label for="manufactor">Производитель</label>
+              <label for="manufactor">Производитель или марка</label>
               <Dropdown
                 v-model="productOptions.manufacturerOptions.selectedOption.value"
                 inputId="manufactor"

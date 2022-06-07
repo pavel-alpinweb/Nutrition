@@ -60,6 +60,10 @@
           <i class="fas fa-certificate nutrition-card__char-icon"></i>
           <div class="nutrition-card__char-value">{{ item.grade }}</div>
         </li>
+        <li v-if="item.servingSize" class="nutrition-card__char">
+          <i class="fas fa-weight-hanging nutrition-card__char-icon"></i>
+          <div class="nutrition-card__char-value">{{ item.servingSize }} {{ item.unit }}</div>
+        </li>
         <li v-if="item.price" class="nutrition-card__char">
           <i class="fas fa-dollar-sign nutrition-card__char-icon"></i>
           <div class="nutrition-card__char-value">

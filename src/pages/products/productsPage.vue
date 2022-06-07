@@ -9,7 +9,7 @@
           :grades-options-array="grades"
           :manufacturers-options-array="manufacturers"
           :is-show-check-i-have="true"
-          :is-show-reload-prices="true"
+          :is-show-reload-prices="false"
           @change="changeIHave"
           @search="onSearch"
           @add="addProduct"

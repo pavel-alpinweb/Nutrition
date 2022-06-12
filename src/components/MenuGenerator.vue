@@ -11,6 +11,15 @@
       <div class="menu-generator__content">
         <div class="menu-generator__section">
           <div class="p-fluid p-field">
+            <label for="name">Название меню</label>
+            <InputText
+              v-model="menuName"
+              id="name"
+              type="text"
+              placeholder="Название"
+            />
+          </div>
+          <div class="p-fluid p-field">
             <label for="cost">Максимальное допустимая стоимость меню</label>
             <InputText
               v-model="menuCost"
@@ -19,6 +28,32 @@
               placeholder="Стоимость"
               min="1"
             />
+          </div>
+          <div class="p-grid">
+            <div class="p-col-6">
+              <div class="p-fluid p-field">
+                <label for="minMealsNumber">Минимальное кол-во приемов пищи на человека</label>
+                <InputText
+                  v-model="minMealsNumber"
+                  id="minMealsNumber"
+                  type="number"
+                  placeholder="Стоимость"
+                  min="1"
+                />
+              </div>
+            </div>
+            <div class="p-col-6">
+              <div class="p-fluid p-field">
+                <label for="minMealsNumber">Кол-во порций блюд в одном приеме пищи</label>
+                <InputText
+                  v-model="servingNumberPerMeal"
+                  id="servingNumberPerMeal"
+                  type="number"
+                  placeholder="Стоимость"
+                  min="1"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div class="menu-generator__section">
@@ -72,7 +107,7 @@
               <div class="p-field p-col-6">
                 <Dropdown
                   optionLabel="name"
-                  placeholder="Наименование блюда"
+                  placeholder="Тэги блюда"
                 />
               </div>
               <div class="p-field p-col-3">
@@ -124,6 +159,9 @@ export default {
   setup() {
     const showMenuGenerator = ref(false);
     const menuCost = ref(1);
+    const menuName = ref('');
+    const minMealsNumber = ref(1);
+    const servingNumberPerMeal = ref(1);
 
     onMounted(() => {
       eventBus.on('showMenuGenerator', () => {
@@ -134,6 +172,9 @@ export default {
     return {
       showMenuGenerator,
       menuCost,
+      menuName,
+      minMealsNumber,
+      servingNumberPerMeal,
     };
   },
 };

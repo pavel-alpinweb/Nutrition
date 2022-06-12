@@ -62,6 +62,7 @@
             <Button
               icon="fas fa-plus-circle"
               class="nutrition-card__btn p-button-rounded p-button-warning"
+              @click="createNewProductsParam"
             />
           </label>
           <div class="p-formgrid">
@@ -94,6 +95,7 @@
                 <Button
                   icon="fas fa-trash"
                   class="nutrition-card__btn p-button-rounded p-button-warning"
+                  @click="deleteProductsParam(key)"
                 />
               </div>
             </div>
@@ -105,6 +107,7 @@
             <Button
               icon="fas fa-plus-circle"
               class="nutrition-card__btn p-button-rounded p-button-warning"
+              @click="createNewDishesParam"
             />
           </label>
           <div class="p-formgrid">
@@ -137,6 +140,7 @@
                 <Button
                   icon="fas fa-trash"
                   class="nutrition-card__btn p-button-rounded p-button-warning"
+                  @click="deleteDishesParam(key)"
                 />
               </div>
             </div>
@@ -173,40 +177,8 @@ export default {
       maxPrice: 1,
       minMealsNumber: 1,
       servingNumberPerMeal: 1,
-      productConstraints: [
-        {
-          productCategory: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-        {
-          productCategory: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-        {
-          productCategory: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-        {
-          productCategory: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-      ],
-      dishTagConstraints: [
-        {
-          dishTag: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-        {
-          dishTag: 'string',
-          condition: 'lessOrEqual',
-          quantity: 0,
-        },
-      ],
+      productConstraints: [],
+      dishTagConstraints: [],
     });
 
     onMounted(() => {
@@ -215,9 +187,37 @@ export default {
       });
     });
 
+    const createNewProductsParam = () => {
+      generatorParams.productConstraints.push({
+        productCategory: '',
+        condition: '',
+        quantity: 0,
+      });
+    };
+
+    const deleteProductsParam = (key) => {
+      generatorParams.productConstraints.splice(key, 1);
+    };
+
+    const createNewDishesParam = () => {
+      generatorParams.dishTagConstraints.push({
+        dishTag: '',
+        condition: '',
+        quantity: 0,
+      });
+    };
+
+    const deleteDishesParam = (key) => {
+      generatorParams.dishTagConstraints.splice(key, 1);
+    };
+
     return {
       showMenuGenerator,
       generatorParams,
+      createNewProductsParam,
+      createNewDishesParam,
+      deleteProductsParam,
+      deleteDishesParam,
     };
   },
 };

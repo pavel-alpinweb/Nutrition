@@ -81,6 +81,8 @@
               </div>
               <div class="p-field p-col-3">
                 <Dropdown
+                  v-model="conditionsOptions.selectedOption.value"
+                  :options="conditionsOptions.options.value"
                   optionLabel="name"
                   placeholder="Не менее"
                 />
@@ -128,6 +130,8 @@
               </div>
               <div class="p-field p-col-3">
                 <Dropdown
+                  v-model="conditionsOptions.selectedOption.value"
+                  :options="conditionsOptions.options.value"
                   optionLabel="name"
                   placeholder="Не менее"
                 />
@@ -171,6 +175,7 @@ import {
 import { eventBus } from '@/modules/utils';
 import { useStore } from 'vuex';
 import useOptions from '@/composition/selectOptions';
+import { CONDITIONS } from '@/modules/constants';
 
 export default {
   name: 'MenuGenerator',
@@ -187,6 +192,7 @@ export default {
     const productCategories = computed(() => store.state.dishes.filters.productCategories);
     const tagsOptions = useOptions(dishTags);
     const productOptions = useOptions(productCategories);
+    const conditionsOptions = useOptions(CONDITIONS);
     const showMenuGenerator = ref(false);
     const generatorParams = reactive({
       menuName: 'string',
@@ -234,6 +240,7 @@ export default {
       filters,
       showMenuGenerator,
       generatorParams,
+      conditionsOptions,
       createNewProductsParam,
       createNewDishesParam,
       deleteProductsParam,

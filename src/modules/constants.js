@@ -5,3 +5,13 @@ export const GLOBAL_UNITS = [
   { name: 'литр', code: 'kg2' },
   { name: 'шт', code: 'kg3' },
 ];
+export const CONDITIONS = [
+  {
+    name: 'Не более',
+    code: 'lessOrEqual',
+  },
+  {
+    name: 'Не менее',
+    code: 'greaterOrEqual',
+  },
+];

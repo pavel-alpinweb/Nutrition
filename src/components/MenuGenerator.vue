@@ -73,6 +73,8 @@
             >
               <div class="p-field p-col-6">
                 <Dropdown
+                  v-model="productOptions.selectedOption.value"
+                  :options="productOptions.options.value"
                   optionLabel="name"
                   placeholder="Категоия продукта"
                 />
@@ -118,6 +120,8 @@
             >
               <div class="p-field p-col-6">
                 <Dropdown
+                  v-model="tagsOptions.selectedOption.value"
+                  :options="tagsOptions.options.value"
                   optionLabel="name"
                   placeholder="Тэги блюда"
                 />
@@ -150,6 +154,8 @@
       <div class="menu-generator__footer">
         <Button label="Подобрать" class="p-button-success"/>
       </div>
+
+      <pre>{{ filters }}</pre>
     </div>
   </Dialog>
 </template>
@@ -159,8 +165,12 @@ import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
-import { reactive, ref, onMounted } from 'vue';
+import {
+  reactive, ref, onMounted, computed,
+} from 'vue';
 import { eventBus } from '@/modules/utils';
+import { useStore } from 'vuex';
+import useOptions from '@/composition/selectOptions';
 
 export default {
   name: 'MenuGenerator',
@@ -171,6 +181,12 @@ export default {
     Dropdown,
   },
   setup() {
+    const store = useStore();
+    const filters = computed(() => store.state.dishes.filters);
+    const dishTags = computed(() => store.state.dishes.filters.dishTags);
+    const productCategories = computed(() => store.state.dishes.filters.productCategories);
+    const tagsOptions = useOptions(dishTags);
+    const productOptions = useOptions(productCategories);
     const showMenuGenerator = ref(false);
     const generatorParams = reactive({
       menuName: 'string',
@@ -181,7 +197,8 @@ export default {
       dishTagConstraints: [],
     });
 
-    onMounted(() => {
+    onMounted(async () => {
+      await store.dispatch('dishes/getAllDishesFields');
       eventBus.on('showMenuGenerator', () => {
         showMenuGenerator.value = true;
       });
@@ -212,6 +229,9 @@ export default {
     };
 
     return {
+      productOptions,
+      tagsOptions,
+      filters,
       showMenuGenerator,
       generatorParams,
       createNewProductsParam,

@@ -73,16 +73,18 @@
             >
               <div class="p-field p-col-6">
                 <Dropdown
-                  v-model="productOptions.selectedOption.value"
+                  v-model="product.productCategory"
                   :options="productOptions.options.value"
+                  option-value="name"
                   optionLabel="name"
                   placeholder="Категоия продукта"
                 />
               </div>
               <div class="p-field p-col-3">
                 <Dropdown
-                  v-model="conditionsOptions.selectedOption.value"
+                  v-model="product.condition"
                   :options="conditionsOptions.options.value"
+                  option-value="code"
                   optionLabel="name"
                   placeholder="Не менее"
                 />
@@ -122,16 +124,18 @@
             >
               <div class="p-field p-col-6">
                 <Dropdown
-                  v-model="tagsOptions.selectedOption.value"
+                  v-model="dish.dishTag"
                   :options="tagsOptions.options.value"
+                  option-value="code"
                   optionLabel="name"
                   placeholder="Тэги блюда"
                 />
               </div>
               <div class="p-field p-col-3">
                 <Dropdown
-                  v-model="conditionsOptions.selectedOption.value"
+                  v-model="dish.condition"
                   :options="conditionsOptions.options.value"
+                  option-value="code"
                   optionLabel="name"
                   placeholder="Не менее"
                 />
@@ -159,7 +163,7 @@
         <Button label="Подобрать" class="p-button-success"/>
       </div>
 
-      <pre>{{ filters }}</pre>
+      <pre>{{ generatorParams }}</pre>
     </div>
   </Dialog>
 </template>

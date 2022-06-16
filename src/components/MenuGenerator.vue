@@ -160,7 +160,12 @@
         </div>
       </div>
       <div class="menu-generator__footer">
-        <Button label="Подобрать" class="p-button-success" @click="generate"/>
+        <Button
+          label="Подобрать"
+          class="p-button-success"
+          :disabled="isGenerateLoading"
+          @click="generate"
+        />
       </div>
     </div>
   </Dialog>
@@ -191,6 +196,7 @@ export default {
     const store = useStore();
     const filters = computed(() => store.state.dishes.filters);
     const dishTags = computed(() => store.state.dishes.filters.dishTags);
+    const isGenerateLoading = computed(() => store.state.menus.isGenerateLoading);
     const productCategories = computed(() => store.state.dishes.filters.productCategories);
     const tagsOptions = useOptions(dishTags);
     const productOptions = useOptions(productCategories);
@@ -251,6 +257,7 @@ export default {
       showMenuGenerator,
       generatorParams,
       conditionsOptions,
+      isGenerateLoading,
       generate,
       createNewProductsParam,
       createNewDishesParam,

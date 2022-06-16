@@ -8,6 +8,7 @@ const state = {
   isMenusListLoaded: true,
   isMenuLoaded: true,
   isPriceLoading: false,
+  isGenerateLoading: false,
   filters: {
     menuNames: [],
     menuTags: [],
@@ -43,6 +44,9 @@ const mutations = {
   },
   setIsPriceLoading(state, val) {
     state.isPriceLoading = val;
+  },
+  setIsGenerateLoading(state, val) {
+    state.isGenerateLoading = val;
   },
   setFilters(state, filters) {
     state.filters = filters;
@@ -114,6 +118,7 @@ const actions = {
   },
   async generateMenu({ commit }, params) {
     try {
+      commit('setIsGenerateLoading', true);
       commit('setIsMenuLoaded', false);
       const result = await HTTP.post('/menus/generate', params);
       commit('setInitialMenu', result.body);
@@ -121,6 +126,7 @@ const actions = {
     } catch {
       return false;
     } finally {
+      commit('setIsGenerateLoading', false);
       commit('setIsMenuLoaded', true);
     }
   },

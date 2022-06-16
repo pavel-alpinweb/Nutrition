@@ -5,7 +5,7 @@
     :style="{width: '50vw'}"
     :modal="true"
     :draggable="false"
-    :dismissableMask="true"
+    :dismissableMask="false"
   >
     <div class="menu-generator">
       <div class="menu-generator__content">
@@ -160,10 +160,8 @@
         </div>
       </div>
       <div class="menu-generator__footer">
-        <Button label="Подобрать" class="p-button-success"/>
+        <Button label="Подобрать" class="p-button-success" @click="generate"/>
       </div>
-
-      <pre>{{ generatorParams }}</pre>
     </div>
   </Dialog>
 </template>
@@ -189,7 +187,7 @@ export default {
     InputText,
     Dropdown,
   },
-  setup() {
+  setup(props, { emit }) {
     const store = useStore();
     const filters = computed(() => store.state.dishes.filters);
     const dishTags = computed(() => store.state.dishes.filters.dishTags);
@@ -238,6 +236,14 @@ export default {
       generatorParams.dishTagConstraints.splice(key, 1);
     };
 
+    const generate = async () => {
+      const success = await store.dispatch('menus/generateMenu', generatorParams);
+      if (success) {
+        emit('generate');
+        showMenuGenerator.value = false;
+      }
+    };
+
     return {
       productOptions,
       tagsOptions,
@@ -245,6 +251,7 @@ export default {
       showMenuGenerator,
       generatorParams,
       conditionsOptions,
+      generate,
       createNewProductsParam,
       createNewDishesParam,
       deleteProductsParam,

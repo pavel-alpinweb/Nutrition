@@ -112,6 +112,18 @@ const actions = {
     const result = await HTTP.put('/menus/update', menu);
     commit('setInitialMenu', result.body);
   },
+  async generateMenu({ commit }, params) {
+    try {
+      commit('setIsMenuLoaded', false);
+      const result = await HTTP.post('/menus/generate', params);
+      commit('setInitialMenu', result.body);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      commit('setIsMenuLoaded', true);
+    }
+  },
   async getMenuById({ commit }, id) {
     try {
       commit('setIsMenuLoaded', false);

@@ -95,7 +95,7 @@
             <label for="tags">Тэги</label>
             <AutoComplete
               v-model="menu.tags"
-              placeholder="Добавте тэги для блюда"
+              placeholder="Добавте тэги для меню"
               id="tags"
               :suggestions="filteredSuggestions"
               :multiple="true"
@@ -134,7 +134,7 @@
         </div>
       </div>
 
-      <MenuGenerator />
+      <MenuGenerator @generate="generateHandler"/>
     </template>
   </DefaultPageLayout>
 </template>
@@ -271,6 +271,10 @@ export default {
       event.target.value = '';
     };
 
+    const generateHandler = () => {
+      Object.assign(menu, initialMenu.value);
+    };
+
     return {
       ...useUpload(),
       pushToPickList,
@@ -285,6 +289,7 @@ export default {
       myUploader,
       createNewTag,
       searchFromSuggestions,
+      generateHandler,
       filteredSuggestions,
       image,
       initialMenu,

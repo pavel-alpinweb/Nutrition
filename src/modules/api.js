@@ -52,12 +52,6 @@ HTTP.interceptors.response.use((response) => {
   if (error.response.status === 401) {
     eventBus.emit('forceRedirect', '/login');
   }
-  eventBus.emit('showToast', {
-    severity: 'error',
-    summary: error.response.data.title || 'Непредвиденная ошибка',
-    detail: error.response.data.message || 'Что-то очень пошло не так!',
-    life: 5000,
-  });
   if (error.response.data.reasons.length) {
     error.response.data.reasons.forEach((reason) => {
       eventBus.emit('showToast', {

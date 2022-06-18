@@ -28,6 +28,9 @@
                   :item="item"
                 />
               </div>
+              <div class="product-page__paginator-wrapper">
+                <Paginator :rows="6" :totalRecords="180"></Paginator>
+              </div>
             </div>
             <div v-else class="product-page__grid">
               <Skeleton height="400px"/>
@@ -50,6 +53,7 @@ import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
 import Skeleton from 'primevue/skeleton';
+import Paginator from 'primevue/paginator';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -59,6 +63,7 @@ export default {
     NutritionCard,
     DefaultPageLayout,
     Skeleton,
+    Paginator,
   },
   setup() {
     const store = useStore();
@@ -143,6 +148,12 @@ export default {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-gap: 0.5rem;
+    }
+    &__paginator-wrapper {
+      grid-column: span 3;
+      .p-paginator {
+        border: none;
+      }
     }
   }
 </style>

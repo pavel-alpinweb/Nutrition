@@ -28,6 +28,16 @@ const state = {
       products: [],
     },
   ],
+  metadata: {
+    totalItems: 0,
+    actualSize: 0,
+    actualNumber: 0,
+    empty: true,
+    offset: 0,
+    totalPages: 0,
+    first: true,
+    last: true,
+  },
   pickDishesList: [],
   pickDishName: null,
 };
@@ -89,6 +99,9 @@ const mutations = {
       items: [],
       tags: [],
     };
+  },
+  setMetaData(state, metadata) {
+    state.metadata = metadata;
   },
   resetPickProductPage(state) {
     state.lackMenuPrice = 0;
@@ -155,6 +168,7 @@ const actions = {
       commit('setMenusListLoaded', false);
       const result = await HTTP.get(`/menus/getByFilter?${queryString.stringify(params)}`);
       commit('setMenusList', result.content);
+      commit('setMetaData', result.metadata);
     } finally {
       commit('setMenusListLoaded', true);
     }

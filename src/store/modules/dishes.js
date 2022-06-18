@@ -26,6 +26,16 @@ const state = {
     tags: [],
   },
   pickProductList: [],
+  metadata: {
+    totalItems: 0,
+    actualSize: 0,
+    actualNumber: 0,
+    empty: true,
+    offset: 0,
+    totalPages: 0,
+    first: true,
+    last: true,
+  },
 };
 
 const mutations = {
@@ -46,6 +56,9 @@ const mutations = {
   },
   deleteProduct(state, id) {
     state.dishesList = state.dishesList.filter((dish) => dish.id !== id);
+  },
+  setMetaData(state, metadata) {
+    state.metadata = metadata;
   },
   checkPickProduct(state, { productIndex, ingredientIndex }) {
     const category = state.pickProductList.find((cat) => ingredientIndex === cat.ingredientIndex);
@@ -114,6 +127,7 @@ const actions = {
       commit('setDishesListLoaded', false);
       const result = await HTTP.get(`/dishes/getByFilter?${queryString.stringify(params)}`);
       commit('setDishesList', result.content);
+      commit('setMetaData', result.metadata);
     } finally {
       commit('setDishesListLoaded', true);
     }

@@ -18,21 +18,28 @@
           @clearSearch="onClearSearch"
         >
           <template v-slot:content>
-            <div v-if="isLoaded" class="product-page__grid">
-              <div
-                v-for="item in dishesList"
-                :key="item.id"
-                class="product-page__item"
-              >
-                <NutritionCard
-                  :item="item"
-                />
+            <div class="product-page__content">
+              <div v-if="isLoaded" class="product-page__grid">
+                <div
+                  v-for="item in dishesList"
+                  :key="item.id"
+                  class="product-page__item"
+                >
+                  <NutritionCard
+                    :item="item"
+                  />
+                </div>
               </div>
-            </div>
-            <div v-else class="product-page__grid">
-              <Skeleton height="400px"/>
-              <Skeleton height="400px"/>
-              <Skeleton height="400px"/>
+              <div v-else class="product-page__grid">
+                <Skeleton v-for="i in ITEMS_PER_PAGE" :key="i" height="400px"/>
+              </div>
+              <div class="product-page__paginator-wrapper">
+                <Paginator
+                  :rows="ITEMS_PER_PAGE"
+                  :totalRecords="metadata.totalItems"
+                  @page="onPage($event)"
+                ></Paginator>
+              </div>
             </div>
           </template>
         </ListLayout>
@@ -47,7 +54,9 @@ import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import { ITEMS_PER_PAGE } from '@/modules/constants';
 import Skeleton from 'primevue/skeleton';
+import Paginator from 'primevue/paginator';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -57,15 +66,17 @@ export default {
     NutritionCard,
     DefaultPageLayout,
     Skeleton,
+    Paginator,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
     const filters = computed(() => store.state.dishes.filters);
     const isLoaded = computed(() => store.state.dishes.isDishesListLoaded);
+    const metadata = computed(() => store.state.dishes.metadata);
     const params = reactive({
       page: 0,
-      size: 200,
+      size: ITEMS_PER_PAGE,
     });
 
     onMounted(async () => {
@@ -94,6 +105,10 @@ export default {
     const onSearch = async (value) => {
       await store.dispatch('dishes/getDishByName', value);
     };
+    const onPage = async (event) => {
+      params.page = event.page;
+      await store.dispatch('products/getProductsByFilter', params);
+    };
     const onClearSearch = async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
     };
@@ -109,6 +124,9 @@ export default {
       onFilter,
       onSearch,
       onClearSearch,
+      onPage,
+      ITEMS_PER_PAGE,
+      metadata,
     };
   },
 };
@@ -121,6 +139,17 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 0.5rem;
+  }
+  &__paginator-wrapper {
+    margin-top: auto;
+    .p-paginator {
+      border: none;
+    }
+  }
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

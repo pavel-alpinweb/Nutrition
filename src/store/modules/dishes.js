@@ -141,6 +141,7 @@ const actions = {
     const result = await HTTP.get(`/dishes/getAllIngredientProducts?${queryString.stringify(params)}`);
     commit('setPickProductsList', result.categories);
     commit('setPickProductListLoaded', true);
+    commit('setBadge', result.dishName, { root: true });
   },
   async createReport({ commit }, params) {
     commit('setIsPriceLoading', true);

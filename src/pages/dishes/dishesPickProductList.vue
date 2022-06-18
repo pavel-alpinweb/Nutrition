@@ -49,7 +49,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Skeleton from 'primevue/skeleton';
 import {
-  computed, ref, onMounted, watch,
+  computed, ref, onMounted, watch, onBeforeUnmount,
 } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -103,6 +103,10 @@ export default {
         }
         fetchProductPriceParams.products.push(data);
       });
+    });
+
+    onBeforeUnmount(() => {
+      store.commit('setBadge', null);
     });
 
     return {

@@ -141,6 +141,7 @@ export default {
 
     onBeforeUnmount(() => {
       store.commit('menus/resetPickProductPage');
+      store.commit('setBadge', null);
     });
 
     return {

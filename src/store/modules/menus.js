@@ -180,6 +180,7 @@ const actions = {
     commit('setPickDishesList', result.dishes);
     commit('setPickDishName', result.dishProducts.dishName);
     commit('setPickProductListLoaded', true);
+    commit('setBadge', result.menuName, { root: true });
   },
   async deleteMenu({ commit }, menuId) {
     await HTTP.delete('/menus/delete', { params: { id: menuId } });

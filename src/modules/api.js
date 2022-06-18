@@ -58,7 +58,7 @@ HTTP.interceptors.response.use((response) => {
         severity: 'error',
         summary: reason.title || 'Непредвиденная ошибка',
         detail: reason.message || 'Что-то очень пошло не так!',
-        life: 5000,
+        life: 10000,
       });
     });
   }

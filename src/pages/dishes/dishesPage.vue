@@ -106,8 +106,9 @@ export default {
       await store.dispatch('dishes/getDishByName', value);
     };
     const onPage = async (event) => {
+      console.log('event', event.page);
       params.page = event.page;
-      await store.dispatch('dishes/getProductsByFilter', params);
+      await store.dispatch('dishes/getDishesByFilter', params);
     };
     const onClearSearch = async () => {
       await store.dispatch('dishes/getDishesByFilter', params);

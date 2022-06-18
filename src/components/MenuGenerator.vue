@@ -203,7 +203,7 @@ export default {
     const conditionsOptions = useOptions(CONDITIONS);
     const showMenuGenerator = ref(false);
     const generatorParams = reactive({
-      menuName: 'string',
+      menuName: '',
       maxPrice: 1,
       minMealsNumber: 1,
       servingNumberPerMeal: 1,

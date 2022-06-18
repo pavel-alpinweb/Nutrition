@@ -29,7 +29,7 @@
                 />
               </div>
               <div class="product-page__paginator-wrapper">
-                <Paginator :rows="6" :totalRecords="180"></Paginator>
+                <Paginator :rows="ITEMS_PER_PAGE" :totalRecords="metadata.totalItems"></Paginator>
               </div>
             </div>
             <div v-else class="product-page__grid">
@@ -52,6 +52,7 @@ import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
 import DefaultPageLayout from '@/layouts/DefaultPageLayout.vue';
+import { ITEMS_PER_PAGE } from '@/modules/constants';
 import Skeleton from 'primevue/skeleton';
 import Paginator from 'primevue/paginator';
 import { useRouter } from 'vue-router';
@@ -70,7 +71,7 @@ export default {
     const router = useRouter();
     const params = reactive({
       page: 0,
-      size: 200,
+      size: ITEMS_PER_PAGE,
     });
     const filters = computed(() => store.state.products.filters);
     const category = computed(() => store.state.products.filters.categories);
@@ -80,6 +81,7 @@ export default {
     const manufacturers = computed(() => store.state.products.filters.manufacturers);
     const user = computed(() => store.state.auth.user);
     const isProductsListLoaded = computed(() => store.state.products.isProductsListLoaded);
+    const metadata = computed(() => store.state.products.metadata);
 
     watch(user, async (currentValue) => {
       if (currentValue !== null) {
@@ -136,6 +138,8 @@ export default {
       params,
       filters,
       isProductsListLoaded,
+      metadata,
+      ITEMS_PER_PAGE,
     };
   },
 };

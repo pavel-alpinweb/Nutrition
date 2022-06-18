@@ -15,3 +15,4 @@ export const CONDITIONS = [
     code: 'greaterOrEqual',
   },
 ];
+export const ITEMS_PER_PAGE = 6;

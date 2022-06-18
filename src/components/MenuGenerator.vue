@@ -29,7 +29,7 @@
               min="1"
             />
           </div>
-          <div class="p-grid">
+          <div class="p-grid p-align-end">
             <div class="p-col-6">
               <div class="p-fluid p-field">
                 <label for="minMealsNumber">Минимальное кол-во приемов пищи на человека</label>
@@ -221,7 +221,7 @@ export default {
     const createNewProductsParam = () => {
       generatorParams.productConstraints.push({
         productCategory: '',
-        condition: '',
+        condition: 'greaterOrEqual',
         quantity: 0,
       });
     };
@@ -233,7 +233,7 @@ export default {
     const createNewDishesParam = () => {
       generatorParams.dishTagConstraints.push({
         dishTag: '',
-        condition: '',
+        condition: 'greaterOrEqual',
         quantity: 0,
       });
     };

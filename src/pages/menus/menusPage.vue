@@ -7,6 +7,7 @@
           :dishes-options-array="filters.dishNames"
           :is-search-by-name="true"
           :is-show-reload-prices="false"
+          :is-show-sort="false"
           :searchArray="filters.menuNames"
           search-placeholder="Название меню"
           @change="changeIHave"

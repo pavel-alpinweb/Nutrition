@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="list-layout__sidebar-bottom p-fluid">
-        <div class="p-field">
+        <div v-if="isShowSort" class="p-field">
           <label for="options">Сортировать</label>
           <Dropdown
             v-model="sortOptions.selectedOption.value"
@@ -222,6 +222,10 @@ export default {
     isShowCheckIHave: {
       type: Boolean,
       default: false,
+    },
+    isShowSort: {
+      type: Boolean,
+      default: true,
     },
     productTagOptionsArray: {
       type: Array,

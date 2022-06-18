@@ -8,6 +8,7 @@
           :products-options-array="filters.productCategories"
           :is-show-check-i-have="false"
           :is-show-reload-prices="false"
+          :is-show-sort="false"
           :searchArray="filters.dishNames"
           search-placeholder="Название блюда"
           @search="onSearch"

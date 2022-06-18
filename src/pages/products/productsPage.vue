@@ -18,24 +18,28 @@
           @filter="onFilter"
         >
           <template v-slot:content>
-            <div v-if="isProductsListLoaded" class="product-page__grid">
-              <div
-                v-for="item in productsList"
-                :key="item.id"
-                class="product-page__item"
-              >
-                <NutritionCard
-                  :item="item"
-                />
+            <div class="product-page__content">
+              <div v-if="isProductsListLoaded" class="product-page__grid">
+                <div
+                  v-for="item in productsList"
+                  :key="item.id"
+                  class="product-page__item"
+                >
+                  <NutritionCard
+                    :item="item"
+                  />
+                </div>
+              </div>
+              <div v-else class="product-page__grid">
+                <Skeleton v-for="i in ITEMS_PER_PAGE" :key="i" height="400px"/>
               </div>
               <div class="product-page__paginator-wrapper">
-                <Paginator :rows="ITEMS_PER_PAGE" :totalRecords="metadata.totalItems"></Paginator>
+                <Paginator
+                  :rows="ITEMS_PER_PAGE"
+                  :totalRecords="metadata.totalItems"
+                  @page="onPage($event)"
+                ></Paginator>
               </div>
-            </div>
-            <div v-else class="product-page__grid">
-              <Skeleton height="400px"/>
-              <Skeleton height="400px"/>
-              <Skeleton height="400px"/>
             </div>
           </template>
         </ListLayout>
@@ -121,6 +125,10 @@ export default {
     const onSearch = (value) => {
       console.log('onSearch', value.value);
     };
+    const onPage = async (event) => {
+      params.page = event.page;
+      await store.dispatch('products/getProductsByFilter', params);
+    };
     return {
       pageName: computed(() => store.state.products.pageName),
       productsList: computed(() => store.state.products.productsList),
@@ -129,6 +137,7 @@ export default {
       markets,
       grades,
       manufacturers,
+      onPage,
       changeIHave,
       addProduct,
       reloadPrices,
@@ -154,10 +163,15 @@ export default {
       grid-gap: 0.5rem;
     }
     &__paginator-wrapper {
-      grid-column: span 3;
+      margin-top: auto;
       .p-paginator {
         border: none;
       }
+    }
+    &__content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
   }
 </style>

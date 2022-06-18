@@ -372,6 +372,7 @@ export default {
     padding: 8px;
     margin-top: 10px;
     background-color: var(--surface-b);
+    height: 100%;
     &__sidebar {
       border: 1px solid #ccc;
       position: fixed;

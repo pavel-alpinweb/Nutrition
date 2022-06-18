@@ -100,6 +100,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.dish-select {
+  .p-card .p-card-body {
+    padding-bottom: 0;
+  }
+}
 
 </style>

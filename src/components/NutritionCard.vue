@@ -102,15 +102,15 @@
         </Tag>
       </div>
       <div
-        v-if="item.dishes?.length > 0"
+        v-if="item.items?.length > 0"
         class="nutrition-card__footer"
       >
         <Tag
-          v-for="tag in item.dishes"
-          :key="tag.code"
+          v-for="item in item.items"
+          :key="item.id"
           class="p-mr-2 p-mb-2"
           severity="info"
-          :value="tag.name"
+          :value="`${item.dishName} (${item.servingNumber})`"
           size="large"
           icon="fas fa-concierge-bell"
           rounded>

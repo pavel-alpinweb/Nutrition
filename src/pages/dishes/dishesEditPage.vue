@@ -118,6 +118,7 @@
               id="tags"
               :suggestions="filteredSuggestions"
               :multiple="true"
+              :dropdown="true"
               @complete="searchFromSuggestions"
               @keyup.enter="createNewTag"
             />

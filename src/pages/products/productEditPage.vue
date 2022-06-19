@@ -327,7 +327,7 @@ export default {
     };
 
     const reset = () => {
-      Object.assign(product, initialProduct.value);
+      window.location.replace(`/products/${route.params.id}`);
     };
 
     const selectField = (event, field) => {

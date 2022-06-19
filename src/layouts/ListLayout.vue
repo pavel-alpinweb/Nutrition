@@ -378,6 +378,7 @@ export default {
     background-color: var(--surface-b);
     height: 100%;
     &__sidebar {
+      background: var(--surface-b);
       border: 1px solid #ccc;
       position: fixed;
       height: calc(100% - 145px);

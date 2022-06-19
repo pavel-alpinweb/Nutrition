@@ -134,7 +134,6 @@
             <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
           </div>
         </div>
-        <pre>{{ dish.tags }}</pre>
       </div>
       <div v-else class="product-edit">
         <div class="dishes-edit__skeleton-grid">

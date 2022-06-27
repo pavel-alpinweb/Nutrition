@@ -19,16 +19,6 @@
               placeholder="Название"
             />
           </div>
-          <div class="p-fluid p-field">
-            <label for="cost">Максимальное допустимая стоимость меню</label>
-            <InputText
-              v-model="generatorParams.maxPrice"
-              id="cost"
-              type="number"
-              placeholder="Стоимость"
-              min="1"
-            />
-          </div>
           <div class="p-grid p-align-end">
             <div class="p-col-6">
               <div class="p-fluid p-field">
@@ -204,7 +194,6 @@ export default {
     const showMenuGenerator = ref(false);
     const generatorParams = reactive({
       menuName: '',
-      maxPrice: 1,
       minMealsNumber: 1,
       servingNumberPerMeal: 1,
       productConstraints: [],

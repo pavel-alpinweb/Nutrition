@@ -30,7 +30,7 @@
       </span>
       <Button
         class="login-submit-btn"
-        :label="formType === 'registration' ? 'Заверширть' : 'Поменять'"
+        :label="formType === 'registration' ? 'Завершить' : 'Поменять'"
         @click="send"
       />
       <router-link v-if="formType === 'registration'" class="login-link" to="/login">

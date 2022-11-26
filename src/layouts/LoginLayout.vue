@@ -37,7 +37,8 @@ export default {
 
 <style scoped lang="scss">
 .nutrition-app {
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   height: 100vh;
   overflow-y: auto;

@@ -1,6 +1,17 @@
 <template>
   <div class="list-layout p-grid">
-    <div class="list-layout__sidebar p-fluid">
+    <Button
+      :class="[
+        'list-layout__btn laptops-hide all-desktops-hide',
+        { 'list-layout__btn--open': isOpenSidebar },
+      ]"
+      icon="fas fa-tasks"
+      @click="toggleSidebar"
+    />
+    <div :class="[
+      'list-layout__sidebar p-fluid',
+      { 'list-layout__sidebar--open': isOpenSidebar },
+    ]">
       <div class="list-layout__sidebar-top">
         <div class="p-field">
           <AutoComplete
@@ -273,6 +284,7 @@ export default {
     },
   },
   setup(props, { emit }) {
+    const isOpenSidebar = ref(false);
     const store = useStore();
     const isIHave = ref(false);
     const searchString = ref();
@@ -335,6 +347,9 @@ export default {
     const clearEmit = () => {
       emit('clearSearch');
     };
+    const toggleSidebar = () => {
+      isOpenSidebar.value = !isOpenSidebar.value;
+    };
     return {
       searchString,
       isIHave,
@@ -356,6 +371,7 @@ export default {
       search,
       searchFromSuggestions,
       clearEmit,
+      toggleSidebar,
       category,
       productTags,
       dishesTags,
@@ -366,28 +382,57 @@ export default {
       manufacturers,
       productNames,
       filteredSuggestions,
+      isOpenSidebar,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/scss/breakpoints.scss";
+
   .list-layout {
     padding: 8px;
     margin-top: 10px;
     background-color: var(--surface-b);
     height: 100%;
+    &__btn {
+      position: fixed;
+      left: 0;
+      transition: left 0.3s;
+      z-index: 1;
+      @include all-tablets {
+        &--open {
+          left: 295px;
+        }
+      }
+    }
     &__sidebar {
+      background: var(--surface-b);
       border: 1px solid #ccc;
       position: fixed;
       height: calc(100% - 145px);
       padding: 10px;
       width: 295px;
       overflow-y: auto;
-      overflow-x: hidden;
+      overflow-x: visible;
+      @include all-tablets {
+        position: fixed;
+        left: -295px;
+        transition: left 0.3s;
+        z-index: 1;
+        &--open {
+          left: 0;
+          z-index: 1;
+        }
+      }
     }
     &__content {
       overflow: auto;
+      @include all-tablets {
+        width: 100%;
+        margin-left: 0;
+      }
     }
     &__sidebar-top {
       border-bottom: 1px solid #ccc;

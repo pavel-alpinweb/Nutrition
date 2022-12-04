@@ -2,7 +2,7 @@
   <Dialog
     header="Профиль"
     v-model:visible="showProfile"
-    :style="{width: '25vw'}"
+    :style="{maxWidth: '500px', width: '100%'}"
     :modal="true"
     :draggable="false"
     :dismissableMask="true"

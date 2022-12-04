@@ -5,7 +5,7 @@
         <div class="menus-pick-product-list__header">
           <div class="menus-pick-product-list__wrapper-form p-formgrid">
             <div class="p-fluid p-grid">
-              <div class="p-field p-col-3 p-offset-5">
+              <div class="p-field p-col-6">
                 <label for="number">Количество меню</label>
                 <InputText
                   v-model="menuQuantity"
@@ -15,7 +15,7 @@
                   :disabled="isPriceLoading"
                   min="1" />
               </div>
-              <div class="menus-pick-product-list__btn-container p-field p-col-4">
+              <div class="p-field menus-pick-product-list__btn-container p-col-6">
                 <Button
                   label="Составить отчет"
                   icon="fas fa-print"
@@ -160,6 +160,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/breakpoints.scss";
 .menus-pick-product-list {
   padding: 10px;
   &__header {
@@ -168,6 +169,9 @@ export default {
   }
   &__wrapper-form {
     flex-basis: 50%;
+    @include all-big-mobiles {
+      flex-basis: 100%;
+    }
   }
   &__btn-container {
     display: flex;

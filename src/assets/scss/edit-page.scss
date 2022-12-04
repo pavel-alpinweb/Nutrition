@@ -1,0 +1,62 @@
+.edit-page {
+  padding: 10px;
+  &__image {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    overflow: hidden;
+  }
+  &__default-image {
+    font-size: 300px;
+    text-align: center;
+    margin-top: 20px;
+    color: grey;
+  }
+  &__add-category {
+    margin-top: 10px;
+  }
+  &__skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 30px;
+    grid-template-areas:
+        "image image input-1 input-2"
+        "image image input-3 input-4"
+        "input-5 input-5 input-5 input-5";
+    grid-gap: 10px;
+  }
+  &__item {
+    &--image {
+      grid-area: image;
+    }
+    &--input-1 {
+      grid-area: input-1;
+    }
+    &--input-2 {
+      grid-area: input-2;
+    }
+    &--input-3 {
+      grid-area: input-3;
+    }
+    &--input-4 {
+      grid-area: input-4;
+    }
+    &--input-5 {
+      grid-area: input-5;
+    }
+  }
+  &__image {
+    img {
+      height: 446px;
+      width: auto;
+      margin: 0 auto 10px;
+      display: block;
+    }
+  }
+  &-footer {
+    padding: 10px;
+  }
+}
+.p-button {
+  margin-right: .5rem;
+}

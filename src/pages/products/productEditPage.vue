@@ -1,19 +1,19 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
-      <div v-if="isProductInit" class="product-edit p-grid">
-        <div class="product-edit__left p-col-6">
+      <div v-if="isProductInit" class="edit-page p-grid">
+        <div class="edit-page__left p-col-6">
           <Image
             v-if="product.imageUrl"
-            class="product-edit__image"
+            class="edit-page__image"
             :src="product.imageUrl"
             alt="Image"
           />
-          <div v-else class="product-edit__default-image">
+          <div v-else class="edit-page__default-image">
             <i class="fas fa-carrot"></i>
           </div>
           <FileUpload
-            class="product-edit__upload"
+            class="edit-page__upload"
             name="demo[]"
             :multiple="false"
             accept="image/*"
@@ -26,7 +26,7 @@
             </template>
           </FileUpload>
         </div>
-        <div class="product-edit__right p-col-6">
+        <div class="edit-page__right p-col-6">
           <div class="p-fluid p-grid">
             <div class="p-field p-col-6">
               <label for="category">Категория</label>
@@ -40,7 +40,7 @@
                 @change="selectField($event, 'category')"
               />
               <Inplace
-                class="product-edit__add-category"
+                class="edit-page__add-category"
                 :closable="true"
               >
                 <template #display>
@@ -71,7 +71,7 @@
                 @change="selectField($event, 'shop')"
               />
               <Inplace
-                class="product-edit__add-category"
+                class="edit-page__add-category"
                 :closable="true"
               >
                 <template #display>
@@ -102,7 +102,7 @@
                 @change="selectField($event, 'grade')"
               />
               <Inplace
-                class="product-edit__add-category"
+                class="edit-page__add-category"
                 :closable="true"
               >
                 <template #display>
@@ -133,7 +133,7 @@
                 @change="selectField($event, 'manufacturer')"
               />
               <Inplace
-                class="product-edit__add-category"
+                class="edit-page__add-category"
                 :closable="true"
               >
                 <template #display>
@@ -201,7 +201,7 @@
             </div>
           </div>
         </div>
-        <div class="product-edit__central p-col-12 p-fluid">
+        <div class="edit-page__central p-col-12 p-fluid">
           <div class="p-field">
             <label for="tags">Тэги</label>
             <AutoComplete
@@ -228,14 +228,14 @@
           <Button label="Сбросить" icon="pi pi-sync" class="p-button-warning" @click="reset"/>
         </div>
       </div>
-      <div v-else class="product-edit">
-        <div class="product-edit__skeleton-grid">
-          <Skeleton class="product-edit__item product-edit__item--image" height="25vh"/>
-          <Skeleton class="product-edit__item product-edit__item--input-1" height="30px"/>
-          <Skeleton class="product-edit__item product-edit__item--input-2" height="30px"/>
-          <Skeleton class="product-edit__item product-edit__item--input-3" height="30px"/>
-          <Skeleton class="product-edit__item product-edit__item--input-4" height="30px"/>
-          <Skeleton class="product-edit__item product-edit__item--input-5" height="30px"/>
+      <div v-else class="edit-page">
+        <div class="edit-page__skeleton-grid">
+          <Skeleton class="edit-page__item edit-page__item--image" height="25vh"/>
+          <Skeleton class="edit-page__item edit-page__item--input-1" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-2" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-3" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-4" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-5" height="30px"/>
         </div>
       </div>
     </template>
@@ -381,66 +381,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-  .product-edit {
-    padding: 10px;
-    &__image {
-      display: block;
-      margin: 0 auto;
-      text-align: center;
-      overflow: hidden;
-    }
-    &__default-image {
-      font-size: 300px;
-      text-align: center;
-      margin-top: 20px;
-      color: grey;
-    }
-    &__add-category {
-      margin-top: 10px;
-    }
-    &__skeleton-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 30px;
-      grid-template-areas:
-        "image image input-1 input-2"
-        "image image input-3 input-4"
-        "input-5 input-5 input-5 input-5";
-      grid-gap: 10px;
-    }
-    &__item {
-      &--image {
-        grid-area: image;
-      }
-      &--input-1 {
-        grid-area: input-1;
-      }
-      &--input-2 {
-        grid-area: input-2;
-      }
-      &--input-3 {
-        grid-area: input-3;
-      }
-      &--input-4 {
-        grid-area: input-4;
-      }
-      &--input-5 {
-        grid-area: input-5;
-      }
-    }
-  }
-  .p-button {
-    margin-right: .5rem;
-  }
-</style>
 <style lang="scss">
-.product-edit__image {
-  img {
-    height: 446px;
-    width: auto;
-    margin: 0 auto 10px;
-    display: block;
-  }
-}
+@import "~@/assets/scss/edit-page.scss";
 </style>

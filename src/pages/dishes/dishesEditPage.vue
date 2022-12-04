@@ -1,20 +1,20 @@
 <template>
   <DefaultPageLayout>
     <template v-slot:page-content>
-      <div v-if="isDishLoaded" class="dishes-edit">
-        <div class="dishes-edit-header p-grid">
-          <div class="dishes-edit-header__left p-col-6">
+      <div v-if="isDishLoaded" class="edit-page">
+        <div class="edit-page-header p-grid">
+          <div class="edit-page-header__left p-col-6">
             <Image
               v-if="dish.imageUrl"
-              class="dishes-edit__image"
+              class="edit-page__image"
               :src="dish.imageUrl"
               alt="Image"
             />
-            <div v-else class="dishes-edit__default-image">
+            <div v-else class="edit-page__default-image">
               <i class="fas fa-concierge-bell"></i>
             </div>
             <FileUpload
-              class="dishes-edit__upload"
+              class="edit-page__upload"
               name="demo[]"
               :multiple="false"
               accept="image/*"
@@ -27,7 +27,7 @@
               </template>
             </FileUpload>
           </div>
-          <div class="dishes-edit-header__right p-col-6 p-formgrid">
+          <div class="edit-page-header__right p-col-6 p-formgrid">
             <div class="p-fluid p-grid">
               <div class="p-field p-col-12">
                 <label for="name">Название блюда</label>
@@ -74,7 +74,7 @@
             </div>
           </div>
         </div>
-        <div class="dishes-edit-content">
+        <div class="edit-page-content">
           <Panel header="Ингридиенты">
             <template #icons>
               <Button
@@ -109,7 +109,7 @@
             />
           </Panel>
         </div>
-        <div class="dishes-edit-footer">
+        <div class="edit-page-footer">
           <div class="p-fluid p-field">
             <label for="tags">Тэги</label>
             <AutoComplete
@@ -123,7 +123,7 @@
               @keyup.enter="createNewTag"
             />
           </div>
-          <div class="dishes-edit-footer__buttons">
+          <div class="edit-page-footer__buttons">
             <Button
               v-if="!isNewDish"
               label="Новое блюдо"
@@ -137,13 +137,13 @@
         </div>
       </div>
       <div v-else class="product-edit">
-        <div class="dishes-edit__skeleton-grid">
-          <Skeleton class="dishes-edit__item dishes-edit__item--image" height="25vh"/>
-          <Skeleton class="dishes-edit__item dishes-edit__item--input-1" height="30px"/>
-          <Skeleton class="dishes-edit__item dishes-edit__item--input-2" height="30px"/>
-          <Skeleton class="dishes-edit__item dishes-edit__item--input-3" height="30px"/>
-          <Skeleton class="dishes-edit__item dishes-edit__item--input-4" height="30px"/>
-          <Skeleton class="dishes-edit__item dishes-edit__item--input-5" height="30px"/>
+        <div class="edit-page__skeleton-grid">
+          <Skeleton class="edit-page__item edit-page__item--image" height="25vh"/>
+          <Skeleton class="edit-page__item edit-page__item--input-1" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-2" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-3" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-4" height="30px"/>
+          <Skeleton class="edit-page__item edit-page__item--input-5" height="30px"/>
         </div>
       </div>
     </template>
@@ -326,61 +326,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-  .dishes-edit {
-    padding: 10px;
-    &-footer {
-      padding: 10px;
-    }
-    .p-button {
-      margin-right: .5rem;
-    }
-    &__default-image {
-      font-size: 300px;
-      text-align: center;
-      margin-top: 20px;
-      color: grey;
-    }
-    &__skeleton-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 30px;
-      grid-template-areas:
-        "image image input-1 input-2"
-        "image image input-3 input-4"
-        "input-5 input-5 input-5 input-5";
-      grid-gap: 10px;
-    }
-    &__item {
-      &--image {
-        grid-area: image;
-      }
-      &--input-1 {
-        grid-area: input-1;
-      }
-      &--input-2 {
-        grid-area: input-2;
-      }
-      &--input-3 {
-        grid-area: input-3;
-      }
-      &--input-4 {
-        grid-area: input-4;
-      }
-      &--input-5 {
-        grid-area: input-5;
-      }
-    }
-  }
-
-</style>
 <style lang="scss">
-.dishes-edit__image {
-  img {
-    height: 446px;
-    width: auto;
-    margin: 0 auto 10px;
-    display: block;
-  }
-}
+@import "~@/assets/scss/edit-page.scss";
 </style>

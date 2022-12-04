@@ -2,7 +2,7 @@
   <DefaultPageLayout>
     <template v-slot:page-content>
       <div v-if="isProductInit" class="edit-page p-grid">
-        <div class="edit-page__left p-col-6">
+        <div class="edit-page__left p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
           <Image
             v-if="product.imageUrl"
             class="edit-page__image"
@@ -26,9 +26,9 @@
             </template>
           </FileUpload>
         </div>
-        <div class="edit-page__right p-col-6">
+        <div class="edit-page__right p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
           <div class="p-fluid p-grid">
-            <div class="p-field p-col-6">
+            <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
               <label for="category">Категория</label>
               <Dropdown
                 v-model="productOptions.categoryOptions.selectedOption.value"
@@ -59,7 +59,7 @@
                 </template>
               </Inplace>
             </div>
-            <div class="p-field p-col-6">
+            <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
               <label for="market">Магазин</label>
               <Dropdown
                 v-model="productOptions.marketOptions.selectedOption.value"
@@ -90,7 +90,7 @@
                 </template>
               </Inplace>
             </div>
-            <div class="p-field p-col-6">
+            <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
               <label for="sort">Сорт</label>
               <Dropdown
                 v-model="productOptions.gradeOptions.selectedOption.value"
@@ -121,7 +121,7 @@
                 </template>
               </Inplace>
             </div>
-            <div class="p-field p-col-6">
+            <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
               <label for="manufactor">Производитель или марка</label>
               <Dropdown
                 v-model="productOptions.manufacturerOptions.selectedOption.value"
@@ -153,7 +153,7 @@
               </Inplace>
             </div>
             <div class="p-formgrid p-grid p-col-12">
-              <div class="p-field p-col-6">
+              <div class="p-field p-col-12 p-xl-6">
                 <label for="price">Цена за:</label>
                 <InputText
                   v-model="product.price"
@@ -163,7 +163,7 @@
                   min="0"
                 />
               </div>
-              <div class="p-field p-col-3">
+              <div class="p-field p-col-6 p-xl-3">
                 <label for="size">Размер упаковки</label>
                 <InputText
                   v-model="product.packingSize"
@@ -173,7 +173,7 @@
                   min="0"
                 />
               </div>
-              <div class="p-field p-col-3">
+              <div class="p-field p-col-6 p-xl-3">
                 <label for="options">Единицы</label>
                 <Dropdown
                   v-model="unitOptions.selectedOption.value"
@@ -216,7 +216,7 @@
             />
           </div>
         </div>
-        <div class="p-col-12">
+        <div class="p-col-12 edit-page__button-container">
           <Button
             v-if="!isNewProduct"
             label="Новый продукт"

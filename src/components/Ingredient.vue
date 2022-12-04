@@ -1,6 +1,6 @@
 <template>
   <div class="ingredient p-grid">
-    <div class="p-col-8 ingredient__filters">
+    <div class="p-col-12 p-lg-8 ingredient__filters">
       <Card>
         <template #content>
           <div class="grid p-fluid">
@@ -88,7 +88,7 @@
         </template>
       </Card>
     </div>
-    <div class="p-col-4 ingredient__number">
+    <div class="p-col-12 p-lg-4 ingredient__number">
       <InputText
         v-model="quantity"
         class="ingredient__text"

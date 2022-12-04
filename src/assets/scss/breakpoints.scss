@@ -167,7 +167,13 @@
 }
 
 .all-mobiles-hide {
-  @media screen and (min-width: 360px) and (max-width: 539px){
+  @media screen and (max-width: 767px){
+    display: none!important;
+  }
+}
+
+.all-mobiles-hide {
+  @media screen and (max-width: 767px){
     display: none!important;
   }
 }

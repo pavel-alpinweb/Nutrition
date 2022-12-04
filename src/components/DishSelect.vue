@@ -3,7 +3,7 @@
     <Card class="p-mb-2">
       <template #content>
         <div class="p-grid">
-          <div class="p-col-6">
+          <div class=" p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
             <div class="p-grid p-fluid">
               <div class="p-col-12">
                 <Dropdown
@@ -17,7 +17,7 @@
               </div>
             </div>
           </div>
-          <div class="p-col-6">
+          <div class=" p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
             <div class="p-grid p-fluid">
               <div class="p-col-11">
                 <InputText

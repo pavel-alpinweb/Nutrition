@@ -75,6 +75,7 @@
           </div>
         </div>
         <div class="edit-page-content">
+          <h2>Ингридиенты входящие в блюдо:</h2>
           <Panel>
             <template #icons>
               <div class="edit-page__button-container">
@@ -95,10 +96,10 @@
             </template>
             <div class="p-grid all-mobiles-hide laptops-hide all-tablets-hide">
               <div class="p-col-8 p-text-center">
-                <h2>Ингридиент</h2>
+                <h3>Ингридиент</h3>
               </div>
               <div class="p-col-4 p-text-center">
-                <h2>Количество</h2>
+                <h3>Количество</h3>
               </div>
             </div>
             <Ingredient

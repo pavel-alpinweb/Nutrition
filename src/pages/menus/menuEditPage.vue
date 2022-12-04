@@ -3,7 +3,7 @@
     <template v-slot:page-content>
       <div v-if="isMenuLoaded" class="edit-page">
         <div class="edit-page-header p-grid">
-          <div class="edit-page-header__left p-col-6">
+          <div class="edit-page-header__left p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
             <Image
               v-if="menu.imageUrl"
               class="edit-page__image"
@@ -28,7 +28,7 @@
               </template>
             </FileUpload>
           </div>
-          <div class="edit-page-header__right p-col-6 p-formgrid">
+          <div class="edit-page-header__right p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12 p-formgrid">
             <div class="p-fluid p-grid">
               <div class="p-field p-col-12">
                 <label for="name">Название меню</label>
@@ -53,8 +53,9 @@
             </div>
           </div>
         </div>
-        <div class="edit-page-content">
-          <Panel header="Блюда входящие в меню">
+        <div class="edit-page-content edit-page__button-container">
+          <h2>Блюда входящие в меню:</h2>
+          <Panel>
             <template #icons>
               <Button
                 label="Добавить"
@@ -72,10 +73,10 @@
             </template>
             <div class="p-grid">
               <div class="p-col-6 p-text-center">
-                <h2>Блюдо</h2>
+                <h3>Блюдо</h3>
               </div>
               <div class="p-col-6 p-text-center">
-                <h2>Количество порций</h2>
+                <h3>Количество порций</h3>
               </div>
               <div class="p-col-12">
                 <DishSelect
@@ -104,7 +105,7 @@
               @keyup.enter="createNewTag"
             />
           </div>
-          <div class="edit-page-footer__buttons">
+          <div class="edit-page-footer__buttons edit-page__button-container">
             <Button
               v-if="!isNewMenu"
               label="Новое меню"

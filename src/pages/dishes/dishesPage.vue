@@ -135,23 +135,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.product-page {
-  height: 100%;
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 0.5rem;
-  }
-  &__paginator-wrapper {
-    margin-top: auto;
-    .p-paginator {
-      border: none;
-    }
-  }
-  &__content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-}
+@import "~@/assets/scss/list-page.scss";
 </style>

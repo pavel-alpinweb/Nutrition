@@ -185,11 +185,11 @@
                 />
               </div>
             </div>
-            <div class="p-field  p-col-12">
+            <div class="p-field p-col-12">
               <label for="iHave">У меня в наличии</label>
               <InputText v-model="product.quantity" id="iHave" type="number" min="0"/>
             </div>
-            <div class="p-field  p-col-12">
+            <div class="p-field p-col-12">
               <label for="describe">Примечание</label>
               <Textarea
                 id="describe"

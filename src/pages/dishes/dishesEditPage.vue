@@ -3,7 +3,7 @@
     <template v-slot:page-content>
       <div v-if="isDishLoaded" class="edit-page">
         <div class="edit-page-header p-grid">
-          <div class="edit-page-header__left p-col-6">
+          <div class="edit-page-header__left p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
             <Image
               v-if="dish.imageUrl"
               class="edit-page__image"
@@ -27,7 +27,7 @@
               </template>
             </FileUpload>
           </div>
-          <div class="edit-page-header__right p-col-6 p-formgrid">
+          <div class="edit-page-header__right  p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12 p-formgrid">
             <div class="p-fluid p-grid">
               <div class="p-field p-col-12">
                 <label for="name">Название блюда</label>
@@ -39,7 +39,7 @@
                   min="0"
                 />
               </div>
-              <div class="p-field p-col-4">
+              <div class="p-field p-col-5">
                 <label for="size">Размер порции</label>
                 <InputText
                   v-model="dish.servingSize"
@@ -49,7 +49,7 @@
                   min="0"
                 />
               </div>
-              <div class="p-field p-col-8">
+              <div class="p-field p-col-7">
                 <label for="options">Единицы</label>
                 <Dropdown
                   v-model="unitOptions.selectedOption.value"
@@ -75,23 +75,25 @@
           </div>
         </div>
         <div class="edit-page-content">
-          <Panel header="Ингридиенты">
+          <Panel>
             <template #icons>
-              <Button
-                label="Добавить"
-                icon="fas fa-plus-circle"
-                class="p-button-success"
-                @click="createIngredient()"
-              />
-              <Button
-                v-if="!isNewDish"
-                label="Подобрать продукты"
-                icon="fas fa-carrot"
-                class="p-button-warning"
-                @click="pushToPickList()"
-              />
+              <div class="edit-page__button-container">
+                <Button
+                  label="Добавить"
+                  icon="fas fa-plus-circle"
+                  class="p-button-success"
+                  @click="createIngredient()"
+                />
+                <Button
+                  v-if="!isNewDish"
+                  label="Подобрать продукты"
+                  icon="fas fa-carrot"
+                  class="p-button-warning"
+                  @click="pushToPickList()"
+                />
+              </div>
             </template>
-            <div class="p-grid">
+            <div class="p-grid all-mobiles-hide laptops-hide all-tablets-hide">
               <div class="p-col-8 p-text-center">
                 <h2>Ингридиент</h2>
               </div>
@@ -123,7 +125,7 @@
               @keyup.enter="createNewTag"
             />
           </div>
-          <div class="edit-page-footer__buttons">
+          <div class="edit-page-footer__buttons edit-page__button-container">
             <Button
               v-if="!isNewDish"
               label="Новое блюдо"
@@ -327,5 +329,6 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~@/assets/scss/breakpoints.scss";
 @import "~@/assets/scss/edit-page.scss";
 </style>

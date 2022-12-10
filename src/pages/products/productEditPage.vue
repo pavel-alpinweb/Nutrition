@@ -48,7 +48,7 @@
         <div class="edit-page__right p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
           <div class="p-fluid p-grid">
             <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
-              <label for="category">Категория</label>
+              <label for="category">Название</label>
               <Dropdown
                 v-model="productOptions.categoryOptions.selectedOption.value"
                 inputId="category"
@@ -63,7 +63,7 @@
                 :closable="true"
               >
                 <template #display>
-                  Добавить новую категорию
+                  Добавить новое название
                 </template>
                 <template #content>
                   <InputText
@@ -205,7 +205,9 @@
               </div>
             </div>
             <div class="p-field p-col-12">
-              <label for="iHave">У меня в наличии</label>
+              <label for="iHave">
+                У меня в наличии ({{ product.unit }})
+              </label>
               <InputText v-model="product.quantity" id="iHave" type="number" min="0"/>
             </div>
             <div class="p-field p-col-12">

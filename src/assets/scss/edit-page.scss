@@ -18,10 +18,12 @@
     overflow: hidden;
   }
   &__default-image {
-    font-size: 300px;
     text-align: center;
     margin-top: 20px;
     color: grey;
+    i {
+      font-size: 300px;
+    }
   }
   &__add-category {
     margin-top: 10px;

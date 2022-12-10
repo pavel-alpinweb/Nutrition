@@ -74,14 +74,14 @@
           v-if="categoryOptionsArray.length > 0"
           class="p-field"
         >
-          <label for="options2">Уточнение по названиям</label>
+          <label for="options2">Уточнение по названию</label>
           <MultiSelect
             v-model="categoryOptions.selectedOption.value"
             inputId="options2"
             :options="category"
             :filter="true"
             optionLabel="name"
-            placeholder="Уточнение по названиям"
+            placeholder="Уточнение по названию"
             @change="filter('category', categoryOptions.selectedOption.value)"
           />
         </div>

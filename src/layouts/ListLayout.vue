@@ -5,9 +5,12 @@
         'list-layout__btn laptops-hide all-desktops-hide',
         { 'list-layout__btn--open': isOpenSidebar },
       ]"
+      type="button"
       icon="fas fa-tasks"
+      label="Фильтры"
       @click="toggleSidebar"
-    />
+    >
+    </Button>
     <div :class="[
       'list-layout__sidebar p-fluid',
       { 'list-layout__sidebar--open': isOpenSidebar },

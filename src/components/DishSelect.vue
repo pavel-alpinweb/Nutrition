@@ -19,7 +19,7 @@
           </div>
           <div class=" p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
             <div class="p-grid p-fluid">
-              <div class="p-col-11">
+              <div class="p-col-10">
                 <InputText
                   v-model="servingNumber"
                   class="ingredient__text"

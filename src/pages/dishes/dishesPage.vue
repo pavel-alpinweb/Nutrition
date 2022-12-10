@@ -10,6 +10,7 @@
           :is-show-reload-prices="false"
           :is-show-sort="false"
           :searchArray="filters.dishNames"
+          :key="rerenderKey"
           search-placeholder="Название блюда"
           @search="onSearch"
           @add="addProduct"
@@ -17,6 +18,7 @@
           @sort="onSort"
           @filter="onFilter"
           @clearSearch="onClearSearch"
+          @clearFilters="onClearFilters"
         >
           <template v-slot:content>
             <div class="product-page__content">
@@ -50,7 +52,9 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue';
+import {
+  computed, onMounted, reactive, ref,
+} from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
@@ -75,10 +79,11 @@ export default {
     const filters = computed(() => store.state.dishes.filters);
     const isLoaded = computed(() => store.state.dishes.isDishesListLoaded);
     const metadata = computed(() => store.state.dishes.metadata);
-    const params = reactive({
+    let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
     });
+    const rerenderKey = ref(0);
 
     onMounted(async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
@@ -101,6 +106,14 @@ export default {
         filtersArray.push(item.name);
       });
       params[param.key] = filtersArray;
+      await store.dispatch('dishes/getDishesByFilter', params);
+    };
+    const onClearFilters = async () => {
+      params = reactive({
+        page: 0,
+        size: ITEMS_PER_PAGE,
+      });
+      rerenderKey.value += 1;
       await store.dispatch('dishes/getDishesByFilter', params);
     };
     const onSearch = async (value) => {
@@ -127,8 +140,10 @@ export default {
       onSearch,
       onClearSearch,
       onPage,
+      onClearFilters,
       ITEMS_PER_PAGE,
       metadata,
+      rerenderKey,
     };
   },
 };

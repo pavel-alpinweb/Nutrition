@@ -5,9 +5,12 @@
         'list-layout__btn laptops-hide all-desktops-hide',
         { 'list-layout__btn--open': isOpenSidebar },
       ]"
+      type="button"
       icon="fas fa-tasks"
+      label="Фильтры"
       @click="toggleSidebar"
-    />
+    >
+    </Button>
     <div :class="[
       'list-layout__sidebar p-fluid',
       { 'list-layout__sidebar--open': isOpenSidebar },
@@ -44,6 +47,14 @@
         </div>
       </div>
       <div class="list-layout__sidebar-bottom p-fluid">
+        <div v-if="isShowClearFilters" class="p-field">
+          <Button
+            label="Очистить фильтры"
+            icon="pi pi-filter-slash"
+            class="p-button-secondary"
+            @click="clearFilters"
+          />
+        </div>
         <div v-if="isShowSort" class="p-field">
           <label for="options">Сортировать</label>
           <Dropdown
@@ -63,14 +74,14 @@
           v-if="categoryOptionsArray.length > 0"
           class="p-field"
         >
-          <label for="options2">Уточнение по категориям</label>
+          <label for="options2">Уточнение по названию</label>
           <MultiSelect
             v-model="categoryOptions.selectedOption.value"
             inputId="options2"
             :options="category"
             :filter="true"
             optionLabel="name"
-            placeholder="Уточнение по категориям"
+            placeholder="Уточнение по названию"
             @change="filter('category', categoryOptions.selectedOption.value)"
           />
         </div>
@@ -285,6 +296,7 @@ export default {
   },
   setup(props, { emit }) {
     const isOpenSidebar = ref(false);
+    const isShowClearFilters = ref(false);
     const store = useStore();
     const isIHave = ref(false);
     const searchString = ref();
@@ -314,6 +326,7 @@ export default {
     const productNames = computed(() => store.state.dishes.filters.productCategories);
 
     const changeIHave = (ihave) => {
+      isShowClearFilters.value = true;
       emit('change', ihave);
     };
     const addProduct = () => {
@@ -322,10 +335,15 @@ export default {
     const reloadPrices = () => {
       emit('reload');
     };
+    const clearFilters = () => {
+      emit('clearFilters');
+    };
     const sort = (value) => {
+      isShowClearFilters.value = true;
       emit('sort', value);
     };
     const filter = (key, value) => {
+      isShowClearFilters.value = true;
       emit('filter', {
         key,
         value,
@@ -342,6 +360,7 @@ export default {
       }, 250);
     };
     const search = () => {
+      isShowClearFilters.value = true;
       emit('search', searchString.value.name);
     };
     const clearEmit = () => {
@@ -372,6 +391,8 @@ export default {
       searchFromSuggestions,
       clearEmit,
       toggleSidebar,
+      clearFilters,
+      isShowClearFilters,
       category,
       productTags,
       dishesTags,

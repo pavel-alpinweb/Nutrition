@@ -10,12 +10,14 @@
           :manufacturers-options-array="manufacturers"
           :is-show-check-i-have="true"
           :is-show-reload-prices="false"
+          :key="rerenderKey"
           @change="changeIHave"
           @search="onSearch"
           @add="addProduct"
           @reload="reloadPrices"
           @sort="onSort"
           @filter="onFilter"
+          @clearFilters="onClearFilters"
         >
           <template v-slot:content>
             <div class="product-page__content">
@@ -50,7 +52,7 @@
 
 <script>
 import {
-  computed, reactive, watch, onMounted,
+  computed, reactive, watch, onMounted, ref,
 } from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
@@ -73,10 +75,11 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    const params = reactive({
+    let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
     });
+    const rerenderKey = ref(0);
     const filters = computed(() => store.state.products.filters);
     const category = computed(() => store.state.products.filters.categories);
     const tags = computed(() => store.state.products.filters.tags);
@@ -122,6 +125,14 @@ export default {
       params[param.key] = filtersArray;
       await store.dispatch('products/getProductsByFilter', params);
     };
+    const onClearFilters = async () => {
+      params = reactive({
+        page: 0,
+        size: ITEMS_PER_PAGE,
+      });
+      rerenderKey.value += 1;
+      await store.dispatch('products/getProductsByFilter', params);
+    };
     const onSearch = (value) => {
       console.log('onSearch', value.value);
     };
@@ -144,6 +155,8 @@ export default {
       onSort,
       onFilter,
       onSearch,
+      onClearFilters,
+      rerenderKey,
       params,
       filters,
       isProductsListLoaded,

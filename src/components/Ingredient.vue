@@ -176,7 +176,7 @@ export default {
       margin-right: 15px;
     }
     &__number {
-      padding-top: 40px;
+      padding-bottom: 40px;
     }
   }
 </style>

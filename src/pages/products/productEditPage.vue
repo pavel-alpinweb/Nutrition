@@ -3,15 +3,6 @@
     <template v-slot:page-content>
       <div v-if="isProductInit" class="edit-page p-grid">
         <div class="edit-page__left p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
-          <Image
-            v-if="product.imageUrl"
-            class="edit-page__image"
-            :src="product.imageUrl"
-            alt="Image"
-          />
-          <div v-else class="edit-page__default-image">
-            <i class="fas fa-carrot"></i>
-          </div>
           <FileUpload
             class="edit-page__upload"
             name="demo[]"
@@ -19,17 +10,45 @@
             accept="image/*"
             :maxFileSize="250000"
             :customUpload="true"
+            :auto="true"
             @uploader="myUploader"
           >
+            <template #header="{ chooseCallback }">
+              <div class="flex flex-wrap justify-content-between align-items-center flex-1">
+                <div class="flex m-2">
+                  <Button
+                    @click="chooseCallback()"
+                    icon="pi pi-images"
+                    class="p-button-rounded p-mr-2">
+                  </Button>
+                  <Button
+                    @click="onClearTemplatingUpload"
+                    icon="pi pi-times"
+                    class="p-button-rounded p-button-danger"
+                    :disabled="!product.imageUrl">
+                  </Button>
+                </div>
+              </div>
+            </template>
+            <template #content>
+              <Image
+                v-if="product.imageUrl"
+                class="edit-page__image"
+                :src="product.imageUrl"
+                alt="Image"
+              />
+            </template>
             <template #empty>
-              <p>Перетащите файл для загрузки</p>
+              <div v-if="!product.imageUrl" class="edit-page__default-image">
+                <i class="pi pi-cloud-upload"></i>
+              </div>
             </template>
           </FileUpload>
         </div>
         <div class="edit-page__right p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
           <div class="p-fluid p-grid">
             <div class="p-field p-col-12 p-xl-6 p-sm-12 p-lg-6">
-              <label for="category">Категория</label>
+              <label for="category">Название</label>
               <Dropdown
                 v-model="productOptions.categoryOptions.selectedOption.value"
                 inputId="category"
@@ -44,7 +63,7 @@
                 :closable="true"
               >
                 <template #display>
-                  Добавить новую категорию
+                  Добавить новое название
                 </template>
                 <template #content>
                   <InputText
@@ -186,7 +205,9 @@
               </div>
             </div>
             <div class="p-field p-col-12">
-              <label for="iHave">У меня в наличии</label>
+              <label for="iHave">
+                У меня в наличии ({{ product.unit }})
+              </label>
               <InputText v-model="product.quantity" id="iHave" type="number" min="0"/>
             </div>
             <div class="p-field p-col-12">
@@ -326,6 +347,10 @@ export default {
       product.imageUrl = result.body;
     };
 
+    const onClearTemplatingUpload = () => {
+      product.imageUrl = null;
+    };
+
     const reset = () => {
       window.location.replace(`/products/${route.params.id}`);
     };
@@ -375,6 +400,7 @@ export default {
       user,
       initialProduct,
       filteredSuggestions,
+      onClearTemplatingUpload,
       BASE_API_URL,
     };
   },

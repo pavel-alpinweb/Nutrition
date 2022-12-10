@@ -4,15 +4,6 @@
       <div v-if="isDishLoaded" class="edit-page">
         <div class="edit-page-header p-grid">
           <div class="edit-page-header__left p-xl-6 p-lg-12 p-md-12 p-sm-12 p-col-12">
-            <Image
-              v-if="dish.imageUrl"
-              class="edit-page__image"
-              :src="dish.imageUrl"
-              alt="Image"
-            />
-            <div v-else class="edit-page__default-image">
-              <i class="fas fa-concierge-bell"></i>
-            </div>
             <FileUpload
               class="edit-page__upload"
               name="demo[]"
@@ -20,10 +11,38 @@
               accept="image/*"
               :maxFileSize="250000"
               :customUpload="true"
+              :auto="true"
               @uploader="myUploader"
             >
+              <template #header="{ chooseCallback }">
+                <div class="flex flex-wrap justify-content-between align-items-center flex-1">
+                  <div class="flex m-2">
+                    <Button
+                      @click="chooseCallback()"
+                      icon="pi pi-images"
+                      class="p-button-rounded p-mr-2">
+                    </Button>
+                    <Button
+                      @click="onClearTemplatingUpload"
+                      icon="pi pi-times"
+                      class="p-button-rounded p-button-danger"
+                      :disabled="!dish.imageUrl">
+                    </Button>
+                  </div>
+                </div>
+              </template>
+              <template #content>
+                <Image
+                  v-if="dish.imageUrl"
+                  class="edit-page__image"
+                  :src="dish.imageUrl"
+                  alt="Image"
+                />
+              </template>
               <template #empty>
-                <p>Перетащите файл для загрузки</p>
+                <div v-if="!dish.imageUrl" class="edit-page__default-image">
+                  <i class="pi pi-cloud-upload"></i>
+                </div>
               </template>
             </FileUpload>
           </div>
@@ -295,6 +314,10 @@ export default {
       dish.imageUrl = result.body;
     };
 
+    const onClearTemplatingUpload = () => {
+      dish.imageUrl = null;
+    };
+
     const save = async () => {
       if (isNewDish.value) {
         await store.dispatch('dishes/dishAdd', dish);
@@ -322,6 +345,7 @@ export default {
       pushToPickList,
       searchFromSuggestions,
       createNewTag,
+      onClearTemplatingUpload,
       filteredSuggestions,
       ingredientsArr,
     };

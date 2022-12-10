@@ -9,6 +9,7 @@
           :is-show-reload-prices="false"
           :is-show-sort="false"
           :searchArray="filters.menuNames"
+          :key="rerenderKey"
           search-placeholder="Название меню"
           @change="changeIHave"
           @search="onSearch"
@@ -17,6 +18,7 @@
           @sort="onSort"
           @filter="onFilter"
           @clearSearch="onClearSearch"
+          @clearFilters="onClearFilters"
         >
           <template v-slot:content>
             <div class="product-page__content">
@@ -50,7 +52,9 @@
 </template>
 
 <script>
-import { computed, reactive, onMounted } from 'vue';
+import {
+  computed, reactive, onMounted, ref,
+} from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
 import NutritionCard from '@/components/NutritionCard.vue';
@@ -75,10 +79,11 @@ export default {
     const filters = computed(() => store.state.menus.filters);
     const isLoaded = computed(() => store.state.menus.isMenusListLoaded);
     const metadata = computed(() => store.state.menus.metadata);
-    const params = reactive({
+    let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
     });
+    const rerenderKey = ref(0);
 
     onMounted(async () => {
       await store.dispatch('menus/getMenusByFilter', params);
@@ -106,6 +111,14 @@ export default {
       params[param.key] = filtersArray;
       await store.dispatch('menus/getMenusByFilter', params);
     };
+    const onClearFilters = async () => {
+      params = reactive({
+        page: 0,
+        size: ITEMS_PER_PAGE,
+      });
+      rerenderKey.value += 1;
+      await store.dispatch('menus/getMenusByFilter', params);
+    };
     const onSearch = async (value) => {
       await store.dispatch('menus/getMenuByName', value);
     };
@@ -123,6 +136,7 @@ export default {
       filters,
       isLoaded,
       metadata,
+      rerenderKey,
       changeIHave,
       addProduct,
       reloadPrices,
@@ -131,6 +145,7 @@ export default {
       onSearch,
       onClearSearch,
       onPage,
+      onClearFilters,
       ITEMS_PER_PAGE,
     };
   },

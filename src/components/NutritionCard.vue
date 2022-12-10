@@ -1,5 +1,7 @@
 <template>
-  <Card class="nutrition-card">
+  <Card
+    class="nutrition-card"
+  >
     <template #header>
       <div
         v-if="!isPickProduct"
@@ -47,7 +49,7 @@
       </div>
     </template>
     <template #content>
-      <ul class="nutrition-card__characters">
+      <ul class="nutrition-card__characters" @click="openItem(item.type, item.id)">
         <li class="nutrition-card__char">
           <i class="fas fa-tag nutrition-card__char-icon"></i>
           <div class="nutrition-card__char-value">{{ item.category || item.name }}</div>

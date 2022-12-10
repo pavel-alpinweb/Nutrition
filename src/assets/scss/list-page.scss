@@ -25,4 +25,10 @@
     display: flex;
     flex-direction: column;
   }
+  &__item {
+    @include all-small-mobiles {
+      margin: 0 auto;
+      min-width: 350px;
+    }
+  }
 }

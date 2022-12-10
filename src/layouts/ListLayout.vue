@@ -334,7 +334,6 @@ export default {
     };
     const clearFilters = () => {
       emit('clearFilters');
-      isShowClearFilters.value = false;
     };
     const sort = (value) => {
       isShowClearFilters.value = true;

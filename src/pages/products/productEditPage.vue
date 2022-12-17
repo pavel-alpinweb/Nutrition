@@ -303,7 +303,7 @@ export default {
     const route = useRoute();
     const user = computed(() => store.state.auth.user);
     const initialProduct = computed(() => store.state.products.initialProduct);
-    const filters = computed(() => store.state.products.filters);
+    const filters = computed(() => store.state.products.fields);
     const product = reactive({});
     const filteredSuggestions = ref();
     const isProductInit = computed(() => Object.keys(product).length > 0);

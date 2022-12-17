@@ -82,27 +82,27 @@ export default {
     const metadata = computed(() => store.state.products.metadata);
     const filters = reactive([
       {
-        label: 'Уточнение по тегам',
+        label: 'Теги',
         options: [],
         field: 'tags',
       },
       {
-        label: 'Уточнение по названию',
+        label: 'Названия',
         options: [],
         field: 'category',
       },
       {
-        label: 'Уточнение по магазинам',
+        label: 'Магазины',
         options: [],
         field: 'shops',
       },
       {
-        label: 'Уточнение по сортам',
+        label: 'Сорта',
         options: [],
         field: 'grades',
       },
       {
-        label: 'Уточнение по производителям',
+        label: 'Производители',
         options: [],
         field: 'manufacturers',
       },

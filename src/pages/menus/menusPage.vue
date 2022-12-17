@@ -80,12 +80,12 @@ export default {
     const metadata = computed(() => store.state.menus.metadata);
     const filters = reactive([
       {
-        label: 'Уточнение по тегам',
+        label: 'Теги',
         options: [],
         field: 'tags',
       },
       {
-        label: 'Уточнение по блюдам',
+        label: 'Блюда',
         options: [],
         field: 'dishNames',
       },

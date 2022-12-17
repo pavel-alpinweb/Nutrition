@@ -3,8 +3,6 @@
     <template v-slot:page-content>
       <div class="product-page">
         <ListLayout
-          :dishes-tag-options-array="filters.dishTags"
-          :products-options-array="filters.productCategories"
           :is-search-by-name="true"
           :is-show-check-i-have="false"
           :is-show-reload-prices="false"
@@ -23,6 +21,7 @@
           <template v-slot:content>
             <div class="product-page__content">
               <div v-if="isLoaded" class="product-page__grid">
+                <pre>{{ filters }}</pre>
                 <div
                   v-for="item in dishesList"
                   :key="item.id"
@@ -76,9 +75,19 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    const filters = computed(() => store.state.dishes.filters);
+    const dishesFields = computed(() => store.state.dishes.fields);
     const isLoaded = computed(() => store.state.dishes.isDishesListLoaded);
     const metadata = computed(() => store.state.dishes.metadata);
+    const filters = ref([
+      {
+        label: 'Уточнение по тегам',
+        filters: dishesFields.value.dishTags,
+      },
+      {
+        label: 'Уточнение по продуктам',
+        filters: dishesFields.value.productCategories,
+      },
+    ]);
     let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
@@ -88,6 +97,8 @@ export default {
     onMounted(async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
       await store.dispatch('dishes/getAllDishesFields');
+      console.log('dishesFields', dishesFields);
+      console.log('filters', filters);
     });
 
     const addProduct = () => {
@@ -120,7 +131,6 @@ export default {
       await store.dispatch('dishes/getDishByName', value);
     };
     const onPage = async (event) => {
-      console.log('event', event.page);
       params.page = event.page;
       await store.dispatch('dishes/getDishesByFilter', params);
     };

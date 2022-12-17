@@ -184,10 +184,10 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore();
-    const filters = computed(() => store.state.dishes.filters);
-    const dishTags = computed(() => store.state.dishes.filters.dishTags);
+    const filters = computed(() => store.state.dishes.fields);
+    const dishTags = computed(() => store.state.dishes.fields.dishTags);
     const isGenerateLoading = computed(() => store.state.menus.isGenerateLoading);
-    const productCategories = computed(() => store.state.dishes.filters.productCategories);
+    const productCategories = computed(() => store.state.dishes.fields.productCategories);
     const tagsOptions = useOptions(dishTags);
     const productOptions = useOptions(productCategories);
     const conditionsOptions = useOptions(CONDITIONS);

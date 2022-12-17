@@ -73,11 +73,13 @@
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
         <div
+          v-for="(filter, key) in filtersArray"
+          :key="key"
           class="p-field"
         >
-          <label for="options2">Уточнение по названию</label>
+          <label :for="`filter_${key}`">{{ filter.label }}</label>
           <MultiSelect
-            inputId="options2"
+            :inputId="`filter_${key}`"
             :options="[]"
             :filter="true"
             optionLabel="name"

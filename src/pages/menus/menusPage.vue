@@ -3,8 +3,7 @@
     <template v-slot:page-content>
       <div class="product-page">
         <ListLayout
-          :menus-tag-options-array="filters.menuTags"
-          :dishes-options-array="filters.dishNames"
+          :filters-array="filters"
           :is-search-by-name="true"
           :is-show-reload-prices="false"
           :is-show-sort="false"
@@ -76,9 +75,21 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    const filters = computed(() => store.state.menus.filters);
+    const menusFields = computed(() => store.state.menus.fields);
     const isLoaded = computed(() => store.state.menus.isMenusListLoaded);
     const metadata = computed(() => store.state.menus.metadata);
+    const filters = reactive([
+      {
+        label: 'Теги',
+        options: [],
+        field: 'tags',
+      },
+      {
+        label: 'Блюда',
+        options: [],
+        field: 'dishNames',
+      },
+    ]);
     let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
@@ -88,6 +99,8 @@ export default {
     onMounted(async () => {
       await store.dispatch('menus/getMenusByFilter', params);
       await store.dispatch('menus/getAllMenusFields');
+      filters[0].options = menusFields.value.menuTags;
+      filters[1].options = menusFields.value.dishNames;
     });
 
     const changeIHave = (ihave) => {

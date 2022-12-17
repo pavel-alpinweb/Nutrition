@@ -12,7 +12,6 @@ export default function useCreateNewFilter() {
   };
 
   const createNewFilter = (filter, selectedOption, product) => {
-    console.log('filter', filter);
     let filtersTarget;
     switch (filter) {
       case 'category':
@@ -30,12 +29,11 @@ export default function useCreateNewFilter() {
       default:
         break;
     }
-    const filterArray = computed(() => store.state.products.filters[filtersTarget]);
+    const filterArray = computed(() => store.state.products.fields[filtersTarget]);
     const newFilter = {
       name: productsNewOptions[filter],
       code: `${filter}-${filterArray.value.length + 1}`,
     };
-    console.log('newFilter', productsNewOptions);
     store.commit('products/pushNewFilter', {
       filter: filtersTarget,
       value: newFilter,

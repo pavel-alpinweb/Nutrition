@@ -37,13 +37,15 @@
             @click="addProduct"
           />
         </div>
-        <div v-if="isShowReloadPrices" class="p-field">
-          <Button
-            label="Обновить цены"
-            icon="pi pi-sync"
-            class="p-button-warning"
-            @click="reloadPrices"
-          />
+        <div class="p-field">
+          <div v-if="isShowReloadPrices" class="p-field">
+            <Button
+              label="Обновить цены"
+              icon="pi pi-sync"
+              class="p-button-warning"
+              @click="reloadPrices"
+            />
+          </div>
         </div>
       </div>
       <div class="list-layout__sidebar-bottom p-fluid">
@@ -71,138 +73,19 @@
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
         <div
-          v-if="categoryOptionsArray.length > 0"
+          v-for="(item, key) in filtersArray"
+          :key="key"
           class="p-field"
         >
-          <label for="options2">Уточнение по названию</label>
+          <label :for="`filter_${key}`">{{ item.label }}</label>
           <MultiSelect
-            v-model="categoryOptions.selectedOption.value"
-            inputId="options2"
-            :options="category"
+            v-model="filtersOptions[item.field].selectedOption"
+            :inputId="`filter_${key}`"
+            :options="item.options"
             :filter="true"
             optionLabel="name"
             placeholder="Уточнение по названию"
-            @change="filter('category', categoryOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="productTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="productTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="productTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', productTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="dishesTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="dishesTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="dishesTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', dishesTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="menusTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="menusTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="menusTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', menusTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="marketsOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options3">Магазины</label>
-          <MultiSelect
-            v-model="marketsOptions.selectedOption.value"
-            inputId="options3"
-            :options="markets"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Магазины"
-            @change="filter('shops', marketsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="gradesOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options4">Сорта</label>
-          <MultiSelect
-            v-model="gradesOptions.selectedOption.value"
-            inputId="options4"
-            :options="grades"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Сорта"
-            @change="filter('grades', gradesOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="manufacturersOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options4">Производители</label>
-          <MultiSelect
-            v-model="manufacturersOptions.selectedOption.value"
-            inputId="options4"
-            :options="manufacturers"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Производители"
-            @change="filter('manufacturers', manufacturersOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="dishesOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options5">Блюда</label>
-          <MultiSelect
-            v-model="dishesOptions.selectedOption.value"
-            inputId="options5"
-            :options="dishes"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Блюда"
-            @change="filter('dishNames', dishesOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="productsOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options6">Продукты</label>
-          <MultiSelect
-            v-model="productsOptions.selectedOption.value"
-            inputId="options6"
-            :options="productNames"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Продукты"
-            @change="filter('productCategories', productsOptions.selectedOption.value)"
+            @change="filter(item.field, filtersOptions[item.field].selectedOption)"
           />
         </div>
       </div>
@@ -214,14 +97,13 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { reactive, ref } from 'vue';
 import Button from 'primevue/button';
 import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import AutoComplete from 'primevue/autocomplete';
 import useOptions from '@/composition/selectOptions';
-import { useStore } from 'vuex';
 
 export default {
   name: 'ListLayout',
@@ -249,39 +131,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    productTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    dishesTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    menusTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    categoryOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    marketsOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    gradesOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    manufacturersOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    productsOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    dishesOptionsArray: {
+    filtersArray: {
       type: Array,
       default: () => [],
     },
@@ -297,7 +147,6 @@ export default {
   setup(props, { emit }) {
     const isOpenSidebar = ref(false);
     const isShowClearFilters = ref(false);
-    const store = useStore();
     const isIHave = ref(false);
     const searchString = ref();
     const filteredSuggestions = ref();
@@ -305,25 +154,10 @@ export default {
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
     ]);
-    const productTagsOptions = useOptions(props.productTagOptionsArray);
-    const dishesTagsOptions = useOptions(props.dishesTagOptionsArray);
-    const menusTagsOptions = useOptions(props.menusTagOptionsArray);
-    const categoryOptions = useOptions(props.categoryOptionsArray);
-    const marketsOptions = useOptions(props.marketsOptionsArray);
-    const gradesOptions = useOptions(props.gradesOptionsArray);
-    const manufacturersOptions = useOptions(props.manufacturersOptionsArray);
-    const productsOptions = useOptions(props.productsOptionsArray);
-    const dishesOptions = useOptions(props.dishesOptionsArray);
-
-    const category = computed(() => store.state.products.filters.categories);
-    const productTags = computed(() => store.state.products.filters.tags);
-    const dishesTags = computed(() => store.state.dishes.filters.dishTags);
-    const menusTags = computed(() => store.state.menus.filters.menuTags);
-    const markets = computed(() => store.state.products.filters.shops);
-    const grades = computed(() => store.state.products.filters.grades);
-    const dishes = computed(() => store.state.menus.filters.dishNames);
-    const manufacturers = computed(() => store.state.products.filters.manufacturers);
-    const productNames = computed(() => store.state.dishes.filters.productCategories);
+    const filtersOptions = reactive({});
+    props.filtersArray.forEach((filter) => {
+      filtersOptions[filter.field] = useOptions(filter.options);
+    });
 
     const changeIHave = (ihave) => {
       isShowClearFilters.value = true;
@@ -373,15 +207,7 @@ export default {
       searchString,
       isIHave,
       sortOptions,
-      productTagsOptions,
-      dishesTagsOptions,
-      menusTagsOptions,
-      marketsOptions,
-      gradesOptions,
-      manufacturersOptions,
-      productsOptions,
-      dishesOptions,
-      categoryOptions,
+      filtersOptions,
       changeIHave,
       addProduct,
       reloadPrices,
@@ -393,15 +219,6 @@ export default {
       toggleSidebar,
       clearFilters,
       isShowClearFilters,
-      category,
-      productTags,
-      dishesTags,
-      menusTags,
-      dishes,
-      markets,
-      grades,
-      manufacturers,
-      productNames,
       filteredSuggestions,
       isOpenSidebar,
     };

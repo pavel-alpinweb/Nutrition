@@ -219,7 +219,7 @@ export default {
     const ingredientsArr = ref([]);
     const initialDish = computed(() => store.state.dishes.initialDish);
     const isDishLoaded = computed(() => store.state.dishes.isDishLoaded);
-    const filters = computed(() => store.state.dishes.filters);
+    const filters = computed(() => store.state.dishes.fields);
     const isNewDish = computed(() => route.params.id === 'new');
     const unitOptions = useOptions(GLOBAL_UNITS);
 

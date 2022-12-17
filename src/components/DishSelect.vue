@@ -68,7 +68,7 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore();
-    const dishNames = computed(() => store.state.menus.filters.dishNames);
+    const dishNames = computed(() => store.state.menus.fields.dishNames);
     const dishPlaceholder = computed(() => (props.item.dishName ? props.item.dishName : 'Выберите блюдо'));
     const dishesOptions = useOptions(dishNames);
     const servingNumber = ref(props.item.servingNumber);

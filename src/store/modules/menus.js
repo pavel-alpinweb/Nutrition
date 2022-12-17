@@ -9,7 +9,7 @@ const state = {
   isMenuLoaded: true,
   isPriceLoading: false,
   isGenerateLoading: false,
-  filters: {
+  fields: {
     menuNames: [],
     menuTags: [],
     dishNames: [],
@@ -58,8 +58,8 @@ const mutations = {
   setIsGenerateLoading(state, val) {
     state.isGenerateLoading = val;
   },
-  setFilters(state, filters) {
-    state.filters = filters;
+  setFilters(state, fields) {
+    state.fields = fields;
   },
   setInitialMenu(state, menu) {
     state.initialMenu = menu;

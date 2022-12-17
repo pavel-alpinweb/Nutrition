@@ -207,7 +207,7 @@ export default {
     const isMenuLoaded = computed(() => store.state.menus.isMenuLoaded);
     let newIndex = 0;
     const isNewMenu = computed(() => route.params.id === 'new');
-    const filters = computed(() => store.state.menus.filters);
+    const filters = computed(() => store.state.menus.fields);
 
     onMounted(async () => {
       if (!isNewMenu.value) {

@@ -73,18 +73,19 @@
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
         <div
-          v-for="(filter, key) in filtersArray"
+          v-for="(item, key) in filtersArray"
           :key="key"
           class="p-field"
         >
-          <label :for="`filter_${key}`">{{ filter.label }}</label>
+          <label :for="`filter_${key}`">{{ item.label }}</label>
           <MultiSelect
-            v-model="filtersOptions[filter.field].selectedOption"
+            v-model="filtersOptions[item.field].selectedOption"
             :inputId="`filter_${key}`"
-            :options="filter.options"
+            :options="item.options"
             :filter="true"
             optionLabel="name"
             placeholder="Уточнение по названию"
+            @change="filter(item.field, filtersOptions[item.field].selectedOption)"
           />
         </div>
       </div>

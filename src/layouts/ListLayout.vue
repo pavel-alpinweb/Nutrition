@@ -79,8 +79,9 @@
         >
           <label :for="`filter_${key}`">{{ filter.label }}</label>
           <MultiSelect
+            v-model="filtersOptions[filter.field].selectedOption"
             :inputId="`filter_${key}`"
-            :options="filter.filters"
+            :options="filter.options"
             :filter="true"
             optionLabel="name"
             placeholder="Уточнение по названию"
@@ -95,14 +96,13 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import Button from 'primevue/button';
 import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import AutoComplete from 'primevue/autocomplete';
 import useOptions from '@/composition/selectOptions';
-// import { useStore } from 'vuex';
 
 export default {
   name: 'ListLayout',
@@ -146,7 +146,6 @@ export default {
   setup(props, { emit }) {
     const isOpenSidebar = ref(false);
     const isShowClearFilters = ref(false);
-    // const store = useStore();
     const isIHave = ref(false);
     const searchString = ref();
     const filteredSuggestions = ref();
@@ -154,9 +153,10 @@ export default {
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
     ]);
-    // const productTagsOptions = useOptions(props.productTagOptionsArray);
-
-    // const category = computed(() => store.state.products.filters.categories);
+    const filtersOptions = reactive({});
+    props.filtersArray.forEach((filter) => {
+      filtersOptions[filter.field] = useOptions(filter.options);
+    });
 
     const changeIHave = (ihave) => {
       isShowClearFilters.value = true;
@@ -206,6 +206,7 @@ export default {
       searchString,
       isIHave,
       sortOptions,
+      filtersOptions,
       changeIHave,
       addProduct,
       reloadPrices,

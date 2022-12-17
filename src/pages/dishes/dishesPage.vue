@@ -81,11 +81,13 @@ export default {
     const filters = reactive([
       {
         label: 'Уточнение по тегам',
-        filters: dishesFields.value.dishTags,
+        options: [],
+        field: 'tags',
       },
       {
         label: 'Уточнение по продуктам',
-        filters: dishesFields.value.productCategories,
+        options: [],
+        field: 'productCategories',
       },
     ]);
     let params = reactive({
@@ -97,8 +99,8 @@ export default {
     onMounted(async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
       await store.dispatch('dishes/getAllDishesFields');
-      console.log('filters', filters);
-      console.log('dishesFields', dishesFields);
+      filters[0].options = dishesFields.value.dishTags;
+      filters[1].options = dishesFields.value.productCategories;
     });
 
     const addProduct = () => {

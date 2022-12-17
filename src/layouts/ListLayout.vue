@@ -37,13 +37,15 @@
             @click="addProduct"
           />
         </div>
-        <div v-if="isShowReloadPrices" class="p-field">
-          <Button
-            label="Обновить цены"
-            icon="pi pi-sync"
-            class="p-button-warning"
-            @click="reloadPrices"
-          />
+        <div class="p-field">
+          <div v-if="isShowReloadPrices" class="p-field">
+            <Button
+              label="Обновить цены"
+              icon="pi pi-sync"
+              class="p-button-warning"
+              @click="reloadPrices"
+            />
+          </div>
         </div>
       </div>
       <div class="list-layout__sidebar-bottom p-fluid">
@@ -71,138 +73,15 @@
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
         <div
-          v-if="categoryOptionsArray.length > 0"
           class="p-field"
         >
           <label for="options2">Уточнение по названию</label>
           <MultiSelect
-            v-model="categoryOptions.selectedOption.value"
             inputId="options2"
-            :options="category"
+            :options="[]"
             :filter="true"
             optionLabel="name"
             placeholder="Уточнение по названию"
-            @change="filter('category', categoryOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="productTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="productTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="productTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', productTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="dishesTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="dishesTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="dishesTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', dishesTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="menusTagOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options2">Уточнение по тэгам</label>
-          <MultiSelect
-            v-model="menusTagsOptions.selectedOption.value"
-            inputId="options2"
-            :options="menusTags"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по тэгам"
-            @change="filter('tags', menusTagsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="marketsOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options3">Магазины</label>
-          <MultiSelect
-            v-model="marketsOptions.selectedOption.value"
-            inputId="options3"
-            :options="markets"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Магазины"
-            @change="filter('shops', marketsOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="gradesOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options4">Сорта</label>
-          <MultiSelect
-            v-model="gradesOptions.selectedOption.value"
-            inputId="options4"
-            :options="grades"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Сорта"
-            @change="filter('grades', gradesOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="manufacturersOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options4">Производители</label>
-          <MultiSelect
-            v-model="manufacturersOptions.selectedOption.value"
-            inputId="options4"
-            :options="manufacturers"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Производители"
-            @change="filter('manufacturers', manufacturersOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="dishesOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options5">Блюда</label>
-          <MultiSelect
-            v-model="dishesOptions.selectedOption.value"
-            inputId="options5"
-            :options="dishes"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Блюда"
-            @change="filter('dishNames', dishesOptions.selectedOption.value)"
-          />
-        </div>
-        <div
-          v-if="productsOptionsArray.length > 0"
-          class="p-field"
-        >
-          <label for="options6">Продукты</label>
-          <MultiSelect
-            v-model="productsOptions.selectedOption.value"
-            inputId="options6"
-            :options="productNames"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Продукты"
-            @change="filter('productCategories', productsOptions.selectedOption.value)"
           />
         </div>
       </div>

@@ -4,8 +4,8 @@
       <div class="product-page">
         <ListLayout
           :dishes-tag-options-array="filters.dishTags"
-          :is-search-by-name="true"
           :products-options-array="filters.productCategories"
+          :is-search-by-name="true"
           :is-show-check-i-have="false"
           :is-show-reload-prices="false"
           :is-show-sort="false"

@@ -93,14 +93,14 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import Button from 'primevue/button';
 import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import AutoComplete from 'primevue/autocomplete';
 import useOptions from '@/composition/selectOptions';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
 
 export default {
   name: 'ListLayout',
@@ -128,39 +128,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    productTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    dishesTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    menusTagOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    categoryOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    marketsOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    gradesOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    manufacturersOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    productsOptionsArray: {
-      type: Array,
-      default: () => [],
-    },
-    dishesOptionsArray: {
+    filtersArray: {
       type: Array,
       default: () => [],
     },
@@ -176,7 +144,7 @@ export default {
   setup(props, { emit }) {
     const isOpenSidebar = ref(false);
     const isShowClearFilters = ref(false);
-    const store = useStore();
+    // const store = useStore();
     const isIHave = ref(false);
     const searchString = ref();
     const filteredSuggestions = ref();
@@ -184,25 +152,9 @@ export default {
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
     ]);
-    const productTagsOptions = useOptions(props.productTagOptionsArray);
-    const dishesTagsOptions = useOptions(props.dishesTagOptionsArray);
-    const menusTagsOptions = useOptions(props.menusTagOptionsArray);
-    const categoryOptions = useOptions(props.categoryOptionsArray);
-    const marketsOptions = useOptions(props.marketsOptionsArray);
-    const gradesOptions = useOptions(props.gradesOptionsArray);
-    const manufacturersOptions = useOptions(props.manufacturersOptionsArray);
-    const productsOptions = useOptions(props.productsOptionsArray);
-    const dishesOptions = useOptions(props.dishesOptionsArray);
+    // const productTagsOptions = useOptions(props.productTagOptionsArray);
 
-    const category = computed(() => store.state.products.filters.categories);
-    const productTags = computed(() => store.state.products.filters.tags);
-    const dishesTags = computed(() => store.state.dishes.filters.dishTags);
-    const menusTags = computed(() => store.state.menus.filters.menuTags);
-    const markets = computed(() => store.state.products.filters.shops);
-    const grades = computed(() => store.state.products.filters.grades);
-    const dishes = computed(() => store.state.menus.filters.dishNames);
-    const manufacturers = computed(() => store.state.products.filters.manufacturers);
-    const productNames = computed(() => store.state.dishes.filters.productCategories);
+    // const category = computed(() => store.state.products.filters.categories);
 
     const changeIHave = (ihave) => {
       isShowClearFilters.value = true;
@@ -252,15 +204,6 @@ export default {
       searchString,
       isIHave,
       sortOptions,
-      productTagsOptions,
-      dishesTagsOptions,
-      menusTagsOptions,
-      marketsOptions,
-      gradesOptions,
-      manufacturersOptions,
-      productsOptions,
-      dishesOptions,
-      categoryOptions,
       changeIHave,
       addProduct,
       reloadPrices,
@@ -272,15 +215,6 @@ export default {
       toggleSidebar,
       clearFilters,
       isShowClearFilters,
-      category,
-      productTags,
-      dishesTags,
-      menusTags,
-      dishes,
-      markets,
-      grades,
-      manufacturers,
-      productNames,
       filteredSuggestions,
       isOpenSidebar,
     };

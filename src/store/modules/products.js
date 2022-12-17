@@ -7,7 +7,7 @@ const state = {
   pageName: 'Продукты',
   productsList: [],
   isProductsListLoaded: false,
-  filters: {
+  fields: {
     categories: [],
     shops: [],
     manufacturers: [],
@@ -45,10 +45,10 @@ const mutations = {
     state.initialProduct = product;
   },
   pushNewFilter(state, { filter, value }) {
-    state.filters[filter].push(value);
+    state.fields[filter].push(value);
   },
-  setFilters(state, filters) {
-    state.filters = filters;
+  setFilters(state, fields) {
+    state.fields = fields;
   },
   setProductList(state, products) {
     state.productsList = products;

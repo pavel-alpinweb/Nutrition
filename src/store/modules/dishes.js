@@ -9,7 +9,7 @@ const state = {
   isPickProductListLoaded: false,
   isPriceLoading: false,
   isDishLoaded: true,
-  filters: {
+  fields: {
     dishTags: [],
     dishUnits: [],
     dishNames: [],
@@ -48,8 +48,8 @@ const mutations = {
   setInitialDish(state, product) {
     state.initialDish = product;
   },
-  setFilters(state, filters) {
-    state.filters = filters;
+  setFilters(state, fields) {
+    state.fields = fields;
   },
   setDishesList(state, dishes) {
     state.dishesList = dishes;

@@ -3,11 +3,7 @@
     <template v-slot:page-content>
       <div class="product-page">
         <ListLayout
-          :category-options-array="category"
-          :product-tag-options-array="tags"
-          :markets-options-array="markets"
-          :grades-options-array="grades"
-          :manufacturers-options-array="manufacturers"
+          :filters-array="filters"
           :is-show-check-i-have="true"
           :is-show-reload-prices="false"
           :key="rerenderKey"
@@ -80,27 +76,59 @@ export default {
       size: ITEMS_PER_PAGE,
     });
     const rerenderKey = ref(0);
-    const filters = computed(() => store.state.products.filters);
-    const category = computed(() => store.state.products.filters.categories);
-    const tags = computed(() => store.state.products.filters.tags);
-    const markets = computed(() => store.state.products.filters.shops);
-    const grades = computed(() => store.state.products.filters.grades);
-    const manufacturers = computed(() => store.state.products.filters.manufacturers);
+    const productFields = computed(() => store.state.products.fields);
     const user = computed(() => store.state.auth.user);
     const isProductsListLoaded = computed(() => store.state.products.isProductsListLoaded);
     const metadata = computed(() => store.state.products.metadata);
+    const filters = reactive([
+      {
+        label: 'Теги',
+        options: [],
+        field: 'tags',
+      },
+      {
+        label: 'Названия',
+        options: [],
+        field: 'category',
+      },
+      {
+        label: 'Магазины',
+        options: [],
+        field: 'shops',
+      },
+      {
+        label: 'Сорта',
+        options: [],
+        field: 'grades',
+      },
+      {
+        label: 'Производители',
+        options: [],
+        field: 'manufacturers',
+      },
+    ]);
 
     watch(user, async (currentValue) => {
       if (currentValue !== null) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
+        await store.dispatch('products/getAllProductsFields');
+        filters[0].options = productFields.value.tags;
+        filters[1].options = productFields.value.categories;
+        filters[2].options = productFields.value.shops;
+        filters[3].options = productFields.value.grades;
+        filters[4].options = productFields.value.manufacturers;
       }
     });
 
     onMounted(async () => {
-      if (user.value) {
-        await store.dispatch('products/getAllProductsFields', user.value.id);
-      }
       await store.dispatch('products/getProductsByFilter', params);
+      if (user.value) {
+        await store.dispatch('products/getAllProductsFields');
+        filters[0].options = productFields.value.tags;
+        filters[1].options = productFields.value.categories;
+        filters[2].options = productFields.value.shops;
+        filters[3].options = productFields.value.grades;
+        filters[4].options = productFields.value.manufacturers;
+      }
     });
 
     const changeIHave = async (ihave) => {
@@ -143,11 +171,6 @@ export default {
     return {
       pageName: computed(() => store.state.products.pageName),
       productsList: computed(() => store.state.products.productsList),
-      category,
-      tags,
-      markets,
-      grades,
-      manufacturers,
       onPage,
       changeIHave,
       addProduct,

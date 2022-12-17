@@ -78,7 +78,7 @@ export default {
     const dishesFields = computed(() => store.state.dishes.fields);
     const isLoaded = computed(() => store.state.dishes.isDishesListLoaded);
     const metadata = computed(() => store.state.dishes.metadata);
-    const filters = ref([
+    const filters = reactive([
       {
         label: 'Уточнение по тегам',
         filters: dishesFields.value.dishTags,
@@ -97,6 +97,8 @@ export default {
     onMounted(async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
       await store.dispatch('dishes/getAllDishesFields');
+      console.log('filters', filters);
+      console.log('dishesFields', dishesFields);
     });
 
     const addProduct = () => {

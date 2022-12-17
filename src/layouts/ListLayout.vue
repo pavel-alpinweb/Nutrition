@@ -80,7 +80,7 @@
           <label :for="`filter_${key}`">{{ filter.label }}</label>
           <MultiSelect
             :inputId="`filter_${key}`"
-            :options="[]"
+            :options="filter.filters"
             :filter="true"
             optionLabel="name"
             placeholder="Уточнение по названию"

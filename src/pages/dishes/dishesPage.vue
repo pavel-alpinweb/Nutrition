@@ -90,6 +90,16 @@ export default {
         field: 'productCategories',
       },
     ]);
+    const setFilters = () => {
+      const dishesFieldsKeys = Object.keys(dishesFields.value);
+      dishesFieldsKeys.forEach((key) => {
+        const adaptiveKey = key === 'dishTags' ? 'tags' : key;
+        const filter = filters.find((item) => item.field === adaptiveKey);
+        if (filter) {
+          filter.options = dishesFields.value[key];
+        }
+      });
+    };
     let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
@@ -99,8 +109,7 @@ export default {
     onMounted(async () => {
       await store.dispatch('dishes/getDishesByFilter', params);
       await store.dispatch('dishes/getAllDishesFields');
-      filters[0].options = dishesFields.value.dishTags;
-      filters[1].options = dishesFields.value.productCategories;
+      setFilters();
     });
 
     const addProduct = () => {

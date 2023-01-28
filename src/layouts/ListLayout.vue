@@ -72,21 +72,32 @@
           <Checkbox id="isIHave" v-model="isIHave" :binary="true" @change="changeIHave(isIHave)"/>
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
-        <div
-          v-for="(item, key) in filtersArray"
-          :key="key"
-          class="p-field"
-        >
-          <label :for="`filter_${key}`">{{ item.label }}</label>
-          <MultiSelect
-            v-model="filtersOptions[item.field].selectedOption"
-            :inputId="`filter_${key}`"
-            :options="item.options"
-            :filter="true"
-            optionLabel="name"
-            placeholder="Уточнение по названию"
-            @change="filter(item.field, filtersOptions[item.field].selectedOption)"
-          />
+        <div v-if="isShowFiltersModeSwitcher" class="list-layout__filters-visible-mode p-field">
+          <span class="p-buttonset">
+            <Button label="Список" icon="fas fa-list" @click="isShowTreeFilters = false"/>
+            <Button label="Дерево" icon="fas fa-stream" @click="isShowTreeFilters = true"/>
+        </span>
+        </div>
+        <div v-if="!isShowTreeFilters" class="list-layout__filters-list">
+          <div
+            v-for="(item, key) in filtersArray"
+            :key="key"
+            class="p-field"
+          >
+            <label :for="`filter_${key}`">{{ item.label }}</label>
+            <MultiSelect
+              v-model="filtersOptions[item.field].selectedOption"
+              :inputId="`filter_${key}`"
+              :options="item.options"
+              :filter="true"
+              optionLabel="name"
+              placeholder="Уточнение по названию"
+              @change="filter(item.field, filtersOptions[item.field].selectedOption)"
+            />
+          </div>
+        </div>
+        <div v-if="isShowTreeFilters" class="list-layout__filters-list">
+          <h1>Здесь будет дерево</h1>
         </div>
       </div>
     </div>
@@ -131,6 +142,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    isShowFiltersModeSwitcher: {
+      type: Boolean,
+      default: false,
+    },
     filtersArray: {
       type: Array,
       default: () => [],
@@ -148,6 +163,7 @@ export default {
     const isOpenSidebar = ref(false);
     const isShowClearFilters = ref(false);
     const isIHave = ref(false);
+    const isShowTreeFilters = ref(false);
     const searchString = ref();
     const filteredSuggestions = ref();
     const sortOptions = useOptions([
@@ -221,6 +237,7 @@ export default {
       isShowClearFilters,
       filteredSuggestions,
       isOpenSidebar,
+      isShowTreeFilters,
     };
   },
 };

@@ -6,6 +6,7 @@
           :filters-array="filters"
           :is-show-check-i-have="true"
           :is-show-reload-prices="false"
+          :is-show-filters-mode-switcher="true"
           :key="rerenderKey"
           @change="changeIHave"
           @search="onSearch"

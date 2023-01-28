@@ -97,8 +97,11 @@ const actions = {
     commit('setCurrentProduct', result.body);
   },
 
-  async getAllProductsFields({ commit }, userId) {
-    const result = await HTTP.get('/products/getAllProductsFields', { params: { userId } });
+  async getAllProductsFields({ commit }, params) {
+    const adaptiveParams = { ...params };
+    delete adaptiveParams.page;
+    delete adaptiveParams.size;
+    const result = await HTTP.get(`/products/getAllProductsFields?${queryString.stringify(adaptiveParams)}`);
     commit('setFilters', result);
   },
 
@@ -121,8 +124,7 @@ const actions = {
   async uploadImage(context, file) {
     const formData = new FormData();
     formData.append('image', file);
-    const result = await HTTP.post('/products/uploadImage', formData);
-    return result;
+    return await HTTP.post('/products/uploadImage', formData);
   },
 };
 

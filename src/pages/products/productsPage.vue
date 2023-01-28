@@ -77,7 +77,6 @@ export default {
     });
     const rerenderKey = ref(0);
     const productFields = computed(() => store.state.products.fields);
-    const user = computed(() => store.state.auth.user);
     const isProductsListLoaded = computed(() => store.state.products.isProductsListLoaded);
     const metadata = computed(() => store.state.products.metadata);
     const filters = reactive([
@@ -121,15 +120,14 @@ export default {
     onMounted(async () => {
       await nextTick();
       await store.dispatch('products/getProductsByFilter', params);
-      if (user.value) {
-        await store.dispatch('products/getAllProductsFields');
-        setFilters();
-      }
+      await store.dispatch('products/getAllProductsFields');
+      setFilters();
     });
 
     const changeIHave = async (ihave) => {
       params.onlyFridge = ihave;
       await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
     };
     const addProduct = () => {
       router.push('/products/new');
@@ -140,6 +138,7 @@ export default {
     const onSort = async (value) => {
       params.sort = value.code;
       await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
     };
     const onFilter = async (param) => {
       const filtersArray = [];
@@ -148,6 +147,7 @@ export default {
       });
       params[param.key] = filtersArray;
       await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
     };
     const onClearFilters = async () => {
       params = reactive({
@@ -156,6 +156,7 @@ export default {
       });
       rerenderKey.value += 1;
       await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
     };
     const onSearch = (value) => {
       console.log('onSearch', value.value);

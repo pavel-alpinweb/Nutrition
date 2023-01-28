@@ -199,7 +199,7 @@
                   inputId="options"
                   :options="unitOptions.options.value"
                   optionLabel="name"
-                  placeholder="Единицы"
+                  :placeholder="unitPlaceholder"
                   @change="selectField($event, 'unit')"
                 />
               </div>
@@ -315,6 +315,7 @@ export default {
     const shopsPlaceholder = computed(() => (product.shop ? product.shop : 'Выберите магазин'));
     const gradesPlaceholder = computed(() => (product.grade ? product.grade.toString() : 'Выберите сорт'));
     const manufacturersPlaceholder = computed(() => (product.manufacturer ? product.manufacturer.toString() : 'Выберите производителя'));
+    const unitPlaceholder = computed(() => (product.unit ? product.unit : 'Единицы'));
 
     onMounted(async () => {
       await store.dispatch('products/getAllProductsFields');
@@ -391,6 +392,7 @@ export default {
       shopsPlaceholder,
       gradesPlaceholder,
       manufacturersPlaceholder,
+      unitPlaceholder,
       searchFromSuggestions,
       createNewTag,
       addProduct,

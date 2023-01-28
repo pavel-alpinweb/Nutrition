@@ -7,6 +7,7 @@
           :is-show-check-i-have="true"
           :is-show-reload-prices="false"
           :is-show-filters-mode-switcher="true"
+          :grouped-filters-array="groupedFields"
           :key="rerenderKey"
           @change="changeIHave"
           @search="onSearch"
@@ -80,6 +81,7 @@ export default {
     const productFields = computed(() => store.state.products.fields);
     const isProductsListLoaded = computed(() => store.state.products.isProductsListLoaded);
     const metadata = computed(() => store.state.products.metadata);
+    const groupedFields = computed(() => store.state.products.groupedFields);
     const filters = reactive([
       {
         label: 'Теги',
@@ -182,6 +184,7 @@ export default {
       filters,
       isProductsListLoaded,
       metadata,
+      groupedFields,
       ITEMS_PER_PAGE,
     };
   },

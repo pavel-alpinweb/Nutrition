@@ -97,7 +97,17 @@
           </div>
         </div>
         <div v-if="isShowTreeFilters" class="list-layout__filters-list">
-          <h1>Здесь будет дерево</h1>
+          <TreeSelect
+            v-model="selectedTreeFields"
+            :options="groupedFiltersArray"
+            display="comma"
+            :filter="true"
+            selectionMode="checkbox"
+            placeholder="Фильтры"
+            @change="filterByGroup"
+            @node-select="nodeSelectHandler"
+            @node-expand="nodeExpandHandler"
+          />
         </div>
       </div>
     </div>
@@ -114,6 +124,7 @@ import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import AutoComplete from 'primevue/autocomplete';
+import TreeSelect from 'primevue/treeselect';
 import useOptions from '@/composition/selectOptions';
 
 export default {
@@ -124,6 +135,7 @@ export default {
     Checkbox,
     Dropdown,
     AutoComplete,
+    TreeSelect,
   },
   props: {
     isSearchByName: {
@@ -150,6 +162,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    groupedFiltersArray: {
+      type: Array,
+      default: () => [],
+    },
     searchArray: {
       type: Array,
       default: () => [],
@@ -166,6 +182,7 @@ export default {
     const isShowTreeFilters = ref(false);
     const searchString = ref();
     const filteredSuggestions = ref();
+    const selectedTreeFields = ref();
     const sortOptions = useOptions([
       { name: 'По цене по возрастанию', code: 'price_asc' },
       { name: 'По цене по убыванию', code: 'price_desc' },
@@ -199,6 +216,16 @@ export default {
         value,
       });
     };
+    const filterByGroup = (event) => {
+      console.log('filterByGroup', event);
+      console.log('selectedTreeFields', selectedTreeFields.value);
+    };
+    const nodeSelectHandler = (node) => {
+      console.log('nodeSelectHandler', node);
+    };
+    const nodeExpandHandler = (node) => {
+      console.log('nodeExpandHandler', node);
+    };
     const searchFromSuggestions = (event) => {
       setTimeout(() => {
         if (!event.query.trim().length) {
@@ -229,15 +256,19 @@ export default {
       reloadPrices,
       sort,
       filter,
+      filterByGroup,
       search,
       searchFromSuggestions,
       clearEmit,
       toggleSidebar,
       clearFilters,
+      nodeSelectHandler,
+      nodeExpandHandler,
       isShowClearFilters,
       filteredSuggestions,
       isOpenSidebar,
       isShowTreeFilters,
+      selectedTreeFields,
     };
   },
 };

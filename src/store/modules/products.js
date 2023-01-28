@@ -14,6 +14,44 @@ const state = {
     grades: [],
     tags: [],
   },
+  groupedFields: [
+    {
+      label: 'Лук',
+      key: 'сategory: лук',
+      children: [
+        {
+          label: 'Сорт',
+          key: 'grades',
+          children: [
+            { label: 'Краснодарские', key: 'grades: Краснодарские' },
+            { label: 'Кубанское', key: 'grades: Кубанское' },
+          ],
+        },
+        {
+          label: 'Производитель',
+          key: 'manufacturers',
+          children: [
+            { label: 'Ферма "Веселый кубанец"', key: 'manufacturers: Ферма "Веселый кубанец"' },
+            { label: 'Ферма "Веселый кубанец2"', key: 'manufacturers: Ферма "Веселый кубанец2"' },
+          ],
+        },
+        {
+          label: 'Магазин',
+          key: 'shops',
+          children: [
+            { label: 'Народный', key: 'shops: Народный' },
+          ],
+        },
+        {
+          label: 'Тэги',
+          key: 'tags',
+          children: [
+            { label: 'Овощи', key: 'tags: Овощи' },
+          ],
+        },
+      ],
+    },
+  ],
   initialProduct: {
     userId: '',
     category: '',

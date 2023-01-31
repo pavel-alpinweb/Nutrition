@@ -123,7 +123,8 @@ export default {
     onMounted(async () => {
       await nextTick();
       await store.dispatch('products/getProductsByFilter', params);
-      await store.dispatch('products/getAllProductsFields');
+      store.dispatch('products/getAllProductsFields');
+      store.dispatch('products/getProductsFieldsByCategories');
       setFilters();
     });
 

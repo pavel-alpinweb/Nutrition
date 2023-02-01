@@ -117,6 +117,7 @@ const mutations = {
     };
   },
   setGroupedFields(state, fields) {
+    state.groupedFields = [];
     fields.forEach((field) => {
       const categoryFilters = Object.keys(field);
       const category = {

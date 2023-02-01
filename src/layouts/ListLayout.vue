@@ -105,8 +105,6 @@
             selectionMode="checkbox"
             placeholder="Фильтры"
             @change="filterByGroup"
-            @node-select="nodeSelectHandler"
-            @node-expand="nodeExpandHandler"
           />
         </div>
       </div>
@@ -218,7 +216,6 @@ export default {
     };
     const filterByGroup = (event) => {
       console.log('filterByGroup', event);
-      console.log('selectedTreeFields', selectedTreeFields.value);
     };
     const nodeSelectHandler = (node) => {
       console.log('nodeSelectHandler', node);

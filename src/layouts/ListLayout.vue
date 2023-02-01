@@ -215,7 +215,16 @@ export default {
       });
     };
     const filterByGroup = (event) => {
-      console.log('filterByGroup', event);
+      const keys = Object.keys(event).filter((key) => key.includes('filter'));
+      const filters = {};
+      keys.forEach((key) => {
+        const filterDataArray = key.split('_');
+        if (!filters[filterDataArray[1]]) {
+          filters[filterDataArray[1]] = [];
+        }
+        filters[filterDataArray[1]].push(filterDataArray[2]);
+      });
+      emit('groupedFilter', filters);
     };
     const nodeSelectHandler = (node) => {
       console.log('nodeSelectHandler', node);

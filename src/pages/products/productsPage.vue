@@ -15,6 +15,7 @@
           @reload="reloadPrices"
           @sort="onSort"
           @filter="onFilter"
+          @groupedFilter="onGroupedFilter"
           @clearFilters="onClearFilters"
         >
           <template v-slot:content>
@@ -153,6 +154,10 @@ export default {
       await store.dispatch('products/getProductsByFilter', params);
       await store.dispatch('products/getAllProductsFields', params);
     };
+    const onGroupedFilter = async (filters) => {
+      console.log('filters', filters);
+      console.log('params', params);
+    };
     const onClearFilters = async () => {
       params = reactive({
         page: 0,
@@ -178,6 +183,7 @@ export default {
       reloadPrices,
       onSort,
       onFilter,
+      onGroupedFilter,
       onSearch,
       onClearFilters,
       rerenderKey,

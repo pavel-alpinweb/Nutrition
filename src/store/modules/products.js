@@ -15,6 +15,10 @@ function fetchGroupedProductFields() {
               name: 'Овощи',
               code: 'Овощи',
             },
+            {
+              name: 'Грусть',
+              code: 'Грусть',
+            },
           ],
           manufacturers: [
             {
@@ -32,6 +36,10 @@ function fetchGroupedProductFields() {
             {
               name: 'Народный',
               code: 'Народный',
+            },
+            {
+              name: 'Лимон',
+              code: 'Лимон',
             },
           ],
         },
@@ -122,7 +130,7 @@ const mutations = {
       const categoryFilters = Object.keys(field);
       const category = {
         label: field.category,
-        key: `category: ${field.category}`,
+        key: `filter_category_${field.category}`,
         children: [],
       };
       categoryFilters.forEach((filter) => {
@@ -135,7 +143,7 @@ const mutations = {
           field[filter].forEach((option) => {
             const filterOption = {
               label: option.name,
-              key: `${filter}: ${option.code}`,
+              key: `filter_${filter}_${option.code}`,
             };
 
             categoryFilter.children.push(filterOption);

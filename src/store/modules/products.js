@@ -22,8 +22,8 @@ function fetchGroupedProductFields() {
           ],
           manufacturers: [
             {
-              name: 'Ферма "Веселый кубанец',
-              code: 'Ферма "Веселый кубанец',
+              name: 'Ферма "Веселый кубанец"',
+              code: 'Ферма "Веселый кубанец"',
             },
           ],
           grades: [

@@ -17,6 +17,7 @@
           @filter="onFilter"
           @groupedFilter="onGroupedFilter"
           @clearFilters="onClearFilters"
+          @resetSelects="onResetSelects"
         >
           <template v-slot:content>
             <div class="product-page__content">
@@ -175,6 +176,16 @@ export default {
       await store.dispatch('products/getProductsByFilter', params);
       await store.dispatch('products/getAllProductsFields', params);
     };
+    const onResetSelects = async () => {
+      params = {
+        page: params.page,
+        size: params.size,
+        sort: params.sort,
+        onlyFridge: params.onlyFridge,
+      };
+      await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
+    };
     const onSearch = (value) => {
       console.log('onSearch', value.value);
     };
@@ -194,6 +205,7 @@ export default {
       onGroupedFilter,
       onSearch,
       onClearFilters,
+      onResetSelects,
       rerenderKey,
       params,
       filters,

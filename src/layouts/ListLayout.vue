@@ -72,10 +72,11 @@
           <Checkbox id="isIHave" v-model="isIHave" :binary="true" @change="changeIHave(isIHave)"/>
           <label for="isIHave">Только имеющиеся у меня в наличии</label>
         </div>
+        <div class="p-field">Режим фильтров:</div>
         <div v-if="isShowFiltersModeSwitcher" class="list-layout__filters-visible-mode p-field">
           <span class="p-buttonset">
-            <Button label="Список" icon="fas fa-list" @click="isShowTreeFilters = false"/>
-            <Button label="Дерево" icon="fas fa-stream" @click="isShowTreeFilters = true"/>
+            <Button label="Список" icon="fas fa-list" @click="switchSelectMode('list')"/>
+            <Button label="Дерево" icon="fas fa-stream" @click="switchSelectMode('tree')"/>
         </span>
         </div>
         <div v-if="!isShowTreeFilters" class="list-layout__filters-list">
@@ -227,11 +228,16 @@ export default {
       });
       emit('groupedFilter', filters);
     };
-    const nodeSelectHandler = (node) => {
-      console.log('nodeSelectHandler', node);
-    };
-    const nodeExpandHandler = (node) => {
-      console.log('nodeExpandHandler', node);
+    const switchSelectMode = (mode) => {
+      isShowTreeFilters.value = mode === 'tree';
+      selectedTreeFields.value = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const option in filtersOptions) {
+        if ({}.hasOwnProperty.call(filtersOptions, option)) {
+          filtersOptions[option].selectedOption = [];
+        }
+      }
+      emit('resetSelects');
     };
     const searchFromSuggestions = (event) => {
       setTimeout(() => {
@@ -269,8 +275,7 @@ export default {
       clearEmit,
       toggleSidebar,
       clearFilters,
-      nodeSelectHandler,
-      nodeExpandHandler,
+      switchSelectMode,
       isShowClearFilters,
       filteredSuggestions,
       isOpenSidebar,

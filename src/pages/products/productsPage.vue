@@ -154,6 +154,7 @@ export default {
       params[param.key] = filtersArray;
       await store.dispatch('products/getProductsByFilter', params);
       await store.dispatch('products/getAllProductsFields', params);
+      setFilters();
     };
     const onGroupedFilter = async (filters) => {
       params = {

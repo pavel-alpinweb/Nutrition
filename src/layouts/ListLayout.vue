@@ -215,6 +215,7 @@ export default {
       });
     };
     const filterByGroup = (event) => {
+      isShowClearFilters.value = true;
       const keys = Object.keys(event).filter((key) => key.includes('filter'));
       const filters = {};
       keys.forEach((key) => {

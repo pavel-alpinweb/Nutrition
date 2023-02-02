@@ -155,8 +155,16 @@ export default {
       await store.dispatch('products/getAllProductsFields', params);
     };
     const onGroupedFilter = async (filters) => {
-      console.log('filters', filters);
+      params = {
+        page: params.page,
+        size: params.size,
+      };
       console.log('params', params);
+      console.log('filters', filters);
+      Object.assign(params, filters);
+      console.log('filtered', params);
+      await store.dispatch('products/getProductsByFilter', params);
+      await store.dispatch('products/getAllProductsFields', params);
     };
     const onClearFilters = async () => {
       params = reactive({

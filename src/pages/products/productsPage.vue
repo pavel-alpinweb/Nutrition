@@ -48,7 +48,7 @@
 
 <script>
 import {
-  computed, reactive, watch, onMounted, ref,
+  computed, reactive, onMounted, nextTick, ref,
 } from 'vue';
 import { useStore } from 'vuex';
 import ListLayout from '@/layouts/ListLayout.vue';
@@ -107,27 +107,23 @@ export default {
         field: 'manufacturers',
       },
     ]);
-
-    watch(user, async (currentValue) => {
-      if (currentValue !== null) {
-        await store.dispatch('products/getAllProductsFields');
-        filters[0].options = productFields.value.tags;
-        filters[1].options = productFields.value.categories;
-        filters[2].options = productFields.value.shops;
-        filters[3].options = productFields.value.grades;
-        filters[4].options = productFields.value.manufacturers;
-      }
-    });
+    const setFilters = () => {
+      const productFieldsKeys = Object.keys(productFields.value);
+      productFieldsKeys.forEach((key) => {
+        const adaptiveKey = key === 'categories' ? 'category' : key;
+        const filter = filters.find((item) => item.field === adaptiveKey);
+        if (filter) {
+          filter.options = productFields.value[key];
+        }
+      });
+    };
 
     onMounted(async () => {
+      await nextTick();
       await store.dispatch('products/getProductsByFilter', params);
       if (user.value) {
         await store.dispatch('products/getAllProductsFields');
-        filters[0].options = productFields.value.tags;
-        filters[1].options = productFields.value.categories;
-        filters[2].options = productFields.value.shops;
-        filters[3].options = productFields.value.grades;
-        filters[4].options = productFields.value.manufacturers;
+        setFilters();
       }
     });
 

@@ -90,6 +90,16 @@ export default {
         field: 'dishNames',
       },
     ]);
+    const setFilters = () => {
+      const dishesFieldsKeys = Object.keys(menusFields.value);
+      dishesFieldsKeys.forEach((key) => {
+        const adaptiveKey = key === 'menuTags' ? 'tags' : key;
+        const filter = filters.find((item) => item.field === adaptiveKey);
+        if (filter) {
+          filter.options = menusFields.value[key];
+        }
+      });
+    };
     let params = reactive({
       page: 0,
       size: ITEMS_PER_PAGE,
@@ -99,8 +109,7 @@ export default {
     onMounted(async () => {
       await store.dispatch('menus/getMenusByFilter', params);
       await store.dispatch('menus/getAllMenusFields');
-      filters[0].options = menusFields.value.menuTags;
-      filters[1].options = menusFields.value.dishNames;
+      setFilters();
     });
 
     const changeIHave = (ihave) => {
